@@ -4,8 +4,25 @@ body,h1,h2,p,ul{ /*Set up overall style*/
 }
 
 body{ /*Set up body font type*/
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-family:'Times New Roman', Times, serif;
     background-color: #7796cb;
+}
+
+.Jack-large-word {
+    font-size:xxx-large;
+    font-weight: bold;
+    color: #f4f5fb;
+    font-family:"Jack Armstrong BB";
+    text-shadow:0 5px 5px #576490;
+    margin-bottom: 40px;
+}
+
+
+.Jack-normal-word {
+    font-size:xx-large;
+    font-family:"Jack Armstrong BB";
+    font-weight:500;
+    margin-bottom: 20px;
 }
 
 header { /*Set up header style*/
