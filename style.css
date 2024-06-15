@@ -275,7 +275,7 @@ nav .accountOption:hover .dropmenu{
     display: flex;
     justify-content: center; 
     align-items: center; 
-    height: 90vh; 
+    height: 80vh; 
 }
 
 .inner-container {
@@ -338,6 +338,7 @@ nav .accountOption:hover .dropmenu{
     justify-content: center;
     text-align: center;
     padding: 30px;
+    height:95vh;
 }
 
 .white-block {
