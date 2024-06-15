@@ -4,13 +4,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const loginFormContainer = document.getElementById("loginFormContainer");
     const registerFormContainer = document.getElementById("registerFormContainer");
     const registerForm = document.getElementById("registerForm");
-    const registerPassword = document.getElementById("register-password");
-    const confirmPassword = document.getElementById("confirm-password");
-    const registerEmail = document.getElementById("register-email");
-    const registerName = document.getElementById("register-name");
-    const registerBirthday = document.getElementById("register-birthday");
-    const registerSex = document.getElementById("register-sex");
-    const registerPhone = document.getElementById("register-phone");
+    const loginForm = document.getElementById("loginForm");
 
     showRegisterLink.addEventListener("click", function(e) {
         e.preventDefault();
@@ -26,57 +20,72 @@ document.addEventListener("DOMContentLoaded", function() {
 
     registerForm.addEventListener("submit", function(e) {
         e.preventDefault();
-        const password = registerPassword.value;
-        const confirmPasswordValue = confirmPassword.value;
-        const email = registerEmail.value;
-        const name = registerName.value;
-        const birthday = registerBirthday.value;
-        const sex = registerSex.value;
-        const phone = registerPhone.value;
-        const errorDiv = document.querySelector('.error');
+        const user = {
+            email: document.getElementById("register-email").value,
+            password: document.getElementById("register-password").value,
+            name: document.getElementById("register-name").value,
+            birthday: document.getElementById("register-birthday").value,
+            sex: document.getElementById("register-sex").value,
+            phone: document.getElementById("register-phone").value
+        };
 
-        if (errorDiv) {
-            errorDiv.remove();
+        if (validateForm(user)) {
+            localStorage.setItem('user', JSON.stringify(user));
+            alert('Registration successful!');
+            registerFormContainer.classList.remove("active");
+            loginFormContainer.classList.add("active");
         }
-
-        if (!validatePassword(password)) {
-            showError(registerForm, "Password must be at least 8 characters long and include symbols like @, #, $, !, %, &, *.");
-            return;
-        }
-
-        if (password !== confirmPasswordValue) {
-            showError(registerForm, "Passwords do not match.");
-            return;
-        }
-
-        if (!validateEmail(email)) {
-            showError(registerForm, "Please enter a valid email address.");
-            return;
-        }
-
-        if (name.trim() === "") {
-            showError(registerForm, "Name is required.");
-            return;
-        }
-
-        if (!validateDate(birthday)) {
-            showError(registerForm, "Please enter a valid date of birth.");
-            return;
-        }
-
-        if (sex === "") {
-            showError(registerForm, "Please select your sex.");
-            return;
-        }
-
-        if (!validatePhoneNumber(phone)) {
-            showError(registerForm, "Please enter a valid phone number.");
-            return;
-        }
-
-        // Add your form submission logic here
-        alert('Registration successful!');
     });
+
+    loginForm.addEventListener("submit", function(e) {
+        e.preventDefault();
+        const email = document.getElementById("login-email").value;
+        const password = document.getElementById("login-password").value;
+        const user = JSON.parse(localStorage.getItem('user'));
+
+        if (user && user.email === email && user.password === password) {
+            window.location.href = 'profile1.html';
+        } else {
+            alert('Invalid email or password');
+        }
+    });
+
+    function validateForm(user) {
+        const errorDiv = document.querySelector('.error');
+        if (errorDiv) errorDiv.remove();
+
+        if (!validatePassword(user.password)) {
+            showError(registerForm, "Password must be at least 8 characters long and include symbols like @, #, $, !, %, &, *.");
+            return false;
+        }
+
+        if (user.password !== document.getElementById("confirm-password").value) {
+            showError(registerForm, "Passwords do not match.");
+            return false;
+        }
+
+        if (!validateEmail(user.email)) {
+            showError(registerForm, "Please enter a valid email address.");
+            return false;
+        }
+
+        if (!validateDate(user.birthday)) {
+            showError(registerForm, "Please enter a valid date of birth.");
+            return false;
+        }
+
+        if (!user.sex) {
+            showError(registerForm, "Please select your sex.");
+            return false;
+        }
+
+        if (!validatePhoneNumber(user.phone)) {
+            showError(registerForm, "Please enter a valid phone number.");
+            return false;
+        }
+
+        return true;
+    }
 
     function validatePassword(password) {
         const minLength = 8;
