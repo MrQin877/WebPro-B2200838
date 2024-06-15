@@ -220,6 +220,7 @@ nav div {
     border-radius: 5px;
     cursor: pointer;
     transition: backgound-color 0.3s, tranform 0.3s;
+    color:black;
 }
 
 .link {
@@ -228,6 +229,12 @@ nav div {
     font-size: x-large;
 }
 /* Menu Movement effect*/
+
+nav div .link:hover{
+    background-color: #576490;
+    color: white;
+}
+
 nav div:hover {
     background-color: #576490;
     color: white;
