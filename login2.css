@@ -42,7 +42,7 @@ body {
 }
 
 button {
-    background-color: #370cc3;
+    background-color: #7796cb;
     color: white;
     border: none;
     padding: 10px;
@@ -52,7 +52,7 @@ button {
 }
 
 button:hover {
-    background-color: #2e09a6;
+    background-color: #7796cb;
 }
 
 p {
@@ -60,7 +60,7 @@ p {
 }
 
 a {
-    color: #370cc3;
+    color: #7796cb;
     text-decoration: none;
 }
 
