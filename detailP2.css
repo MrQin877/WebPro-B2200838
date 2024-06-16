@@ -29,9 +29,9 @@ header {
 .search-bar input {
     width: 100%;
     padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    font-size: 20px;
+    border: 3px solid #ccc;
+    border-radius: 5px;
 }
 
 #suggestions {
@@ -49,7 +49,7 @@ header {
 }
 
 #suggestions div {
-    padding: 10px;
+    padding: 3px;
     cursor: pointer;
 }
 
@@ -61,14 +61,14 @@ main.program-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 10px;
-    padding: 10px;
+    padding:10px;
 }
 
 .program {
     padding: 15px;
-    background-color: #e0e0e0;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    background-color: #7796cb;
+    border: 3px solid #0e4ba7;
+    border-radius: 8px;
     cursor: pointer;
     text-align: center;
 }
