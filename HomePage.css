@@ -35,10 +35,11 @@ body{ /*Set up body font type*/
 
 
 .outer-container {
+    margin-bottom: -100px;
     display: flex;
     justify-content: center; 
     align-items: center; 
-    height: 80vh; 
+    height: 75vh; 
 }
 
 .inner-container {
@@ -109,7 +110,7 @@ body{ /*Set up body font type*/
     height: 500px; /* Adjust the height as needed */
     background-color: #f4f5fb; /* Add background color for visibility */
     border-radius: 50px; /* Set border-radius to create rounded corners */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 7px rgba(0, 0, 0, 0.1);
 }
 
 .title-word {
