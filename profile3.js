@@ -1,20 +1,13 @@
-document.addEventListener("DOMContentLoaded", function() {
-    // Retrieve user data from localStorage
+document.addEventListener('DOMContentLoaded', () => {
     const user = JSON.parse(localStorage.getItem('user'));
-
-    // Populate the profile fields with user data
     if (user) {
-        document.getElementById("profile-email").textContent = user.email;
-        document.getElementById("profile-name").textContent = user.name;
-        document.getElementById("profile-birthday").textContent = user.birthday;
-        document.getElementById("profile-phone").textContent = user.phone;
+        document.getElementById('userName').textContent = user.name;
+        document.getElementById('userBirthday').textContent = user.birthday;
+        document.getElementById('userEmail').textContent = user.email;
+        document.getElementById('userPhone').textContent = user.phone;
+        document.getElementById('userSex').textContent = user.sex;
     } else {
-        alert("No user data found. Please log in.");
-        window.location.href = 'login1.html';
+        alert('No user data found. Please register or log in.');
+        window.location.href = 'login1.html'; // Redirect to the login page if no user data
     }
-
-    // Handle edit profile button click
-    document.getElementById("edit-profile").addEventListener("click", function() {
-        alert("Edit profile functionality is not implemented yet.");
-    });
 });
