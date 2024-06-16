@@ -5,7 +5,7 @@ body,h1,h2,p,ul{ /*Set up overall style*/
 
 body{ /*Set up body font type*/ 
     font-family:Georgia, 'Times New Roman', Times, serif;
-    background-color: #7796cb;
+    background-image: linear-gradient(to bottom right, #576490, #7796CB, #5a7099)
 }
 
 .Jack-large-word {
@@ -26,13 +26,12 @@ body{ /*Set up body font type*/
 
 .Para-word {
     margin-top: 30px;
-    margin-left: 25px;
-
+    margin-bottom: 50px;
 }
 
-
-
-
+.col-sm-6 .Para-word {
+    margin-left: -60px;
+}
 
 .outer-container {
     margin-bottom: -100px;
@@ -58,8 +57,8 @@ body{ /*Set up body font type*/
     padding-bottom: ;
     width: auto;
     height: 500px; 
-    margin-top:;
-    margin-bottom:;
+    margin-bottom:-20px;
+    margin-left:-20px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -69,6 +68,14 @@ body{ /*Set up body font type*/
 .pic-middle img {
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
     height: 90%;
+}
+.Body-block .pic{
+    width:100px;
+    height:100px;
+}
+.Body-block .pic img {
+    width: 90%;
+    margin-bottom: 60%;
 }
 
 .pic {
@@ -100,29 +107,46 @@ body{ /*Set up body font type*/
     display:flex;
     align-items:center;
     justify-content: center;
-    text-align: center;
     padding: 30px;
     height:95vh;
 }
 
 .white-block {
-    width: 80%; /* Adjust the width as needed */
-    height: 500px; /* Adjust the height as needed */
+    display: flex;
+    width: 80%; 
+    height: 80%; 
     background-color: #f4f5fb; /* Add background color for visibility */
     border-radius: 50px; /* Set border-radius to create rounded corners */
     box-shadow: 0 8px 7px rgba(0, 0, 0, 0.1);
+}
+.Title-block {
+    width: 80%; 
+    height: 15%;
+}
+.Body-block {
+    display:flex;
+    margin: 5% 5%;
+    width: 80%; 
+    height: 80%;
 }
 
 .title-word {
     font-family: "Jack Armstrong BB";
 }
+.Body-block .button {
+    width: 300px;
+    height: 40px;
+    border-radius: 50px; /* create rounded corners */  
+}
 .button {
-    width: 50%; 
+    width: 250px; 
     height: 90px; 
     background-color: #576490; 
-    border-radius: 50px; /* create rounded corners */
+    border-top-right-radius: 50px; /* create rounded corners */
+    border-bottom-right-radius: 50px;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
     margin-top: 20px;
-    margin-left: 50%;
     box-shadow:0 4px 4px #192335;
     display: flex;
     align-items:center;
@@ -139,8 +163,21 @@ body{ /*Set up body font type*/
 
 }
 .button:hover .link{
-    color:black;
+    color:rgb(0, 0, 0);
 }
+
+.prog {
+    display:flex;
+    align-items:center;
+    justify-content: center;
+    text-align: center;
+    opacity: 0.8;
+    width: 100%;
+    height: 100%;
+    background:url(PBG.png);
+    background-size: 100%;
+}
+.prog .white-block {}
 
 .bg {
     background-color: #576490;
