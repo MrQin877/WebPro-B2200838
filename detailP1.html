@@ -16,18 +16,22 @@
             </div>
         </header>
         <main id="programList" class="program-grid">
-            <div class="program" onclick="showAllPrograms()">
-                <div class="program-content">
-                    <img src="icons/all-subjects.png" alt="All Subjects Icon">
-                    <div class="program-info">
-                        <div class="program-title">All Subjects</div>
-                        <div class="program-description">Explore all available subjects</div>
-                    </div>
-                </div>
-            </div>
-            <!-- Program details will be generated here by JavaScript -->
+            <!-- JavaScript will dynamically populate this section -->
         </main>
     </div>
     <script src="detailP3.js"></script>
+    <script>
+        // JavaScript code to navigate to the detail page when "English Language" is clicked
+        function showProgramDetails() {
+            // You can redirect the user to a new page or load content dynamically
+            // Here's a simple example redirecting to a new page
+            window.location.href = 'Engpage.html';
+            window.location.href = 'Malpage.html';
+            window.location.href = 'Mathpage.html';
+            window.location.href = 'Scipage.html';
+            window.location.href = 'Hispage.html';
+            window.location.href = 'Allpage.html';
+        }
+    </script>
 </body>
 </html>
