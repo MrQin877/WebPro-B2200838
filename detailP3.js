@@ -39,10 +39,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const suggestion = document.createElement('div');
             suggestion.innerHTML = `
                 <div class="program-content">
-                    <img src="${program.icon}" alt="${program.title} Icon">
                     <div class="program-info">
                         <div class="program-title">${program.title}</div>
-                        <div class="program-description">${program.description}</div>
                     </div>
                 </div>
             `;
