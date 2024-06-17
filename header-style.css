@@ -1,84 +1,85 @@
-header { /*Set up header style*/
+/* header-style.css */
+
+header {
+    width: 100%;
     background-color: #f4f5fb;
     padding: 5px 0;
     display: flex;
     align-items: center;
-    justify-content:center;
-    border-bottom-left-radius: 45px; /* Set border-radius to create rounded corners */
-    border-bottom-right-radius: 45px; /* Set border-radius to create rounded corners */
+    justify-content: center;
+    border-bottom-left-radius: 45px;
+    border-bottom-right-radius: 45px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000; /* Ensure it stays on top of other content */
 }
 
 .logo {
     position: relative;
-    width: 175px; /* Ensures the figure fits within the layout */
+    width: 175px;
 }
 
-
-.logo img{ /*Set up logo size*/
+.logo img {
     width: 100%;
     height: auto;
     transition: opacity 0.3s ease-in-out;
 }
 
-
-/*Display png */
-.pri-img{
+.pri-img {
     opacity: 1;
 }
-/*Hide the gif */
+
 .hov-img {
     opacity: 0;
     position: absolute;
-
     left: 0;
-    width: 100%; /* Ensure the hover image fits the parent container */
+    width: 100%;
     height: auto;
 }
-/*logo effect */
-.logo:hover .pri-img{/*Hide the png*/
-    opacity:0;
+
+.logo:hover .pri-img {
+    opacity: 0;
 }
 
-.logo:hover .hov-img{/*display gif*/
-    opacity:1;
+.logo:hover .hov-img {
+    opacity: 1;
 }
 
-/*Navigation menu set up*/
-header nav { 
-    display:flex;
+header nav {
+    display: flex;
     gap: 20px;
     align-items: center;
 }
+
 nav {
     margin: 0;
     padding: 0;
     display: flex;
     justify-content: space-between;
 }
+
 nav div {
     font-family: "Jack Armstrong BB";
     font-weight: bold;
-    font-size:x-large;
+    font-size: x-large;
     list-style: none;
     margin: 0 10px;
     padding: 10px 20px;
     border-radius: 5px;
     cursor: pointer;
-    transition: backgound-color 0.3s, tranform 0.3s;
-    color:black;
+    transition: background-color 0.3s, transform 0.3s;
+    color: black;
 }
 
 .link {
-    color:black;
-    text-decoration:none;
+    color: black;
+    text-decoration: none;
     font-size: x-large;
 }
 
-/* Menu Movement effect*/
-
-nav div .link:hover{
+nav div .link:hover {
     background-color: #576490;
     color: white;
 }
@@ -88,11 +89,11 @@ nav div:hover {
     color: white;
     transform: scale(1.05);
 }
-/* My account menu position*/
+
 nav .accountOption {
     position: relative;
 }
-/*dropdown menu size, style */
+
 nav .dropmenu {
     display: none;
     position: absolute;
@@ -103,24 +104,24 @@ nav .dropmenu {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     border-radius: 5px;
 }
-/*dropdown menu effect*/
-nav .accountOption:hover .dropmenu{
-    display:block;
+
+nav .accountOption:hover .dropmenu {
+    display: block;
 }
-/*Set up dropdown menu style form li to a*/
+
 .dropmenu li {
-    padding:5px 0;
+    padding: 5px 0;
     list-style: none;
 }
 
 .dropmenu li a {
-    font-weight:normal;
+    font-weight: normal;
     color: black;
     text-decoration: none;
     display: block;
     padding: 5px 10px;
 }
-/*Dropdown menu word show effect*/
+
 .dropmenu li a:hover {
     background-color: #576490;
     color: white;
