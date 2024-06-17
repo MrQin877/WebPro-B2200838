@@ -1,11 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
     const programs = [
-        { title: 'Malay Language', description: 'Learn Malay language basics.', icon: 'icons/malay.png' },
-        { title: 'English Language', description: 'Master English language skills.', icon: 'icons/english.png' },
-        { title: 'Mathematics', description: 'Explore various math concepts.', icon: 'icons/math.png' },
-        { title: 'History', description: 'Study historical events and figures.', icon: 'icons/history.png' },
-        { title: 'Science', description: 'Learn about scientific principles.', icon: 'icons/science.png' },
-        { title: 'All Subjects', description: 'Learn about our every programs.', icon: 'icons/all_subjects.png' }
+        { title: 'Malay Language', description: 'Learn Malay language basics.', icon: 'icon3.jpg' },
+        { title: 'English Language', description: 'Master English language skills.', icon: 'icon4.jpg' },
+        { title: 'Mathematics', description: 'Explore various math concepts.', icon: 'icon2.jpg' },
+        { title: 'History', description: 'Study historical events and figures.', icon: 'icon5.jpg' },
+        { title: 'Science', description: 'Learn about scientific principles.', icon: 'icon1.jpg' },
+        { title: 'All Subjects', description: 'Learn about our every programs.', icon: 'icon6.jpg' }
     ];
 
     const programList = document.getElementById('programList');
