@@ -1,0 +1,114 @@
+body,h1,h2,p,ul{ /*Set up overall style*/
+    margin: 0;
+    padding: 0;
+}
+
+body{ /*Set up body font type*/ 
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    background-image: linear-gradient(to bottom right, #576490, #7796CB, #5a7099)
+}
+
+
+.Para-word {
+    margin-top: 30px;
+    margin-bottom: 50px;
+}
+
+.col-sm-6 .Para-word {
+    margin-left: 70px;
+    
+}
+
+.align-center{
+    display:flex;
+    align-items:center;
+    justify-content: center;
+    padding: 30px;
+    height:95vh;
+}
+
+.white-block {
+    display: flex;
+    width: 80%; 
+    height: 80%; 
+    background-color: #f4f5fb; /* Add background color for visibility */
+    border-radius: 50px; /* Set border-radius to create rounded corners */
+    box-shadow: 0 8px 7px rgba(0, 0, 0, 0.1);
+}
+
+
+.Body-block .button {
+    width: 300px;
+    height: 40px;
+    border-radius: 50px; /* create rounded corners */  
+}
+.button {
+    width: 250px; 
+    height: 90px; 
+    background-color: #576490; 
+    border-top-right-radius: 50px; /* create rounded corners */
+    border-bottom-right-radius: 50px;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    margin-top: 20px;
+    box-shadow:0 4px 4px #192335;
+    display: flex;
+    align-items:center;
+    justify-content: center;
+    
+}
+.button .link {
+    color:#f4f5fb;
+    text-decoration:none;
+    font-size: x-large;
+}
+
+.button:hover .link{
+    color:rgb(0, 0, 0);
+}
+
+#cart {
+    list-style-type: none;
+    padding: 0;
+}
+
+#cart li {
+    margin-bottom: 10px;
+}
+
+#checkoutButton {
+    width: 250px; 
+    height: 90px; 
+    background-color: #576490; 
+    box-shadow:0 4px 4px #192335;
+    align-items:center;
+    justify-content: center;
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    font-size: 18px;
+    color: #fff;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+#checkoutButton:hover {
+    background-color: #218838;
+}
+
+/* Add styles for the remove button */
+.remove-button {
+    padding: 5px 10px;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.remove-button:hover {
+    background-color: #c82333;
+}
+
