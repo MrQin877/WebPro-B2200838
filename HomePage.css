@@ -29,8 +29,13 @@ body{ /*Set up body font type*/
     margin-bottom: 50px;
 }
 
+.Body-block .Para-word{
+    text-decoration-line: underline;
+}
+
 .col-sm-6 .Para-word {
     margin-left: -60px;
+    
 }
 
 .outer-container {
@@ -41,12 +46,6 @@ body{ /*Set up body font type*/
     height: 75vh; 
 }
 
-.inner-container {
-    display: flex;
-    justify-content: center; 
-    align-items: center; 
-    gap: 20px; /* Space between text and image */
-}
 
 .text {
     text-align: right; 
@@ -75,7 +74,7 @@ body{ /*Set up body font type*/
 }
 .Body-block .pic img {
     width: 90%;
-    margin-bottom: 60%;
+    margin-bottom: 5%;
 }
 
 .pic {
