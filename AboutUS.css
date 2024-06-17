@@ -1,0 +1,12 @@
+body,h1,h2,p,ul{ /*Set up overall style*/
+    margin: 0;
+    padding: 0;
+}
+
+body{ /*Set up body font type*/ 
+    background-image: linear-gradient(to bottom right, #576490, #7796CB, #5a7099)
+}
+
+section{
+    height:70vh;
+}
