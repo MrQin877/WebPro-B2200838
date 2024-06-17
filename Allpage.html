@@ -6,6 +6,13 @@
     <title>All Subjects Program</title>
     <!-- Add any necessary CSS files or styles here -->
     <style>
+        .description-block {
+            background-color: #7796cb; /* Light gray background */
+            padding: 20px; /* Add some padding */
+            border-radius: 10px; /* Optional: Add rounded corners */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle shadow */
+            margin-bottom: 20px; /* Add some space below the block */
+        }
         .cart-feedback {
             display: none; /* Initially hide the feedback message */
             color: navy; /* Style for success message */
@@ -15,15 +22,20 @@
 </head>
 <body>
     <h1>Mastering Science: Advanced Conversational Skills</h1>
-    <p><strong>Detailed Description:</strong></p>
-    <ul>
-        <li>Advanced conversational skills training</li>
-        <li>Designed for intermediate to advanced learners</li>
-        <li>Includes video lectures, interactive exercises, and quizzes</li>
-        <li>Personalized feedback from instructors</li>
-        <li>Access to exclusive live Q&A sessions</li>
-    </ul>
-    <p><strong>Price:</strong> $99 one-time purchase</p>
+    <img src="path/to/your/image.jpg" alt="Mastering Science Program Image" width="600" height="400">
+    
+    <div class="description-block">
+        <p><strong>Detailed Description:</strong></p>
+        <ul>
+            <li>Advanced conversational skills training</li>
+            <li>Designed for intermediate to advanced learners</li>
+            <li>Includes video lectures, interactive exercises, and quizzes</li>
+            <li>Personalized feedback from instructors</li>
+            <li>Access to exclusive live Q&A sessions</li>
+        </ul>
+        <p><strong>Price:</strong> RM 199 one-time purchase</p>
+    </div>
+
     <button onclick="addToCart()">Add to Cart</button>
     <p class="cart-feedback" id="cartFeedback">Added to Cart!</p>
     
