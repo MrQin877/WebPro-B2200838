@@ -1,0 +1,124 @@
+/* Reset default margins and paddings */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background: url('Logo.PNG') no-repeat  ;
+    background-color: #7796CB;
+    background-size: 1200px;
+    background-position: center;
+}
+
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 30px 40px;
+    background: transparent;
+    border: 2px solid rgba(255,255,255,0.2);
+    backdrop-filter: blur(20px);
+    border-radius: 50px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    color:#fff;
+}
+
+h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.input {
+    margin-bottom: 15px;
+}
+
+.input-label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.input-field {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    transition: border-color 0.3s ease;
+}
+
+.input-field:focus {
+    outline: none;
+    border-color: #66afe9;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
+
+.nav {
+    display: flex;
+    justify-content: center;
+    background-color: #f0f0f0;
+    padding: 10px 0;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.nav-item {
+    margin: 0 10px;
+}
+
+.nav-item.active a {
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    color: #007bff; /* Change color for active link */
+}
+
+.nav-item a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
+
+.nav-item a:hover {
+    color: #007bff;
+}
+
+.input-group {
+    display: flex;
+    justify-content: space-between;
+}
+
+.input-group .input {
+    flex: 1;
+    margin-right: 10px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
