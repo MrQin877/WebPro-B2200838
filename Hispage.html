@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Language Program</title>
+    <!-- Add any necessary CSS files or styles here -->
+    <style>
+        .cart-feedback {
+            display: none; /* Initially hide the feedback message */
+            color: navy; /* Style for success message */
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Mastering History: Advanced Conversational Skills</h1>
+    <p><strong>Detailed Description:</strong></p>
+    <ul>
+        <li>Advanced conversational skills training</li>
+        <li>Designed for intermediate to advanced learners</li>
+        <li>Includes video lectures, interactive exercises, and quizzes</li>
+        <li>Personalized feedback from instructors</li>
+        <li>Access to exclusive live Q&A sessions</li>
+    </ul>
+    <p><strong>Price:</strong> $99 one-time purchase</p>
+    <button onclick="addToCart()">Add to Cart</button>
+    <p class="cart-feedback" id="cartFeedback">Added to Cart!</p>
+    
+    <!-- Link the button to your checkout or cart page -->
+    
+    <script>
+        function addToCart() {
+            // Here you can add logic to actually add the item to the cart
+            // For now, let's just show a feedback message
+            var feedback = document.getElementById('cartFeedback');
+            feedback.style.display = 'block'; // Show the feedback message
+            setTimeout(function() {
+                feedback.style.display = 'none'; // Hide the feedback message after a delay
+            }, 2000); // Adjust the delay as needed (2000ms = 2 seconds)
+        }
+    </script>
+</body>
+</html>

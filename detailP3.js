@@ -4,7 +4,8 @@ document.addEventListener('DOMContentLoaded', () => {
         { title: 'English Language', description: 'Master English language skills.', icon: 'icons/english.png' },
         { title: 'Mathematics', description: 'Explore various math concepts.', icon: 'icons/math.png' },
         { title: 'History', description: 'Study historical events and figures.', icon: 'icons/history.png' },
-        { title: 'Science', description: 'Learn about scientific principles.', icon: 'icons/science.png' }
+        { title: 'Science', description: 'Learn about scientific principles.', icon: 'icons/science.png' },
+        { title: 'All Subjects', description: 'Learn about our every programs.', icon: 'icons/all_subjects.png' }
     ];
 
     const programList = document.getElementById('programList');
@@ -16,9 +17,30 @@ document.addEventListener('DOMContentLoaded', () => {
         const programElement = document.createElement('div');
         programElement.classList.add('program');
         programElement.onclick = () => {
-            searchInput.value = program.title;
-            suggestions.style.display = 'none';
-            searchProgram();
+            if (program.title === 'English Language') {
+                showProgramDetails();
+            } 
+            if (program.title === 'Malay Language') {
+                showProgramDetails();
+            } 
+            if (program.title === 'Mathematics') {
+                showProgramDetails();
+            } 
+            if (program.title === 'Science') {
+                showProgramDetails();
+            } 
+            if (program.title === 'History') {
+                showProgramDetails();
+            } 
+            if (program.title === 'All Subjects') {
+                showProgramDetails();
+            } 
+            
+            else {
+                searchInput.value = program.title;
+                suggestions.style.display = 'none';
+                searchProgram();
+            }
         };
         programElement.innerHTML = `
             <div class="program-content">
@@ -45,9 +67,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             `;
             suggestion.onclick = () => {
-                searchInput.value = program.title;
-                suggestions.style.display = 'none';
-                searchProgram();
+                if (program.title === 'English Language') {
+                    showProgramDetails();
+                } else {
+                    searchInput.value = program.title;
+                    suggestions.style.display = 'none';
+                    searchProgram();
+                }
             };
             suggestions.appendChild(suggestion);
         });
