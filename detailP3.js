@@ -1,11 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
     const programs = [
-        { title: 'Malay Language', description: 'Learn Malay language basics.', icon: 'icon3.jpg' },
-        { title: 'English Language', description: 'Master English language skills.', icon: 'icon4.jpg' },
-        { title: 'Mathematics', description: 'Explore various math concepts.', icon: 'icon2.jpg' },
-        { title: 'History', description: 'Study historical events and figures.', icon: 'icon5.jpg' },
-        { title: 'Science', description: 'Learn about scientific principles.', icon: 'icon1.jpg' },
-        { title: 'All Subjects', description: 'Learn about our every programs.', icon: 'icon6.jpg' }
+        { title: 'Malay Language', description: 'Learn Malay language basics.', icon: 'icon3.jpg', page: 'Malpage.html' },
+        { title: 'English Language', description: 'Master English language skills.', icon: 'icon4.jpg', page: 'Engpage.html' },
+        { title: 'Mathematics', description: 'Explore various math concepts.', icon: 'icon2.jpg', page: 'Mathpage.html' },
+        { title: 'History', description: 'Study historical events and figures.', icon: 'icon5.jpg', page: 'Hispage.html' },
+        { title: 'Science', description: 'Learn about scientific principles.', icon: 'icon1.jpg', page: 'Scipage.html' },
+        { title: 'All Subjects', description: 'Learn about our every programs.', icon: 'icon6.jpg', page: 'Allpage.html' }
     ];
 
     const programList = document.getElementById('programList');
@@ -17,30 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const programElement = document.createElement('div');
         programElement.classList.add('program');
         programElement.onclick = () => {
-            if (program.title === 'English Language') {
-                showProgramDetails();
-            } 
-            if (program.title === 'Malay Language') {
-                showProgramDetails();
-            } 
-            if (program.title === 'Mathematics') {
-                showProgramDetails();
-            } 
-            if (program.title === 'Science') {
-                showProgramDetails();
-            } 
-            if (program.title === 'History') {
-                showProgramDetails();
-            } 
-            if (program.title === 'All Subjects') {
-                showProgramDetails();
-            } 
-            
-            else {
-                searchInput.value = program.title;
-                suggestions.style.display = 'none';
-                searchProgram();
-            }
+            showProgramDetails(program.page);
         };
         programElement.innerHTML = `
             <div class="program-content">
@@ -59,6 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
         suggestions.innerHTML = '';
         filteredPrograms.forEach(program => {
             const suggestion = document.createElement('div');
+            suggestion.classList.add('suggestion');
             suggestion.innerHTML = `
                 <div class="program-content">
                     <div class="program-info">
@@ -67,13 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             `;
             suggestion.onclick = () => {
-                if (program.title === 'English Language') {
-                    showProgramDetails();
-                } else {
-                    searchInput.value = program.title;
-                    suggestions.style.display = 'none';
-                    searchProgram();
-                }
+                showProgramDetails(program.page);
             };
             suggestions.appendChild(suggestion);
         });
@@ -128,4 +100,9 @@ document.addEventListener('DOMContentLoaded', () => {
     suggestions.addEventListener('mouseleave', () => {
         suggestions.style.display = 'none';
     });
+
+    // JavaScript code to navigate to the detail page when a program is clicked
+    function showProgramDetails(page) {
+        window.location.href = page;
+    }
 });
