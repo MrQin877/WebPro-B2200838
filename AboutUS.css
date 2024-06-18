@@ -1,12 +1,25 @@
-body,h1,h2,p,ul{ /*Set up overall style*/
-    margin: 0;
-    padding: 0;
-}
-
-body{ /*Set up body font type*/ 
-    background-image: linear-gradient(to bottom right, #576490, #7796CB, #5a7099)
-}
 
 section{
-    height:70vh;
+    height:100vh;
 }
+
+.firsection {
+    margin-top: 7%; 
+    background-image: url(Gt.png);
+    background-size:contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    
+}
+
+.firsection .container {
+    margin-top:20%;
+    text-align:center;
+
+}
+
