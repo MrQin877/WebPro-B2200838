@@ -8,7 +8,7 @@
 body {
     font-family: Arial, sans-serif;
     line-height: 1.6;
-    background: url('Logo.PNG') no-repeat  ;
+    background: url('Logo-w.PNG') no-repeat  ;
     background-color: #7796CB;
     background-size: 1200px;
     background-position: center;
@@ -23,7 +23,7 @@ body {
     backdrop-filter: blur(20px);
     border-radius: 50px;
     box-shadow: 0 0 10px rgba(0,0,0,0.2);
-    color:#fff;
+    color:#000000;
 }
 
 h1 {
