@@ -121,6 +121,12 @@ body {
 .Title-block {
     width: 80%;
     height: 15%;
+    display: flex;
+    flex-direction: row;
+}
+.Title-block img{
+    margin-left:2%;
+    margin-bottom: 3%;
 }
 
 .Body-block {
@@ -189,4 +195,11 @@ body {
 
 .bg {
     background-color: #576490;
+}
+
+.bgb {
+    background-image: url(Gt1.png);
+    background-size:contain;
+    background-repeat: no-repeat;
+    background-position:  top right;
 }
