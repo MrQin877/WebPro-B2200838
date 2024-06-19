@@ -1,6 +1,39 @@
-
+th, td {
+    padding-top: 50px;
+    padding-bottom: 20px;
+    padding-left: 40px;
+    padding-right: 40px;
+    font-family: monospace;
+}
+    
 section{
     height:100vh;
+}
+
+body, h1, h2, p, ul {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    background-image: linear-gradient(to bottom right, #576490, #7796CB, #5a7099);
+}
+
+.Jack-large-word {
+    font-weight: bold;
+    color: #f4f5fb;
+    font-family: "Jack Armstrong BB";
+    text-shadow: 0 5px 5px #576490;
+    margin-bottom: 40px;
+    font-size:400%
+}
+
+.Jack-normal-word {
+    font-family: "Jack Armstrong BB";
+    font-weight: 500;
+    margin-bottom: 20px;
+    font-size: 200%;
 }
 
 .firsection {
@@ -13,13 +46,54 @@ section{
     display: flex;
     align-items: center;
     justify-content: center;
-    
-    
 }
 
 .firsection .container {
-    margin-top:20%;
+    margin-top:50%;
     text-align:center;
-
+    width: 50%
 }
 
+.align-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+    height: 95vh;
+}
+
+.white-block {
+    display: flex;
+    width: 80%;
+    height: 80%;
+    background-color: #f4f5fb;
+    border-radius: 50px;
+    box-shadow: 0 8px 7px rgba(0, 0, 0, 0.1);
+}
+
+@media screen and (max-width: 600px) {
+    .firsection {
+        margin-top: 0%; 
+        background-image: url(Gt.png);
+        background-size:contain;
+        background-repeat: no-repeat;
+        background-position: top;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .align-center {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 30px;
+        height: 20vh;
+    }
+    .Jack-large-word{
+        font-size: Large;
+    }
+    .Jack-normal-word{
+        font-size: larger;
+    }
+  }
