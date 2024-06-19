@@ -44,9 +44,9 @@ document.addEventListener("DOMContentLoaded", function() {
         const user = JSON.parse(localStorage.getItem('user'));
 
         if (user && user.email === email && user.password === password) {
-            window.location.href = 'profile1.html';
+            window.location.href = 'Sampleforprofile.html'; // Redirect to Sampleforprofile.html on successful login
         } else {
-            alert('Invalid email or password');
+            alert('Invalid email or password.');
         }
     });
 
@@ -55,7 +55,7 @@ document.addEventListener("DOMContentLoaded", function() {
         if (errorDiv) errorDiv.remove();
 
         if (!validatePassword(user.password)) {
-            showError(registerForm, "Password must be at least 8 characters long and include symbols like @, #, $, !, %, &, *.");
+            showError(registerForm, "Password must be at least 8 characters long and contain special characters (@, #, $, !, %, & *)");
             return false;
         }
 
@@ -75,7 +75,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
 
         if (!user.sex) {
-            showError(registerForm, "Please select your sex.");
+            showError(registerForm, "Please select your gender.");
             return false;
         }
 
