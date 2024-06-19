@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Study Sport - User Profile</title>
+    <script type="text/javascript" src="https://db.onlinewebfonts.com/s/71976204cf6d53991ececd406824ec45?family=Jack+Armstrong+BB"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="HomePage.css">
+    <link rel="stylesheet" href="footer-style.css">
+    <link rel="stylesheet" href="header-style.css">
+    <script src="multiUsage.js" defer></script>
+</head>
+
+<body>
+    <div class="container light-style flex-grow-1 container-p-y">
+        <h4 class="font-weight-bold py-3 mb-4">Account settings</h4>
+        <div class="card overflow-hidden">
+            <div class="row no-gutters row-bordered row-border-light">
+                <div class="col-md-3 pt-0">
+                    <div class="list-group list-group-flush account-settings-links">
+                        <a class="list-group-item list-group-item-action active" data-toggle="list" href="#account-general">User Account</a>
+                        <a class="list-group-item list-group-item-action" data-toggle="list" href="#account-change-password">Change password</a>
+                        <a class="list-group-item list-group-item-action" data-toggle="list" href="#account-info">Info</a>
+                        <a class="list-group-item list-group-item-action" data-toggle="list" href="#account-courses">Taking Courses</a>
+                        <a class="list-group-item list-group-item-action" data-toggle="list" href="#account-notifications">Notifications</a>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="tab-content">
+                        <div class="tab-pane fade active show" id="account-general">
+                            <div class="card-body media align-items-center">
+                                <img src="JUN.jpg" border="2" width="250" height="250" alt="Profile Picture">
+                                <div class="media-body ml-4">
+                                    <label class="btn btn-outline-primary">
+                                        Upload new photo
+                                        <input type="file" class="account-settings-fileinput">
+                                    </label> &nbsp;
+                                    <button type="button" class="btn btn-default md-btn-flat">Reset</button>
+                                    <div class="text-light small mt-1">Allowed JPG, GIF or PNG. Max size of 800K</div>
+                                </div>
+                            </div>
+                            <hr class="border-light m-0">
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label class="form-label">Username</label>
+                                    <input type="text" class="form-control mb-1" id="usernameInput">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Name</label>
+                                    <input type="text" class="form-control" id="nameInput">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">E-mail</label>
+                                    <input type="text" class="form-control mb-1" id="emailInput">
+                                    <div class="alert alert-warning mt-3" id="emailConfirmationMessage" style="display: none;">
+                                        Your email is not confirmed. Please check your inbox.<br>
+                                        <a href="javascript:void(0)">Resend confirmation</a>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="account-change-password">
+                            <div class="card-body pb-2">
+                                <div class="form-group">
+                                    <label class="form-label">Current password</label>
+                                    <input type="password" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">New password</label>
+                                    <input type="password" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Repeat new password</label>
+                                    <input type="password" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="account-info">
+                            <div class="card-body pb-2">
+                                <div class="form-group">
+                                    <label class="form-label">Bio</label>
+                                    <textarea class="form-control" rows="5"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Birthday</label>
+                                    <input type="text" class="form-control" value="May 7, 2004">
+                                </div>
+                            </div>
+                            <hr class="border-light m-0">
+                            <div class="card-body pb-2">
+                                <h6 class="mb-4">Contacts</h6>
+                                <div class="form-group">
+                                    <label class="form-label">Phone</label>
+                                    <input type="text" class="form-control" value="+60 11 456 7891">
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="account-courses">
+                            <div class="card-body pb-2">
+                                <h6 class="mb-4">Currently Taking Courses</h6>
+                                <ul class="list-group" id="coursesList">
+                                    <!-- Courses will be dynamically added here -->
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="account-notifications">
+                            <div class="card-body pb-2">
+                                <h6 class="mb-4">Notifications</h6>
+                                <div class="form-group">
+                                    <label class="switcher">
+                                        <input type="checkbox" class="switcher-input" checked>
+                                        <span class="switcher-indicator">
+                                            <span class="switcher-yes"></span>
+                                            <span class="switcher-no"></span>
+                                        </span>
+                                        <span class="switcher-label">Enable Every Notification</span>
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <label class="switcher">
+                                        <input type="checkbox" class="switcher-input">
+                                        <span class="switcher-indicator">
+                                            <span class="switcher-yes"></span>
+                                            <span class="switcher-no"></span>
+                                        </span>
+                                        <span class="switcher-label">Enable Only Message Notification</span>
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <label class="switcher">
+                                        <input type="checkbox" class="switcher-input">
+                                        <span class="switcher-indicator">
+                                            <span class="switcher-yes"></span>
+                                            <span class="switcher-no"></span>
+                                        </span>
+                                        <span class="switcher-label">Enable Only Email Notification</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex justify-content-between mt-3">
+            <div>
+                <button type="button" class="btn btn-primary">Save changes</button>&nbsp;
+                <button type="button" class="btn btn-default">Cancel</button>
+            </div>
+            <div>
+                <button type="button" class="btn btn-secondary">Log out</button>&nbsp;
+                <button type="button" class="btn btn-danger">Delete Account</button>
+            </div>
+        </div>
+    </div>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            // 페이지 로드 시 사용자 정보를 가져오는 함수
+            function fetchUserData() {
+                // Ajax를 사용하여 서버에서 사용자 정보를 가져오는 예시
+                $.ajax({
+                    url: '/api/userinfo', // 서버 API 엔드포인트
+                    type: 'GET',
+                    success: function (data) {
+                        // 가져온 사용자 정보를 각 필드에 설정
+                        $('#usernameInput').val(data.username);
+                        $('#nameInput').val(data.name);
+                        $('#emailInput').val(data.email);
+                        // 이메일 확인 메시지 표시 여부 설정
+                        if (!data.emailConfirmed) {
+                            $('#emailConfirmationMessage').show();
+                        } else {
+                            $('#emailConfirmationMessage').hide();
+                        }
+
+                        // 수강 중인 강의 목록을 추가
+                        var coursesList = $('#coursesList');
+                        coursesList.empty(); // 기존 목록 비우기
+                        data.courses.forEach(function (course) {
+                            var listItem = '<li class="list-group-item d-flex justify-content-between align-items-center">' +
+                                course +
+                                '<button type="button" class="btn btn-danger btn-sm">Delete</button>' +
+                                '</li>';
+                            coursesList.append(listItem);
+                        });
+
+                        // 삭제 버튼 클릭 시 리스트 아이템을 삭제하는 기능을 추가
+                        $('.btn-danger').off('click').on('click', function () {
+                            $(this).closest('li').remove();
+                        });
+                    },
+                    error: function () {
+                        // 에러 처리
+                        console.error('Failed to fetch user data.');
+                    }
+                });
+            }
+
+            // 페이지 로드 시 사용자 정보 가져오기
+            fetchUserData();
+
+            // Save changes 버튼 클릭 시 이벤트 처리 (임시 예시)
+            $('button.btn-primary').on('click', function () {
+                alert('Changes saved!');
+            });
+
+            // Cancel 버튼 클릭 시 이벤트 처리 (임시 예시)
+            $('button.btn-default').on('click', function () {
+                alert('Cancelled.');
+            });
+
+            // Log out 버튼 클릭 시 이벤트 처리 (임시 예시)
+            $('button.btn-secondary').on('click', function () {
+                alert('Logged out.');
+            });
+
+            // Delete Account 버튼 클릭 시 이벤트 처리 (임시 예시)
+            $('button.btn-danger').on('click', function () {
+                alert('Account deleted.');
+            });
+        });
+    </script>
+</body>
+
+</html>
