@@ -15,9 +15,9 @@
     <!-- Add any necessary CSS files or styles here -->
     <style>
         .description-block {
-            background-color: #7796cb; /* Light gray background */
+            background-color: #f4f5fb; /* Light gray background */
             padding: 20px; /* Add some padding */
-            border-radius: 10px; /* Optional: Add rounded corners */
+            border-radius: 30px; /* Optional: Add rounded corners */
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle shadow */
             margin-bottom: 20px; /* Add some space below the block */
         }
@@ -25,6 +25,11 @@
             display: none; /* Initially hide the feedback message */
             color: navy; /* Style for success message */
             font-weight: bold;
+        }
+        .box {
+            width: 600px;
+            border-radius: 30px;
+            overflow: hidden;
         }
     </style>
 </head>
@@ -50,8 +55,10 @@
     </div>
 
 <div style="width: 45%; height:400px; float: right;">
-    <img src="pic4-1.jpg" alt="Mastering Science Program Image" width="600" height="400">
-</div>
+    <div class="box">
+        <img src="pic4-1.jpg" alt="Mastering Science Program Image" width="600" height="400">
+        </div>
+    </div>
 
     <script>
         function addToCart() {
@@ -64,5 +71,8 @@
             }, 2000); // Adjust the delay as needed (2000ms = 2 seconds)
         }
     </script>
+    <section style="margin-bottom:35%; height: vh;"></section>
+    <footers>
+    </footers>
 </body>
 </html>
