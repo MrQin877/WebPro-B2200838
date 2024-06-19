@@ -38,29 +38,30 @@
     <link rel="stylesheet" href="header-style.css">
     <script src="multiUsage.js" defer></script>
     
-    
-    <div style="width: 55%; height:400px; float: left;">
-        <div class="description-block">
-            <p><strong>Detailed Description:</strong></p>
-            <ul>
-                <li>Advanced conversational skills training</li><br>
-                <li>Designed for intermediate to advanced learners</li><br>
-                <li>Includes video lectures, interactive exercises, and quizzes</li><br>
-                <li>Personalized feedback from instructors</li><br>
-                <li>Access to exclusive live Q&A sessions</li><br>
-            </ul>
-            <p><strong>Price:</strong> RM 599 one-time purchase</p>
-            <p>Do Not Lose This Special Chance!</p><br>
-            <button onclick="addToCart()">Add to Cart</button>
-            <p class="cart-feedback" id="cartFeedback">Added to Cart!</p>
+    <div style="display:flex; flex-direction: row; margin-right:2.5%;margin-left:2.5%">
+        <div style="width: 55%; height:400px;">
+            <div class="description-block">
+                <p><strong>Detailed Description:</strong></p>
+                <ul>
+                    <li>Advanced conversational skills training</li><br>
+                    <li>Designed for intermediate to advanced learners</li><br>
+                    <li>Includes video lectures, interactive exercises, and quizzes</li><br>
+                    <li>Personalized feedback from instructors</li><br>
+                    <li>Access to exclusive live Q&A sessions</li><br>
+                </ul>
+                <p><strong>Price:</strong> RM 599 one-time purchase</p> 
+                <button onclick="addToCart()">Add to Cart</button>
+                <p class="cart-feedback" id="cartFeedback">Added to Cart!</p>
+            </div>
+        </div>
+        <div style="width: 45%; height:400px; ">
+            <div class="box">
+                <img src="pic6-1.jpg" alt="Mastering Science Program Image" width="600" height="400">
+            </div>
         </div>
     </div>
-    
-<div style="width: 45%; height:400px; float: right;">
-    <div class="box">
-        <img src="pic6-1.jpg" alt="Mastering Science Program Image" width="600" height="400">
-    </div>
-</div>
+
+
 
     <script>
         function addToCart() {
