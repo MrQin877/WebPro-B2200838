@@ -71,6 +71,15 @@ body {
     box-shadow: 0 8px 7px rgba(0, 0, 0, 0.1);
 }
 
+.white-block-s {
+    display: flex;
+    width: 40%;
+    height: 80%;
+    background-color: #f4f5fb;
+    border-radius: 50px;
+    box-shadow: 0 8px 7px rgba(0, 0, 0, 0.1);
+}
+
 @media screen and (max-width: 600px) {
     .firsection {
         margin-top: 0%; 
