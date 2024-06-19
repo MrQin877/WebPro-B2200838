@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
         { title: 'English Language', description: 'Master English language skills.', icon: 'icon4.jpg', page: 'Engpage.html' },
         { title: 'Mathematics', description: 'Explore various math concepts.', icon: 'icon2.jpg', page: 'Mathpage.html' },
         { title: 'History', description: 'Study historical events and figures.', icon: 'icon5.jpg', page: 'Hispage.html' },
-        { title: 'Science', description: 'Learn about scientific principles.', icon: 'icon1.jpg', page: 'Scipage.html' },
+        { title: 'Science', description: 'Learn about scientific principles.', icon: 'icon1.jpg', page: 'Sicpage.html' },
         { title: 'All Subjects', description: 'Learn about our every programs.', icon: 'icon6.jpg', page: 'Allpage.html' }
     ];
 
