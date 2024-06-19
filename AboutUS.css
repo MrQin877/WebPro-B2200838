@@ -1,10 +1,11 @@
 th, td {
-    padding-top: 50px;
-    padding-bottom: 20px;
+    padding-top: 30px;
+    padding-bottom: 30px;
     padding-left: 40px;
     padding-right: 40px;
     font-family: monospace;
 }
+
     
 section{
     height:100vh;
@@ -18,6 +19,26 @@ body, h1, h2, p, ul {
 body {
     font-family: Georgia, 'Times New Roman', Times, serif;
     background-image: linear-gradient(to bottom right, #576490, #7796CB, #5a7099);
+}
+.lesspd{
+    padding-top:0px;
+    padding-bottom: 0px;
+    
+}
+.title-mg{
+    text-align: right;
+}
+.font{
+    font-size:140%;
+}
+.line-f{
+    font-size:150%;
+}
+.Jack-line-f {
+    font-family: "Jack Armstrong BB";
+    font-weight: 500;
+    margin-bottom: 20px;
+    font-size: 200%;
 }
 
 .Jack-large-word {
@@ -80,7 +101,28 @@ body {
     box-shadow: 0 8px 7px rgba(0, 0, 0, 0.1);
 }
 
-@media screen and (max-width: 600px) {
+.icon-logo{
+    height: auto;
+    width: 40%;
+    
+}
+
+.scrollbox {
+    background-color:white;
+    width: 30%;
+    height: 80%;
+    border-radius: 10%;
+    overflow-y: hidden;
+    scrollbar-width:thin ;
+    display: flex;
+  }
+.lecturebox {
+
+}
+
+
+
+@media screen and (max-width: 760px) {
     .firsection {
         margin-top: 0%; 
         background-image: url(Gt.png);
@@ -92,17 +134,50 @@ body {
         align-items: center;
         justify-content: center;
     }
+    .container{
+        width: 120%;
+    }
     .align-center {
         display: flex;
         align-items: center;
         justify-content: center;
         padding: 30px;
-        height: 20vh;
+        height: 70vh;
+    }
+    .white-block {
+        display: flex;
+        width: 90%;
+        height: 550px;
+        background-color: #f4f5fb;
+        border-radius: 50px;
+        box-shadow: 0 8px 7px rgba(0, 0, 0, 0.1);
+    }
+
+    .white-block-s {
+        display: flex;
+        width: 40%;
+        height: 100%;
+        background-color: #f4f5fb;
+        border-radius: 50px;
+        box-shadow: 0 8px 7px rgba(0, 0, 0, 0.1);
     }
     .Jack-large-word{
-        font-size: Large;
+        font-size: 240%;
     }
     .Jack-normal-word{
-        font-size: larger;
+        font-size: 120%;
+    }
+    .font {
+        font-size:120%;
+    }
+    .line-f{
+        font-size: 64.7%;
+    }
+
+    .Jack-line-f{
+        font-family: "Jack Armstrong BB";
+        font-weight: 500;
+        margin-bottom: 20px;
+        font-size: 90%;
     }
   }
