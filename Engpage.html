@@ -50,7 +50,7 @@
                     <li>Access to exclusive live Q&A sessions</li><br>
                 </ul>
                 <p><strong>Price:</strong> RM 199 one-time purchase</p>
-                <button onclick="addToCart('Mastering English: Everyone Can Be Great Speakers With This Program', 199)">Add to Cart</button>
+                <button onclick="addToCart('Mastering English: Everyone Can Be Great Speakers With This Program', 199,'icon4.jpg')">Add to Cart</button>
                 <p class="cart-feedback" id="cartFeedback">Added to Cart!</p>
             </div>
         </div>
@@ -64,9 +64,9 @@
 
     
     <script>
-        function addToCart(productName, price) {
+        function addToCart(productName, price, icon) {
             const cart = JSON.parse(localStorage.getItem('cart')) || [];
-            const product = { name: productName, price: price, quantity: 1 };
+            const product = { name: productName, price: price, icon: icon, quantity: 1 };
             cart.push(product);
             localStorage.setItem('cart', JSON.stringify(cart));
 
