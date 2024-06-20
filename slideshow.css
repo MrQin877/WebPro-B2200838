@@ -1,0 +1,66 @@
+.slider {
+    position: relative;
+    width: 35%;
+    
+    margin: 0 auto;
+    overflow: hidden;
+}
+ 
+.slides {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    align-items: center;
+}
+ 
+.disease-slide {
+    min-width: 90%;
+    height: 500px;
+    margin-left: 5%;
+    margin-right: 5%;
+    box-sizing: border-box;
+    padding: 5%;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: #C9CAD9;
+    border-radius: 10%;
+    box-shadow: 0 8px 7px rgba(0, 0, 0, 0.1);
+}
+ 
+.disease-slide img {
+    width: auto;
+    height: 180px;
+    border-radius: 10px;
+}
+ 
+.disease-slide h2 {
+    font-size: 40px;
+    margin: 10px 0;
+}
+ 
+.disease-slide p {
+    font-size: 20px;
+    color: black;
+    margin: 0;
+}
+ 
+.arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    font-size: 18px;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+ 
+.arrow.left {
+    left: 10px;
+}
+ 
+.arrow.right {
+    right: 10px;
+}
