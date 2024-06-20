@@ -23,7 +23,7 @@ body {
     border: 2px solid rgba(255, 255, 255, .2);
     backdrop-filter: blur(20px);
     box-shadow: 0 0 10px rgba(0, 0, 0, .2);
-    color: #fff;
+    color: #000;
     border-radius: 10px;
     padding: 30px 40px;
 }
@@ -35,7 +35,7 @@ form {
 h1 {
     text-align: center;
     margin-bottom: 20px;
-    color: #fff;
+    color: #000;
 }
 
 .input-box {
@@ -97,12 +97,12 @@ h1 {
 }
 
 .remember-forgot label input {
-    accent-color: #fff;
+    accent-color: #000;
     margin-right: 3px;
 }
 
 .remember-forgot a {
-    color: #fff;
+    color: #000;
     text-decoration: none;
 }
 
@@ -131,7 +131,7 @@ h1 {
 }
 
 .register-link p a {
-    color: #fff;
+    color: #000;
     text-decoration: none;
     font-weight: 600;
 }
@@ -141,7 +141,7 @@ h1 {
 }
 
 .success-message {
-    color: #28a745;
+    color: #576490;
     text-align: center;
     margin-top: 15px;
     font-size: 16px;
