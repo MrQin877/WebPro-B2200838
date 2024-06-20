@@ -1,11 +1,11 @@
 body {
     margin: 0;
     font-family: Georgia, 'Times New Roman', Times, serif;
-    position: relative; /* Ensure relative positioning for pseudo-element */
-    overflow-x: hidden; /* Prevent horizontal overflow */
+    position: relative; 
+    overflow-x: hidden; 
     background-image: linear-gradient(to bottom right, #576490, #7796CB, #5a7099), url('Contactus.png');
     background-size: cover;
-    background-attachment: fixed; /* Ensure background remains fixed */
+    background-attachment: fixed; 
 }
 body::before {
     content: "";
@@ -16,12 +16,13 @@ body::before {
     height: 100%;
     background: url('Contactus.png') no-repeat center center;
     background-size: cover;
-    filter: blur(10px); /* Adjust blur amount as needed */
+    filter: blur(10px); 
     z-index: -1;
 }
 
 section {
-    height: 100vh; /* Adjusted to full viewport height */
+    margin-top: -5%;
+    height: 130vh; 
     position: relative;
     overflow: hidden;
     display: flex;
@@ -30,7 +31,28 @@ section {
     align-items: center;
 }
 
+.Jack-large-word {
+    font-weight: bold;
+    color: #f4f5fb;
+    font-family: "Jack Armstrong BB";
+    text-shadow: 0 5px 5px #576490;
+    margin-bottom: 40px;
+    font-size:400%
+}
 
+.Jack-normal-word {
+    font-family: "Jack Armstrong BB";
+    font-weight: 500;
+    margin-bottom: 20px;
+    font-size: 200%;
+}
+
+.Jack-small-word {
+    font-family: "Jack Armstrong BB";
+    font-weight: 500;
+    margin-bottom: 20px;
+    font-size: 130%;
+}
 
 .align-center {
     display: flex;
@@ -40,12 +62,13 @@ section {
     z-index: 2;
 }
 
+
 .white-block-l {
     width: 500px;
     height: 500px;
     background-color: #f4f5fb;
     border-radius: 50%;
-    position: absolute;
+
     z-index: 2;
     margin: 20px;
     padding: 20px;
@@ -62,7 +85,7 @@ section {
     height: 500px;
     background-color: #f4f5fb;
     border-radius: 50%;
-    position: absolute;
+
     z-index: 2;
     margin: 20px;
     padding: 20px;
@@ -74,6 +97,23 @@ section {
     transition: opacity 0.3s ease;
 }
 
+.contact-item {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+}
+
+.icon {
+    width: 30px;  /* Adjust size as needed */
+    height: auto; /* Adjust size as needed */
+    margin-right: 10px;
+}
+
+.contact-text {
+    text-decoration: underline;
+    margin: 0; /* Remove default paragraph margin */
+}
+
 .button {
-    margin-top: 400%;
+    margin-top: 500%;
 }
