@@ -8,9 +8,8 @@
 body {
     font-family: Arial, sans-serif;
     line-height: 1.6;
-    background: url('Logo-w.PNG') no-repeat  ;
-    background-color: #7796CB;
-    background-size: 1200px;
+    background: url(Paymentbackground.png) no-repeat  ;
+    background-size: cover;
     background-position: center;
 }
 
@@ -18,9 +17,8 @@ body {
     max-width: 800px;
     margin: 20px auto;
     padding: 30px 40px;
-    background: transparent;
+    background-color: #fff;
     border: 2px solid rgba(255,255,255,0.2);
-    backdrop-filter: blur(20px);
     border-radius: 50px;
     box-shadow: 0 0 10px rgba(0,0,0,0.2);
     color:#000000;
