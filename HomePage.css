@@ -4,7 +4,7 @@ body, h1, h2, p, ul {
 }
 
 body {
-    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-family:monospace;
     background-image: linear-gradient(to bottom right, #576490, #7796CB, #5a7099);
 }
 
@@ -14,22 +14,36 @@ body {
     font-family: "Jack Armstrong BB";
     text-shadow: 0 5px 5px #576490;
     margin-bottom: 40px;
+    font-size: 350%;
 }
 
 .Jack-normal-word {
     font-family: "Jack Armstrong BB";
+    color: #f4f5fb;
     font-weight: 500;
-    margin-bottom: 20px;
-    font-size: 75%;
+    font-size: 200%;
 }
 
 .Para-word {
     margin-top: 30px;
-    margin-bottom: 50px;
+    width: 90%;
+    text-align: center;
+    font-family: monospace;
 }
 
-.Body-block .Para-word {
-    text-decoration-line: underline;
+.Para-word-r{
+    margin-top: 30px;
+    width: 70%;
+    text-align: center;
+    font-family: monospace;
+}
+
+.Para-word-l {
+    margin-top: 30px;
+    width: 80%;
+    text-align: center;
+    font-family: monospace;
+
 }
 
 .col-sm-6 .Para-word {
@@ -37,32 +51,23 @@ body {
 }
 
 .outer-container {
-    margin-bottom: -100px;
+    margin-top:4%;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 75vh;
 }
 
-.text {
-    text-align: right;
-}
-
 .pic-middle {
     position: relative;
-    width: auto;
-    height: 500px;
+    width: 40%;
+    height: auto;
     margin-bottom: -20px;
     margin-left: -20px;
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 10px;
-}
-
-.pic-middle img {
-    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
-    height: 90%;
 }
 
 .Body-block .pic {
@@ -82,6 +87,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-top: 10%;
 }
 
 .pic img {
@@ -118,51 +124,61 @@ body {
     box-shadow: 0 8px 7px rgba(0, 0, 0, 0.1);
 }
 
+.white-block-s {
+    display: flex;
+    align-items: center;
+    width: 35%;
+    height: 90%;
+    background-color: #f4f5fb;
+    border-radius: 50px;
+    box-shadow: 0 8px 7px rgba(0, 0, 0, 0.1);
+}
+
 .Title-block {
     width: 80%;
     height: 15%;
     display: flex;
     flex-direction: row;
 }
+
 .Title-block img{
     margin-left:2%;
     margin-bottom: 3%;
 }
 
-.Body-block {
+.Body-block-l {
     display: flex;
-    margin: 3% 5%;
     width: 80%;
     height: 80%;
+    align-items: center;
+    justify-content: center;
+    text-align:center;
+    background-color:;
 }
 
-.Body-block p {
-    font-size: large;
+.Body-block {
+    display: flex;
+    width: 80%;
+    height: 90%;
+    align-items: center;
+    justify-content: center;
+    text-align:center;
 }
 
-.title-word {
-    font-family: "Jack Armstrong BB";
-}
-
-.Body-block .button {
-    width: 300px;
-    height: 40px;
-    border-radius: 50px;
+.Body-block .Para-word{
+    width: 70%;
 }
 
 .button {
     width: 250px;
     height: 90px;
     background-color: #576490;
-    border-top-right-radius: 50px;
-    border-bottom-right-radius: 50px;
-    border-top-left-radius: 20px;
-    border-bottom-left-radius: 20px;
-    margin-top: 20px;
+    border-radius: 50px;
     box-shadow: 0 4px 4px #192335;
     display: flex;
     align-items: center;
     justify-content: center;
+    text-align:center;
 }
 
 .button .link {
@@ -191,15 +207,27 @@ body {
     background-size: 100%;
 }
 
-.prog .white-block {}
-
 .bg {
     background-color: #576490;
 }
 
 .bgb {
-    background-image: url(Gt1.png);
-    background-size:contain;
+    
+    background-image: url(backgroundhome.png);
+    background-size:cover;
     background-repeat: no-repeat;
-    background-position:  top right;
+    background-position: bottom;
+    height: 100vh;
+}
+
+.text {
+    text-align: center;
+    margin-top: 15%;
+}
+
+.triangle {
+    color: white; 
+    margin-top:5% ;
+    text-align: center;
+    font-size: 200%;
 }

@@ -107,6 +107,12 @@ body {
     
 }
 
+.icon-logo2{
+    height: auto;
+    width: 55%;
+    
+}
+
 .scrollbox {
     background-color:white;
     width: 30%;
@@ -116,9 +122,17 @@ body {
     scrollbar-width:thin ;
     display: flex;
   }
-.lecturebox {
 
-}
+
+/* Teacher box part*/
+.testimonial {
+    position: relative;
+    max-width: 900px;
+    width: 100%;
+    padding: 50px 0;
+    overflow: hidden;
+  }
+
 
 
 

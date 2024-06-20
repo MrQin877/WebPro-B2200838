@@ -1,6 +1,7 @@
 body {
-    background: #f5f5f5;
+    background: #7796cb;
     margin-top: 20px;
+    font-family: monospace
 }
 
 .ui-w-80 {
@@ -9,8 +10,9 @@ body {
     height: 250px;
 }
 
+
 .btn-default {
-    border-color: rgba(24, 28, 33, 0.1);
+    border-color: rgba(9, 25, 45, 0.1);
     background  : rgba(0, 0, 0, 0);
     color       : #4E5155;
 }
@@ -30,7 +32,7 @@ label.btn {
 }
 
 .text-light {
-    color: #babbbc !important;
+    color: #40474e !important;
 }
 
 .btn-facebook {
@@ -46,8 +48,8 @@ label.btn {
 }
 
 .card {
-    background-clip: padding-box;
-    box-shadow     : 0 1px 4px rgba(24, 28, 33, 0.012);
+    
+    box-shadow     : 0 px 4px rgba(24, 28, 33, 0.012);
 }
 
 .row-bordered {
@@ -67,7 +69,7 @@ label.btn {
 }
 
 html:not(.dark-style) .account-settings-links .list-group-item.active {
-    background: transparent !important;
+    background:#C9CaD9 !important;
 }
 
 .account-settings-multiselect~.select2-container {
@@ -108,4 +110,13 @@ html:not(.dark-style) .account-settings-links .list-group-item.active {
 .light-style .account-settings-links .list-group-item {
     padding     : 0.85rem 1.5rem;
     border-color: rgba(24, 28, 33, 0.03) !important;
+}
+
+.Jack-large-word {
+    font-weight: bold;
+    color: #f4f5fb;
+    font-family: "Jack Armstrong BB";
+    text-shadow: 0 5px 5px #576490;
+    margin-bottom: 40px;
+    font-size:300%
 }
