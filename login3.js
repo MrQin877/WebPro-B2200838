@@ -44,7 +44,8 @@ document.addEventListener("DOMContentLoaded", function() {
         const user = JSON.parse(localStorage.getItem('user'));
 
         if (user && user.email === email && user.password === password) {
-            window.location.href = 'profile1.html';
+            alert('Successful login!');
+            window.location.href = 'HomePage.html'; // Replace 'index.html' with your home page URL
         } else {
             alert('Invalid email or password');
         }
