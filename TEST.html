@@ -3,17 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="test.css">
-    <title>Circle Boxes</title>
+    <title>Payment Form</title>
+    <link rel="stylesheet" href="payment.css">
 </head>
 <body>
-    <div class="circle-box">
-        <div class="circle active" data-index="0">hi</div>
-        <div class="circle" data-index="1">bye</div>
-        <div class="circle" data-index="2">shit</div>
-    </div>
-    <button id="changeButton">Change</button>
 
-    <script src="test.js"></script>
+<div class="nav">
+    <div class="nav-item"><a href="cart.html" >Shopping Cart</a></div>
+    <div class="nav-item active" aria-current="page" id="checkoutLink"><a href="#">Checkout</a></div>
+</div>
+
+<div class="container">
+
+    <div class="payment-form">
+        <h2>Payment Form</h2>
+        <form id="paymentForm">
+            <div class="input input-text half-width">
+                <label for="name">Name</label>
+                <input class="input-field" type="text" id="name" name="name" required>
+            </div>
+            <div class="input input-text half-width">
+                <label for="email">Email</label>
+                <input class="input-field" type="email" id="email" name="email" required>
+            </div>
+
+            <div>
+                <label class="input-label" for="amount">Amount (MYR)</label>
+                <span id="cartSummary" type="number" id="amount" name="amount" required>$0</span>
+            </div>
+
+            <button class="btn btn-mega" type="submit">Pay Now</button>
+        </form>
+    </div>
+
+</div>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script src="payment.js"></script>
 </body>
 </html>
