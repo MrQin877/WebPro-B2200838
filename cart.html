@@ -58,7 +58,7 @@
                 const cell4 = row.insertCell(3);
 
                 cell1.innerHTML = `<div class="cart-info">
-                                    <img src="icon${index + 1}.jpg" alt="${product.name}">
+                                    <img src="${product.icon}" alt="${product.name}">
                                     <div><p>${product.name}</p></div>
                                 </div>`;
                 cell2.innerHTML = `<a href="#" onclick="removeFromCart(${index})"><i class="fas fa-trash-alt bin-icon"></i></a>`;
