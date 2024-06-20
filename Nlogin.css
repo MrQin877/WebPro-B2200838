@@ -64,7 +64,7 @@ h1 {
 
 .input-box input::placeholder,
 .input-box select {
-    color: #000; /* Set placeholder text color to black */
+    color: #000;
 }
 
 .input-box i {
@@ -82,11 +82,11 @@ h1 {
 .gender-box select {
     appearance: none;
     padding-right: 30px;
-    color: #000; /* Set text color of selected option */
+    color: #000; 
 }
 
 .gender-box select option {
-    color: #000; /* Set text color of all options */
+    color: #000; 
 }
 
 .remember-forgot {
@@ -148,7 +148,7 @@ h1 {
     display: none;
 }
 
-/* Adjust placeholder color for birthdate input */
+
 .input-box input[type="date"]::placeholder {
-    color: #000; /* Set placeholder text color to black */
+    color: #000; 
 }
