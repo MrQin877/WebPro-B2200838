@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const suggestions = document.getElementById('suggestions');
     const searchInput = document.getElementById('searchInput');
 
-    // Populate the program list
+    
     programs.forEach(program => {
         const programElement = document.createElement('div');
         programElement.classList.add('program');
@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
         programList.appendChild(programElement);
     });
 
-    // Render suggestions
+  
     function renderSuggestions(filteredPrograms) {
         suggestions.innerHTML = '';
         filteredPrograms.forEach(program => {
@@ -52,12 +52,12 @@ document.addEventListener('DOMContentLoaded', () => {
         suggestions.style.display = filteredPrograms.length > 0 ? 'block' : 'none';
     }
 
-    // Show all suggestions
+   
     window.showAllSuggestions = function() {
         renderSuggestions(programs);
     }
 
-    // Filter suggestions as user types
+    
     window.filterSuggestions = function() {
         const searchValue = searchInput.value.toLowerCase();
         const filteredPrograms = programs.filter(program =>
@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
         renderSuggestions(filteredPrograms);
     }
 
-    // Search programs based on input
+    
     window.searchProgram = function() {
         const searchValue = searchInput.value.toLowerCase();
         const programElements = document.querySelectorAll('.program');
@@ -83,25 +83,25 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Show all programs when "All Subjects" is clicked
+    
     window.showAllPrograms = function() {
         programList.querySelectorAll('.program').forEach(program => {
             program.style.display = 'block';
         });
     }
 
-    // Hide suggestions when focus is lost or mouse leaves
+    
     searchInput.addEventListener('blur', () => {
         setTimeout(() => {
             suggestions.style.display = 'none';
-        }, 100); // Delay to allow click event on suggestion to fire
+        }, 100); 
     });
 
     suggestions.addEventListener('mouseleave', () => {
         suggestions.style.display = 'none';
     });
 
-    // JavaScript code to navigate to the detail page when a program is clicked
+    
     function showProgramDetails(page) {
         window.location.href = page;
     }
