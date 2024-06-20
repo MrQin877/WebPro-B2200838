@@ -79,5 +79,19 @@
     </form>
 </div>
 
+<script>
+        document.addEventListener('DOMContentLoaded', function() {
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        let totalPrice = 0;
+
+        cart.forEach(product => {
+            totalPrice += product.price * product.quantity;
+        });
+
+        document.getElementById('cartTotal').innerText = `RM${totalPrice.toFixed(2)}`;
+    });
+</script>
+
+
 </body>
 </html>
