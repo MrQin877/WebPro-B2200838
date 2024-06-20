@@ -49,8 +49,9 @@
                     <li>Do Not Miss Out This Chance!</li>
                 </ul>
                 <p><strong>Price:</strong> RM 599 one-time purchase</p> 
-                <button onclick="addToCart()">Add to Cart</button>
+                <button onclick="addToCart('All Subject Package', 599)">Add to Cart</button>
                 <p class="cart-feedback" id="cartFeedback">Added to Cart!</p>
+                
             </div>
         </div>
         <div style="width: 45%; height:400px; ">
@@ -63,9 +64,12 @@
 
 
     <script>
-        function addToCart() {
-            // Here you can add logic to actually add the item to the cart
-            // For now, let's just show a feedback message
+        function addToCart(productName, price) {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const product = { name: productName, price: price, quantity: 1 };
+            cart.push(product);
+            localStorage.setItem('cart', JSON.stringify(cart));
+
             var feedback = document.getElementById('cartFeedback');
             feedback.style.display = 'block'; // Show the feedback message
             setTimeout(function() {
