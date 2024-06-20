@@ -5,8 +5,7 @@ body {
 }
 
 .ui-w-80 {
-    border-radius: 30px; /* Optional: Add rounded corners */
-    width: 250px;
+    border-radius: 30px; 
     height: 250px;
 }
 
