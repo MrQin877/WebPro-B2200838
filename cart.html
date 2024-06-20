@@ -86,8 +86,11 @@
         }
 
         document.getElementById('checkoutButton').addEventListener('click', function() {
-            window.location.href = 'payment.html';
+        const totalPrice = document.getElementById('totalPrice').innerText.replace('RM', '');
+        localStorage.setItem('totalAmount', totalPrice);
+        window.location.href = 'payment.html'; // Redirect to the payment page
         });
+
 
         window.onload = loadCart;
     </script>
