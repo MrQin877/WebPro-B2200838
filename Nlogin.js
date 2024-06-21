@@ -1,13 +1,8 @@
 function redirectToResetPage(event) {
     event.preventDefault();
-    
-    const email = document.querySelector('#passwordRecoveryForm input[type="email"]').value;
-    
-
-    
+    const email = document.querySelector('#passwordRecoveryForm input[type="email"]').value;    
     window.location.href = `reset.html?email=${encodeURIComponent(email)}`;
 }
-
 function showSuccessMessage(event, type) {
     event.preventDefault();
     const successMessage = document.getElementById('successMessage');
