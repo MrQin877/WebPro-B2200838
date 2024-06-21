@@ -4,18 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>All Subjects-Intensive Program</title>
-    <!-- Add any necessary CSS files or styles here -->
+    
     <style>
         .description-block {
             background-color: #f4f5fb; 
-            padding: 20px; /* Add some padding */
-            border-radius: 30px; /* Optional: Add rounded corners */
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle shadow */
-            margin-bottom: 20px; /* Add some space below the block */
+            padding: 20px; 
+            border-radius: 30px; 
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+            margin-bottom: 20px; 
         }
         .cart-feedback {
-            display: none; /* Initially hide the feedback message */
-            color: navy; /* Style for success message */
+            display: none; 
+            color: navy; 
             font-weight: bold;
         }
         .box {
@@ -71,10 +71,10 @@
             localStorage.setItem('cart', JSON.stringify(cart));
 
             var feedback = document.getElementById('cartFeedback');
-            feedback.style.display = 'block'; // Show the feedback message
+            feedback.style.display = 'block'; 
             setTimeout(function() {
-                feedback.style.display = 'none'; // Hide the feedback message after a delay
-            }, 2000); // Adjust the delay as needed (2000ms = 2 seconds)
+                feedback.style.display = 'none'; 
+            }, 2000); 
         }
     </script>
     <section style="margin-bottom:35%; height: vh;"></section>

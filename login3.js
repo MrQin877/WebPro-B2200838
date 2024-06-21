@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
         if (user && user.email === email && user.password === password) {
             alert('Successful login!');
-            window.location.href = 'HomePage.html'; // Replace 'index.html' with your home page URL
+            window.location.href = 'HomePage.html'; 
         } else {
             alert('Invalid email or password');
         }
