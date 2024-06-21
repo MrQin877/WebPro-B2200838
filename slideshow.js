@@ -1,9 +1,7 @@
 let currentSlide = 0;
- 
 function showSlide(index) {
     const slides = document.querySelector('.slides');
     const totalSlides = document.querySelectorAll('.disease-slide').length;
- 
     if (index >= totalSlides) {
         currentSlide = 0;
     } else if (index < 0) {
@@ -11,14 +9,11 @@ function showSlide(index) {
     } else {
         currentSlide = index;
     }
- 
     slides.style.transform = `translateX(${-currentSlide * 100}%)`;
 }
- 
 function nextSlide() {
     showSlide(currentSlide + 1);
 }
- 
 function prevSlide() {
     showSlide(currentSlide - 1);
 }
