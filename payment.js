@@ -14,7 +14,7 @@ document.getElementById('paymentForm').addEventListener('submit', function(e) {
     const amount = document.getElementById('amount').value * 100; // Razorpay amount is in the smallest currency unit, cents for MYR
 
     const options = {
-        "key": "rzp_test_30hYlhpNoKCLY8", // Replace with your Razorpay key ID
+        "key": "rzp_test_30hYlhpNoKCLY8", // Replace with the Razorpay key ID
         "amount": amount,
         "currency": "MYR",
         "name": name,
