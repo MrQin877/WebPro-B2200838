@@ -57,6 +57,10 @@ body {
     font-size: 200%;
 }
 
+.container{
+    
+}
+
 .firsection {
     margin-top: 7%; 
     background-image: url(Gt.png);
@@ -72,15 +76,25 @@ body {
 .firsection .container {
     margin-top:50%;
     text-align:center;
-    width: 50%
+    width: 60%
 }
 
-.align-center {
+.align-center-a {
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 30px;
     height: 95vh;
+    margin-top: 17%
+}
+
+.align-center-b {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+    height: 95vh;
+    
 }
 
 .white-block {
@@ -137,6 +151,13 @@ body {
 
 
 @media screen and (max-width: 760px) {
+    th, td {
+        padding-top: 10px;
+        padding-bottom: 10px;
+        padding-left: 10px;
+        padding-right: 10px;
+        font-family: monospace;
+    }
     .firsection {
         margin-top: 0%; 
         background-image: url(Gt.png);
@@ -149,19 +170,28 @@ body {
         justify-content: center;
     }
     .container{
-        width: 120%;
+
     }
-    .align-center {
+    .align-center-a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px;
+        height: 50vh;
+    }
+
+    .align-center-b {
         display: flex;
         align-items: center;
         justify-content: center;
         padding: 30px;
-        height: 70vh;
+        height: 50vh;
     }
+
     .white-block {
         display: flex;
         width: 90%;
-        height: 550px;
+        height: 300px;
         background-color: #f4f5fb;
         border-radius: 50px;
         box-shadow: 0 8px 7px rgba(0, 0, 0, 0.1);
@@ -170,28 +200,49 @@ body {
     .white-block-s {
         display: flex;
         width: 40%;
-        height: 100%;
+        height: 400px;
         background-color: #f4f5fb;
         border-radius: 50px;
         box-shadow: 0 8px 7px rgba(0, 0, 0, 0.1);
     }
     .Jack-large-word{
-        font-size: 240%;
+        font-size: 260%;
     }
     .Jack-normal-word{
-        font-size: 120%;
+        font-size: 160%;
     }
     .font {
-        font-size:120%;
+        font-size:100%;
+        margin-bottom: 10px;
     }
     .line-f{
-        font-size: 64.7%;
+        font-size: 75%;
     }
 
     .Jack-line-f{
         font-family: "Jack Armstrong BB";
         font-weight: 500;
         margin-bottom: 20px;
-        font-size: 90%;
+        font-size: 110%;
     }
+
+    .scrollbox {
+        background-color:white;
+        width: 50%;
+        height: 80%;
+        border-radius: 10%;
+        overflow-y: hidden;
+        scrollbar-width:thin ;
+        display: flex;
+      }
+    
+    .testimonial {
+        position: relative;
+        max-width: 900px;
+        width: 100%;
+        padding: 50px 0;
+        overflow: hidden;
+      }
   }
+
+  
