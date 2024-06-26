@@ -127,3 +127,22 @@ nav .accountOption:hover .dropmenu {
     background-color: #576490;
     color: white;
 }
+
+@media screen and (max-width: 760px) {
+    nav div {
+        font-family: "Jack Armstrong BB";
+        font-weight: bold;
+        font-size: medium;
+        list-style: none;
+        margin: 0 10px;
+        padding: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.3s;
+        color: black;
+    }
+
+    .link {
+        font-size: medium;
+    }
+}
