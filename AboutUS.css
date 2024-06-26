@@ -94,7 +94,7 @@ body {
     justify-content: center;
     padding: 30px;
     height: 95vh;
-    
+    flex-direction: row;
 }
 
 .white-block {
@@ -127,25 +127,6 @@ body {
     
 }
 
-.scrollbox {
-    background-color:white;
-    width: 30%;
-    height: 80%;
-    border-radius: 10%;
-    overflow-y: hidden;
-    scrollbar-width:thin ;
-    display: flex;
-  }
-
-
-/* Teacher box part*/
-.testimonial {
-    position: relative;
-    max-width: 900px;
-    width: 100%;
-    padding: 50px 0;
-    overflow: hidden;
-  }
 
 
 
@@ -185,7 +166,14 @@ body {
         align-items: center;
         justify-content: center;
         padding: 30px;
-        height: 50vh;
+        height: 90vh;
+        flex-direction: column;
+    }
+
+    .lesspd{
+        padding-top:0px;
+        padding-bottom: 10px;
+        padding-left: 20px
     }
 
     .white-block {
@@ -199,8 +187,8 @@ body {
 
     .white-block-s {
         display: flex;
-        width: 40%;
-        height: 400px;
+        width: 90%;
+        height: 500px;
         background-color: #f4f5fb;
         border-radius: 50px;
         box-shadow: 0 8px 7px rgba(0, 0, 0, 0.1);
@@ -223,26 +211,21 @@ body {
         font-family: "Jack Armstrong BB";
         font-weight: 500;
         margin-bottom: 20px;
-        font-size: 110%;
+        font-size: 100%;
     }
 
-    .scrollbox {
-        background-color:white;
-        width: 50%;
-        height: 80%;
-        border-radius: 10%;
-        overflow-y: hidden;
-        scrollbar-width:thin ;
-        display: flex;
-      }
+    .icon-logo{
+        height: auto;
+        width: 20%;
+        
+    }
     
-    .testimonial {
-        position: relative;
-        max-width: 900px;
-        width: 100%;
-        padding: 50px 0;
-        overflow: hidden;
-      }
+    .icon-logo2{
+        height: auto;
+        width: 30%;
+        
+    }
+
   }
 
   
