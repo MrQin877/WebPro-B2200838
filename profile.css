@@ -119,3 +119,15 @@ html:not(.dark-style) .account-settings-links .list-group-item.active {
     margin-bottom: 40px;
     font-size:300%
 }
+
+@media screen and (max-width:760px) {
+    .list-group {
+        font-size: medium;
+        font-weight: bolder;
+        flex-direction: row;
+    }
+    
+
+
+
+}
