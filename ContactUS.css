@@ -60,6 +60,7 @@ section {
     align-items: center;
     justify-content: center;
     z-index: 2;
+    flex-direction: row
 }
 
 
@@ -116,4 +117,19 @@ section {
 
 .button {
     margin-top: 500%;
+}
+
+@media screen and (max-width:760px) {
+
+    .Jack-large-word {
+        font-size: 300%;
+    }
+    
+    .align-center {
+        flex-direction: column;
+    }
+
+    section {
+        height: 200vh;
+    }
 }
