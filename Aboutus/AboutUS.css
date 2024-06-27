@@ -63,7 +63,7 @@ body {
 
 .firsection {
     margin-top: 7%; 
-    background-image: url(Gt.png);
+    background-image: url(../images/Gt.png);
     background-size:contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -139,7 +139,6 @@ body {
     }
     .firsection {
         margin-top: 0%; 
-        background-image: url(Gt.png);
         background-size:contain;
         background-repeat: no-repeat;
         background-position: top;

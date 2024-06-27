@@ -5,7 +5,7 @@ body,h1,h2,p,ul{ /*Set up overall style*/
 
 body{ /*Set up body font type*/ 
     font-family:Georgia, 'Times New Roman', Times, serif;
-    background: url(Cartbackground.png);
+    background: url(../Cartbackground.png);
     background-size: cover;
     background-position: center;
 }
