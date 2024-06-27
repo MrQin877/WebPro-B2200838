@@ -3,16 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
     <title>Smart Study Sport- HomePage</title>
     <script type="text/javascript" src="https://db.onlinewebfonts.com/s/71976204cf6d53991ececd406824ec45?family=Jack+Armstrong+BB"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="HomePage.css">
-    <link rel="stylesheet" href="footer-style.css">
-    <link rel="stylesheet" href="header-style.css">
-    <script src="multiUsage.js" defer></script>
-
-    <title>History-Intensive Program</title>
+    <link rel="stylesheet" href="../HomePage.css">
+    <link rel="stylesheet" href="../footer-style.css">
+    <link rel="stylesheet" href="../header-style.css">
+    <script src="../multiUsage.js" defer></script>
     
+    <title>Science-Intensive Program</title>
+
     <style>
         .description-block {
             background-color: #f4f5fb; 
@@ -36,31 +37,32 @@
 <body>
     <headers></headers>
     <section style="margin-top:9%; height: vh;"></section>
-    <h1>&emsp;&ensp;Mastering History: Do Not Memorize, Feel History</h1>
+    <h1>&emsp;&ensp;Mastering Science: Our First Step To Become Little Scientists</h1>
     
     <div style="display:flex; flex-direction: row; margin-right:2.5%;margin-left:2.5%">
         <div style="width: 55%; height:400px;">
             <div class="description-block">
                 <p><strong>Detailed Description:</strong></p>
                 <ul>
-                    <li>History lessons well-organized in chronological order.</li><br>
-                    <li>Designed to make it easy for learners to get interested.</li><br>
+                    <li>Interested experiments and lessons</li><br>
+                    <li>Easy learning for theoretical formulas</li><br>
                     <li>Includes video lectures, interactive exercises, and quizzes</li><br>
-                    <li>Subtlety without missing the details.</li><br>
+                    <li>Personalized feedback from instructors</li><br>
                     <li>Access to exclusive live Q&A sessions</li><br>
                 </ul>
                 <p><strong>Price:</strong> RM 199 one-time purchase</p>
-                <button onclick="addToCart('Mastering History: Do Not Memorize, Feel History Through This Program', 199,'icon5.jpg')">Add to Cart</button>
+                <button onclick="addToCart('Mastering Science: Our First Step To Become Little Scientists', 199,'../images/icon1.jpg')">Add to Cart</button>
                 <p class="cart-feedback" id="cartFeedback">Added to Cart!</p>
             </div>
         </div>
-        <div style="width: 45%; height:400px;">
+        <div style="width: 45%; height:400px; ">
             <div class="box">
-                <img src="pic5.jpg" alt="Mastering Science Program Image" width="600" height="400">
+                <img src="../images/pic2.jpg" alt="Mastering Science Program Image" width="600" height="400">
             </div>
         </div>
     </div>
-    
+
+
     <script>
         function addToCart(productName, price, icon) {
             const cart = JSON.parse(localStorage.getItem('cart')) || [];
@@ -75,7 +77,6 @@
             }, 2000); 
         }
     </script>
-
     <section style="margin-bottom:35%; height: vh;"></section>
     <footers>
     </footers>
