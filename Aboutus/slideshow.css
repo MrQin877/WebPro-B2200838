@@ -1,6 +1,6 @@
 .slider {
     position: relative;
-    width: 70%;
+    width: 35%;
     
     margin: 0 auto;
     overflow: hidden;
@@ -63,4 +63,10 @@
  
 .arrow.right {
     right: 10px;
+}
+@media screen and (max-width:760px) {
+    .slider {
+        width: 80%;
+    }
+    
 }

@@ -1,11 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
     const programs = [
-        { title: 'Malay Language', description: 'Learn Malay language basics.', icon: 'icon3.jpg', page: 'Malpage.html' },
-        { title: 'English Language', description: 'Master English language skills.', icon: 'icon4.jpg', page: 'Engpage.html' },
-        { title: 'Mathematics', description: 'Explore various math concepts.', icon: 'icon2.jpg', page: 'Mathpage.html' },
-        { title: 'History', description: 'Study historical events and figures.', icon: 'icon5.jpg', page: 'Hispage.html' },
-        { title: 'Science', description: 'Learn about scientific principles.', icon: 'icon1.jpg', page: 'Sicpage.html' },
-        { title: 'All Subjects', description: 'Learn about our every programs.', icon: 'icon6.jpg', page: 'Allpage.html' }
+        { title: 'Malay Language', description: 'Learn Malay language basics.', icon: '../images/icon3.jpg', page: 'Malpage.html' },
+        { title: 'English Language', description: 'Master English language skills.', icon: '../images/icon4.jpg', page: 'Engpage.html' },
+        { title: 'Mathematics', description: 'Explore various math concepts.', icon: '../images/icon2.jpg', page: 'Mathpage.html' },
+        { title: 'History', description: 'Study historical events and figures.', icon: '../images/icon5.jpg', page: 'Hispage.html' },
+        { title: 'Science', description: 'Learn about scientific principles.', icon: '../images/icon1.jpg', page: 'Sicpage.html' },
+        { title: 'All Subjects', description: 'Learn about our every programs.', icon: '../images/icon6.jpg', page: 'Allpage.html' }
     ];
 
     const programList = document.getElementById('programList');

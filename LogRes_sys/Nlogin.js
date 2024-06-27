@@ -25,5 +25,5 @@ function showSuccessMessage(event, type) {
     successMessage.style.display = 'block';
 }
 function redirectToHomePage() {
-    window.location.href = 'HomePage.html';
+    window.location.href = '../HomePage.html';
 }
