@@ -8,6 +8,10 @@ body {
     background-image: linear-gradient(to bottom right, #576490, #7796CB, #5a7099);
 }
 
+section {
+    min-height: 100vh;
+}
+
 .Jack-large-word {
     font-weight: bold;
     color: #f4f5fb;
@@ -241,10 +245,11 @@ body {
     font-size: 200%;
 }
 
+
 @media screen and (max-width:760px) {
     .bgb {
     
-        background-image: url(backgroundhome.png);
+        background-image: url(images/backgroundhome.png);
         background-size:cover;
         background-repeat: no-repeat;
         background-position: bottom;

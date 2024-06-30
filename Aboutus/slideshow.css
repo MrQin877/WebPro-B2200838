@@ -12,7 +12,7 @@
     align-items: center;
 }
  
-.disease-slide {
+.teacher-slide {
     min-width: 90%;
     height: 500px;
     margin-left: 5%;
@@ -27,18 +27,18 @@
     box-shadow: 0 8px 7px rgba(0, 0, 0, 0.1);
 }
  
-.disease-slide img {
+.teacher-slide img {
     width: auto;
     height: 180px;
     border-radius: 10px;
 }
  
-.disease-slide h2 {
+.teacher-slide h2 {
     font-size: 40px;
     margin: 10px 0;
 }
  
-.disease-slide p {
+.teacher-slide p {
     font-size: 20px;
     color: black;
     margin: 0;
