@@ -1,0 +1,9 @@
+body, h1, h2, p, ul {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family:monospace;
+    background-image: linear-gradient(to bottom right, #576490, #7796CB, #5a7099);
+}
