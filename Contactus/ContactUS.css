@@ -119,6 +119,24 @@ section {
     margin-top: 500%;
 }
 
+.circle1 {
+    transition: all 1s;
+}
+
+.circle1:hover{
+    transform: scale(1.3) translateX(40%);
+    z-index: 5;
+}
+
+.circle2 {
+    transition: all 1s;
+}
+
+.circle2:hover{
+    transform: scale(1.3) translateX(-40%);
+    z-index: 5;
+}
+
 @media screen and (max-width:760px) {
 
     .Jack-large-word {

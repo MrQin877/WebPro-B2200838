@@ -1,7 +1,7 @@
 let currentSlide = 0;
 function showSlide(index) {
     const slides = document.querySelector('.slides');
-    const totalSlides = document.querySelectorAll('.disease-slide').length;
+    const totalSlides = document.querySelectorAll('.teacher-slide').length;
     if (index >= totalSlides) {
         currentSlide = 0;
     } else if (index < 0) {

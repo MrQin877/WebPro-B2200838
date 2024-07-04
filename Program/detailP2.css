@@ -1,11 +1,12 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    background-image: linear-gradient(to bottom right, #576490, #7796CB, #5a7099);
     margin: 0;
     padding: 0;
 }
 
 .container {
+    border-radius: 5px;
     max-width: 800px;
     margin: 0 auto;
     padding: 20px;
