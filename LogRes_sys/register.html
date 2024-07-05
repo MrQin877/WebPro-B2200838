@@ -12,18 +12,19 @@
 
 <body>
     <div class="wrapper">
-        <form id="registerForm" onsubmit="showSuccessMessage(event, 'register')">
+        <!-- 폼의 action 속성을 process_registration.php로 설정하여 데이터를 PHP 스크립트로 전송 -->
+        <form id="registerForm" action="process_registration.php" method="POST" onsubmit="showSuccessMessage(event, 'register')">
             <h1>Register</h1>
             <div class="input-box">
-                <input type="text" placeholder="Username" required>
+                <input type="text" name="username" placeholder="Username" required>
                 <i class="bx bxs-user"></i>
             </div>
             <div class="input-box">
-                <input type="email" placeholder="Email" required>
+                <input type="email" name="email" placeholder="Email" required>
                 <i class="bx bxs-envelope"></i>
             </div>
             <div class="input-box">
-                <input type="password" placeholder="Password" required>
+                <input type="password" name="password" placeholder="Password" required>
                 <i class="bx bxs-lock-alt"></i>
             </div>
             <div class="input-box">
@@ -31,19 +32,19 @@
                 <i class="bx bxs-lock-alt"></i>
             </div>
             <div class="input-box">
-                <input type="text" placeholder="Phone Number" required>
+                <input type="text" name="phoneNumber" placeholder="Phone Number" required>
                 <i class="bx bxs-phone"></i>
             </div>
             <div class="input-box">
-                <input type="date" placeholder="Birthdate" required>
+                <input type="date" name="birthdate" placeholder="Birthdate" required>
                 <i class="bx bxs-calendar"></i>
             </div>
             <div class="input-box gender-box">
-                <select required>
+                <select name="gender" required>
                     <option value="" disabled selected>Gender</option>
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
-                    <option value="other">Other</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
                 </select>
                 <i class="bx bxs-chevron-down"></i>
             </div>
@@ -55,7 +56,7 @@
             <p id="successMessage" class="success-message"></p>
         </form>
     </div>
-    <script src="registration.php"></script>
+    <script src="Nlogin.js"></script>
 </body>
 
 </html>
