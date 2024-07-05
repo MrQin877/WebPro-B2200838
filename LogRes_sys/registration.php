@@ -16,17 +16,17 @@ if ($conn->connect_error) {
 
 // 회원가입 테이블이 존재하지 않으면 생성
 $sql = "CREATE TABLE IF NOT EXISTS user_registration (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(50) NOT NULL,
-    email VARCHAR(255) NOT NULL,
-    password VARCHAR(255) NOT NULL,
-    phone_number VARCHAR(15),
-    birthdate DATE,
-    gender ENUM('Male', 'Female', 'Other')
+    UserID INT(100) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    Username VARCHAR(100) NOT NULL,
+    Email VARCHAR(255) NOT NULL,
+    Password VARCHAR(100) NOT NULL,
+    PhoneNumber INT(100) NOT NULL,
+    Birth DATE NOT NULL,
+    Gender VARCHAR(10) NOT NULL
 )";
 
 if ($conn->query($sql) === TRUE) {
-    echo "Table 'sign_up' created successfully";
+    echo "Table 'user_registration' created successfully";
 } else {
     echo "Error creating table: " . $conn->error;
 }
@@ -36,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
     $password = $_POST['password'];
     $phoneNumber = $_POST['phoneNumber'];
-    $birthdate = $_POST['birthdate'];
+    $birth = $_POST['birthdate'];
     $gender = $_POST['gender'];
 
     // 입력값 유효성 검사
@@ -47,8 +47,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
         // 삽입문 준비
-        $stmt = $conn->prepare("INSERT INTO sign_up (username, email, password, phone_number, birthdate, gender) VALUES (?,?,?,?,?,?)");
-        $stmt->bind_param("ssssss", $username, $email, $hashedPassword, $phoneNumber, $birthdate, $gender);
+        $stmt = $conn->prepare("INSERT INTO user_registration (Username, Email, Password, PhoneNumber, Birth, Gender) VALUES (?,?,?,?,?,?)");
+        $stmt->bind_param("ssssss", $username, $email, $hashedPassword, $phoneNumber, $birth, $gender);
 
         if ($stmt->execute()) {
             echo "Registration successful.";
