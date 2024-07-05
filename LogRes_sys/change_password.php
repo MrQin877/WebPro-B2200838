@@ -33,14 +33,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo "New passwords do not match.";
     } else {
         $user_id = $_SESSION['user_id'];
-        $sql = "SELECT password FROM users WHERE id = '$user_id'";
+        $sql = "SELECT password FROM user_registration WHERE id = '$user_id'";
         $result = $conn->query($sql);
         
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
             if (password_verify($current_password, $row['password'])) {
                 $new_password_hashed = password_hash($new_password, PASSWORD_DEFAULT);
-                $sql = "UPDATE users SET password = '$new_password_hashed' WHERE id = '$user_id'";
+                $sql = "UPDATE user_registration SET password = '$new_password_hashed' WHERE id = '$user_id'";
                 
                 if ($conn->query($sql) === TRUE) {
                     echo "Password updated successfully.";
