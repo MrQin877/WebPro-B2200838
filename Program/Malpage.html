@@ -50,9 +50,9 @@
                     <li>Access to exclusive live Q&A sessions</li><br>
                 </ul>
                 <p><strong>Price:</strong> RM 199 one-time purchase</p>
-                <button onclick="addToCart('Mastering Malay Language: Growing Your Conversational Levels With Us', 199,'../images/icon3.jpg')">Add to Cart</button>
+                <button onclick="addToCart('1001','Mastering Malay Language: Growing Your Conversational Levels With Us', 199,'../images/icon3.jpg')">Add to Cart</button>
                 <p class="cart-feedback" id="cartFeedback">Added to Cart!</p>
-                
+                <p class="cart-feedback" id="cartExistsFeedback" style="color: red;">Already in Cart!</p>
             </div>
         </div>
         <div style="width: 45%; height:400px;">
@@ -62,12 +62,21 @@
         </div>
     </div>
 
-
-
     <script>
-        function addToCart(productName, price, icon) {
+        function addToCart(programId, productName, price, icon) {
             const cart = JSON.parse(localStorage.getItem('cart')) || [];
-            const product = { name: productName, price: price, icon: icon, quantity: 1 };
+            const product = { id: programId, name: productName, price: price, icon: icon, quantity: 1 };
+
+            const productExists = cart.some(item => item.id === programId);
+            if (productExists) {
+                var existsFeedback = document.getElementById('cartExistsFeedback');
+                existsFeedback.style.display = 'block'; 
+                setTimeout(function() {
+                    existsFeedback.style.display = 'none'; 
+                }, 2000); 
+                return; // Do not add the product again
+            }
+
             cart.push(product);
             localStorage.setItem('cart', JSON.stringify(cart));
 
