@@ -80,10 +80,10 @@
                                     <div><p>${product.name}</p></div>
                                 </div>`;
                 cell2.innerHTML = `<a href="#" onclick="removeFromCart(${index})"><i class="fas fa-trash-alt bin-icon"></i></a>`;
-                cell3.innerHTML = `<input type="number" value="${product.quantity}" min="1" onchange="updateQuantity(${index}, this.value)">`;
-                cell4.innerHTML = `RM${(product.price * product.quantity).toFixed(2)}`;
+                cell3.innerHTML = `1`; // Static quantity of 1
+                cell4.innerHTML = `RM${product.price.toFixed(2)}`; // Subtotal remains the same as the price
 
-                totalPrice += product.price * product.quantity;
+                totalPrice += product.price; // Since quantity is always 1, no multiplication needed
             });
 
             document.getElementById('totalPrice').innerText = `RM${totalPrice.toFixed(2)}`;
@@ -92,13 +92,6 @@
         function removeFromCart(index) {
             const cart = JSON.parse(localStorage.getItem('cart')) || [];
             cart.splice(index, 1);
-            localStorage.setItem('cart', JSON.stringify(cart));
-            location.reload();
-        }
-
-        function updateQuantity(index, quantity) {
-            const cart = JSON.parse(localStorage.getItem('cart')) || [];
-            cart[index].quantity = quantity;
             localStorage.setItem('cart', JSON.stringify(cart));
             location.reload();
         }
