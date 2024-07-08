@@ -33,11 +33,7 @@ if ($_SERVER["REQUEST_METHOD"]=="POST") {
 
     if ($stmt->num_rows > 0) {
         // Email already exists
-<<<<<<< Updated upstream
         echo "<script>alert('The Email is already registered.'); window.location.href = 'register.html';</script>";
-=======
-        echo "The Email is already registered.";
->>>>>>> Stashed changes
     } else {
         // Hash the password
         $hashedPassword = password_hash($Password, PASSWORD_DEFAULT);
@@ -47,13 +43,7 @@ if ($_SERVER["REQUEST_METHOD"]=="POST") {
         $stmt->bind_param("ssssss", $Username, $Email, $hashedPassword, $PhoneNumber, $Birth, $Gender);
 
         if ($stmt->execute()) {
-<<<<<<< Updated upstream
             echo "<script>alert('Registration successful.'); window.location.href = 'Nlogin.html';</script>";
-=======
-            echo "<script>alert('Register successful.');</script>";
-            header("Location: Nlogin.html");
-
->>>>>>> Stashed changes
         } else {
             echo "Error: " . $stmt->error;
         }
