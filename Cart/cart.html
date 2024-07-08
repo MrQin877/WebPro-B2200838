@@ -45,6 +45,24 @@
 
     <footers></footers>
     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if user is logged in
+            fetch('../LogRes_sys/check_session.php')
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Session check response:', data);
+                    if (data.loggedIn) {
+                        loadCart();
+                    } else {
+                        alert('Please login first.');
+                        window.location.href = '../LogRes_sys/Nlogin.html'; // Redirect to login page if not logged in
+                    }
+                })
+                .catch(error => {
+                    console.error('Error checking session:', error);
+                });
+        });
+
         function loadCart() {
             const cart = JSON.parse(localStorage.getItem('cart')) || [];
             const cartTable = document.getElementById('cartTable');
@@ -86,13 +104,25 @@
         }
 
         document.getElementById('checkoutButton').addEventListener('click', function() {
-        const totalPrice = document.getElementById('totalPrice').innerText.replace('RM', '');
-        localStorage.setItem('totalAmount', totalPrice);
-        window.location.href = 'payment.html'; // Redirect to the payment page
+            console.log('Checkout button clicked');
+            // Check if user is logged in before proceeding to payment
+            fetch('../LogRes_sys/check_session.php')
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Session check response on checkout:', data);
+                    if (data.loggedIn) {
+                        const totalPrice = document.getElementById('totalPrice').innerText.replace('RM', '');
+                        localStorage.setItem('totalAmount', totalPrice);
+                        window.location.href = 'payment.html'; // Redirect to the payment page
+                    } else {
+                        alert('Please login first.');
+                        window.location.href = '../LogRes_sys/Nlogin.html'; // Redirect to login page if not logged in
+                    }
+                })
+                .catch(error => {
+                    console.error('Error checking session on checkout:', error);
+                });
         });
-
-
-        window.onload = loadCart;
     </script>
 </body>
 </html>
