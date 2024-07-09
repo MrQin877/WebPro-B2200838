@@ -1,69 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        <!-- 페이지 제목 설정 -->
         <title>Program Detail Page</title>
+        
+        <!-- 커스텀 폰트 로드 -->
         <script type="text/javascript" src="https://db.onlinewebfonts.com/s/71976204cf6d53991ececd406824ec45?family=Jack+Armstrong+BB"></script>
+        
+        <!-- Bootstrap CSS 로드 -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        
+        <!-- 외부 CSS 파일 로드 -->
         <link rel="stylesheet" href="detailP2.css">
-        <link rel="stylesheet" href="../Animation.css">
         <link rel="stylesheet" href="../footer-style.css">
         <link rel="stylesheet" href="../header-style.css">
+        
+        <!-- 외부 JavaScript 파일 로드 (defer 속성으로 문서 로드 후 실행) -->
         <script src="../multiUsage.js" defer></script>
     </head>
-</html>
 <body>
+    <!-- 헤더를 삽입할 위치 -->
     <headers></headers>
 
-
-    <div class="container" style="margin-bottom: 10%;" >
+    <div class="container" style="margin-bottom: 10%;">
         <section class="align-center" style="margin-top: 9%;">
             <h1>Program List</h1>
             <div class="search-bar">
-                <input type="text" id="searchInput" placeholder="Search programs..." oninput="filterPrograms()" onclick="showAllSuggestions()">
-                <div id="suggestions"></div>
+                <!-- 검색 입력 필드. 입력 값이 변경될 때마다 filterSuggestions 함수 호출 -->
+                <input type="text" id="searchInput" placeholder="Search programs..." oninput="filterSuggestions()" onclick="showAllSuggestions()">
+                <div id="suggestions"></div> <!-- 검색 제안 표시할 div -->
             </div>
-        </secion>
+        </section>
         <main id="programList" class="program-grid">
-            
+            <!-- 프로그램 목록이 동적으로 추가될 위치 -->
         </main>
     </div>
 
+    <!-- detailP3.js 파일 로드 -->
     <script src="detailP3.js"></script>
     <script>
-        const programs = [
-            { title: 'Malay Language', description: 'Learn Malay language basics.', icon: '../images/icon3.jpg', page: 'Malpage.html' },
-            { title: 'English Language', description: 'Master English language skills.', icon: '../images/icon4.jpg', page: 'Engpage.html' },
-            { title: 'Mathematics', description: 'Explore various math concepts.', icon: '../images/icon2.jpg', page: 'Mathpage.html' },
-            { title: 'History', description: 'Study historical events and figures.', icon: '../images/icon5.jpg', page: 'Hispage.html' },
-            { title: 'Science', description: 'Learn about scientific principles.', icon: '../images/icon1.jpg', page: 'Scipage.html' },
-            { title: 'All Subjects', description: 'Learn about all our programs.', icon: '../images/icon6.jpg', page: 'Allpage.html' }
-        ];
-
-
-        function displayPrograms(list) {
-            const programList = document.getElementById('programList');
-            programList.innerHTML = '';
-            list.forEach(program => {
-                const programDiv = document.createElement('div');
-                programDiv.className = 'program-item';
-                programDiv.innerHTML = <a href="${program.url}">${program.name}</a>;
-                programDiv.addEventListener('click', () => {
-                    // 클릭 시 프로그램 세부 페이지로 이동
-                    window.location.href = program.url;
-                });
-                programList.appendChild(programDiv);
-            });
-        }
-
-        function filterPrograms() {
-            const searchInput = document.getElementById('searchInput').value.toLowerCase();
-            const filteredPrograms = programs.filter(program => program.name.toLowerCase().includes(searchInput));
-            displayPrograms(filteredPrograms);
-        }
-
-
+        // 프로그램 상세 페이지로 이동하는 함수
         function showProgramDetails() {
-            
             window.location.href = 'Engpage.html';
             window.location.href = 'Malpage.html';
             window.location.href = 'Mathpage.html';
@@ -73,11 +50,11 @@
         }
     </script>
 
-
+    <!-- 푸터를 삽입할 위치 -->
     <footers></footers>
+
+    <!-- Ionicons 아이콘 모듈 로드 -->
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-    
-
 </body>
 </html>
