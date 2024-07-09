@@ -16,6 +16,10 @@ header {
     z-index: 1000; /* Ensure it stays on top of other content */
 }
 
+.hidden{
+    display: none;
+}
+
 .logo {
     position: relative;
     width: 175px;
@@ -140,9 +144,7 @@ nav .accountOption:hover .dropmenu {
     color: white;
 }
 
-.hidden {
-    display: none;
-}
+
 @media screen and (max-width: 760px) {
     nav div {
         font-family: "Jack Armstrong BB";

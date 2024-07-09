@@ -1,42 +1,21 @@
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        // Function to check if the user is logged in
-        function checkLoginStatus() {
-            fetch('check_login_status.php')
-                .then(response => response.json())
-                .then(data => {
-                    const loginLink = document.getElementById('login');
-                    const profileLink = document.getElementById('profile');
-                    const logoutLink = document.getElementById('logout');
-
-                    if (data.is_logged_in) {
-                        loginLink.style.display = 'none';
-                        profileLink.style.display = 'block';
-                        logoutLink.style.display = 'block';
-                    } else {
-                        loginLink.style.display = 'block';
-                        profileLink.style.display = 'none';
-                        logoutLink.style.display = 'none';
-                    }
-                })
-                .catch(error => console.error('Error checking login status:', error));
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="display_logout.js" type="text/javascript" defer></script>
+    <style>
+        .hidden {
+            display: none;
         }
+    </style>
+    <title>Login Status</title>
+</head>
+<body>
+    <a href="../LogRes_sys/Nlogin.html" id="login">Login</a>
+    <a href="../UserProfile/profile.html" id="profile" class="hidden">Profile</a>
+    <a href="../logout.php" id="logout" class="hidden">Logout</a>
 
-        // Attach logout function to logout link
-        document.getElementById('logout').addEventListener('click', function (event) {
-            event.preventDefault(); // Prevent default link behavior
+</body>
+</html>
 
-            fetch('logout.php')
-                .then(response => {
-                    if (response.ok) {
-                        // After logout, check the login status again to update UI
-                        checkLoginStatus();
-                    }
-                })
-                .catch(error => console.error('Error logging out:', error));
-        });
-
-        // Call the function to set the initial state of login/logout links
-        checkLoginStatus();
-    });
-</script>
