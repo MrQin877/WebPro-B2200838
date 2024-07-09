@@ -18,9 +18,6 @@ if ($conn->connect_error) {
 // Get the input data
 $data = json_decode(file_get_contents('php://input'), true);
 
-// Log the input data for debugging
-file_put_contents('log.txt', "Input Data: " . print_r($data, true) . "\n", FILE_APPEND);
-
 if (isset($data['user_id'], $data['cart'], $data['payment_id'], $data['amount'])) {
     $user_id = $data['user_id'];
     $cart = $data['cart'];
