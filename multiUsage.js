@@ -29,23 +29,15 @@ function updateDisplay(loggedIn) {
     var loginElement = document.getElementById('login');
     var profileElement = document.getElementById('profile');
     var logoutElement = document.getElementById('logout');
-    var login1Element = document.getElementById('login1');
-    var profile1Element = document.getElementById('profile1');
-    var logout1Element = document.getElementById('logout1');
 
     if (loggedIn) {
         loginElement.classList.add('hidden');
         profileElement.classList.remove('hidden');
         logoutElement.classList.remove('hidden');
-        login1Element.classList.add('hidden');
-        profile1Element.classList.remove('hidden');
-        logout1Element.classList.remove('hidden');
     } else {
         loginElement.classList.remove('hidden');
         profileElement.classList.add('hidden');
         logoutElement.classList.add('hidden');
-        login1Element.classList.remove('hidden');
-        profile1Element.classList.add('hidden');
-        logout1Element.classList.add('hidden');
+
     }
 }
