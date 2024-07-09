@@ -26,14 +26,14 @@ $stmt->execute();
 $user_result = $stmt->get_result();
 $user_info = $user_result->fetch_assoc();
 
-$courses_query = "SELECT course_name FROM purchased_courses WHERE user_id = ?";
+$courses_query = "SELECT pr.Program_Name FROM user_program urpr JOIN program pr ON pr.Program_id = urpr.program_id WHERE urpr.user_ID = ?";
 $stmt = $conn->prepare($courses_query);
 $stmt->bind_param("i", $user_id);
 $stmt->execute();
 $courses_result = $stmt->get_result();
 $purchased_courses = [];
-while ($row = $courses_result->fetch_assoc()) {
-    $purchased_courses[] = $row['course_name'];
+while ($row = $courses_result->fetch_assoc()) { //Fetching courses
+    $purchased_courses[] = $row['Program_Name'];
 }
 
 $response = [

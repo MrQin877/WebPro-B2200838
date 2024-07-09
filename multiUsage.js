@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", function() {
         .then(data => {
             document.querySelector("footers").innerHTML = data;
         });
-});
+}); 
 
 // Function to update the display based on login status
 function updateDisplay(loggedIn) {
