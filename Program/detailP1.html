@@ -18,7 +18,7 @@
         <section class="align-center" style="margin-top: 9%;">
             <h1>Program List</h1>
             <div class="search-bar">
-                <input type="text" id="searchInput" placeholder="Search programs..." oninput="filterSuggestions()" onclick="showAllSuggestions()">
+                <input type="text" id="searchInput" placeholder="Search programs..." oninput="filterPrograms()" onclick="showAllSuggestions()">
                 <div id="suggestions"></div>
             </div>
         </secion>
@@ -27,12 +27,40 @@
         </main>
     </div>
 
-
-
-
     <script src="detailP3.js"></script>
     <script>
-        
+        const programs = [
+            { title: 'Malay Language', description: 'Learn Malay language basics.', icon: '../images/icon3.jpg', page: 'Malpage.html' },
+            { title: 'English Language', description: 'Master English language skills.', icon: '../images/icon4.jpg', page: 'Engpage.html' },
+            { title: 'Mathematics', description: 'Explore various math concepts.', icon: '../images/icon2.jpg', page: 'Mathpage.html' },
+            { title: 'History', description: 'Study historical events and figures.', icon: '../images/icon5.jpg', page: 'Hispage.html' },
+            { title: 'Science', description: 'Learn about scientific principles.', icon: '../images/icon1.jpg', page: 'Scipage.html' },
+            { title: 'All Subjects', description: 'Learn about all our programs.', icon: '../images/icon6.jpg', page: 'Allpage.html' }
+        ];
+
+
+        function displayPrograms(list) {
+            const programList = document.getElementById('programList');
+            programList.innerHTML = '';
+            list.forEach(program => {
+                const programDiv = document.createElement('div');
+                programDiv.className = 'program-item';
+                programDiv.innerHTML = <a href="${program.url}">${program.name}</a>;
+                programDiv.addEventListener('click', () => {
+                    // 클릭 시 프로그램 세부 페이지로 이동
+                    window.location.href = program.url;
+                });
+                programList.appendChild(programDiv);
+            });
+        }
+
+        function filterPrograms() {
+            const searchInput = document.getElementById('searchInput').value.toLowerCase();
+            const filteredPrograms = programs.filter(program => program.name.toLowerCase().includes(searchInput));
+            displayPrograms(filteredPrograms);
+        }
+
+
         function showProgramDetails() {
             
             window.location.href = 'Engpage.html';
@@ -51,3 +79,4 @@
     
 
 </body>
+</html>
