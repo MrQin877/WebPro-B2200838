@@ -17,15 +17,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $Username = $_POST['Username'];
     $Email = $_POST['Email'];
     $Password = $_POST['Password'];
-    $ConfirmPassword = $_POST['ConfirmPassword'];
     $PhoneNumber = $_POST['PhoneNumber'];
     $Birth = $_POST['Birth'];
     $Gender = $_POST['Gender'];
 
-    if (empty($Username) || empty($Email) || empty($Password) || empty($ConfirmPassword) || empty($PhoneNumber) || empty($Birth) || empty($Gender)) {
+    if (empty($Username) || empty($Email) || empty($Password) || empty($PhoneNumber) || empty($Birth) || empty($Gender)) {
         echo "All fields are required.";
-    } elseif ($Password !== $ConfirmPassword) {
-        echo "<script>alert('Passwords do not match. Please try again.'); window.location.href = 'register.html';</script>";
     } else {
         // Prepare SQL statement to check if email already exists
         $stmt = $conn->prepare("SELECT UserID FROM user_registration WHERE Email = ?");
