@@ -9,7 +9,7 @@ $dbname = "user";
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-if($conn->connect_error) {
+if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "<script>alert('Passwords do not match. Please try again.'); window.location.href = 'register.html';</script>";
     } else {
         // Prepare SQL statement to check if email already exists
-        $stmt = $conn->prepare("SELECT UserID, Email FROM user_registration WHERE Email = ?");
+        $stmt = $conn->prepare("SELECT UserID FROM user_registration WHERE Email = ?");
         $stmt->bind_param("s", $Email);
         $stmt->execute();
         $stmt->store_result();
