@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", function() {
-    // Load the headers
     fetch("proname.php")
         .then(response => response.json())
         .then(data => {
