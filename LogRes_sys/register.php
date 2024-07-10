@@ -1,9 +1,9 @@
 <?php
-//process_registration.php
+// register.php
 
-$servername ="localhost";
+$servername = "localhost";
 $username = "root";
-$password ="";
+$password = "";
 $dbname = "user";
 
 // Create connection
@@ -13,7 +13,7 @@ if($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-if ($_SERVER["REQUEST_METHOD"]=="POST") {
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $Username = $_POST['Username'];
     $Email = $_POST['Email'];
     $Password = $_POST['Password'];
@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"]=="POST") {
     } elseif ($Password !== $ConfirmPassword) {
         echo "<script>alert('Passwords do not match. Please try again.'); window.location.href = 'register.html';</script>";
     } else {
-        // Prepare sql statement to check if email already exists
+        // Prepare SQL statement to check if email already exists
         $stmt = $conn->prepare("SELECT UserID, Email FROM user_registration WHERE Email = ?");
         $stmt->bind_param("s", $Email);
         $stmt->execute();
@@ -35,7 +35,7 @@ if ($_SERVER["REQUEST_METHOD"]=="POST") {
 
         if ($stmt->num_rows > 0) {
             // Email already exists
-            echo "<script>alert('The Email is already registered.'); window.location.href = 'register.html';</script>";
+            echo "<script>alert('The Email is already registered. Please use a different email.'); window.location.href = 'register.html';</script>";
         } else {
             // Hash the password
             $hashedPassword = password_hash($Password, PASSWORD_DEFAULT);
