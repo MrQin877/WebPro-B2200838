@@ -1,5 +1,4 @@
 <?php
-// process_registration.php
 
 // PHPMailer 클래스 사용
 use PHPMailer\PHPMailer\PHPMailer;
@@ -55,6 +54,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->bind_param("ssssss", $Username, $Email, $hashedPassword, $PhoneNumber, $Birth, $Gender);
 
             if ($stmt->execute()) {
+                // 새로 삽입된 사용자 정보 가져오기
+                $userId = $stmt->insert_id;
+                $stmt->close();
+
+                $stmt = $conn->prepare("SELECT Email FROM user_registration WHERE UserID = ?");
+                $stmt->bind_param("i", $userId);
+                $stmt->execute();
+                $stmt->bind_result($userEmail);
+                $stmt->fetch();
+                $stmt->close();
+
                 // 회원가입 축하 이메일 발송
                 $mail = new PHPMailer(true);
                 try {
@@ -69,7 +79,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                     // 수신자 설정
                     $mail->setFrom('your-email@example.com', 'Your Name');
-                    $mail->addAddress($Email, $Username);
+                    $mail->addAddress($userEmail, $Username);
 
                     // 이메일 내용 설정
                     $mail->isHTML(true);
