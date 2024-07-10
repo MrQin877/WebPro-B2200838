@@ -6,45 +6,56 @@ $username = "root";
 $password = "";
 $dbname = "user";
 
-// Create connection
+// 데이터베이스 연결 생성
 $conn = new mysqli($servername, $username, $password, $dbname);
 
+// 연결 실패 시 오류 메시지 출력 후 종료
 if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+    die("연결 실패: " . $conn->connect_error);
 }
 
+// POST 메서드로 요청이 온 경우에만 처리
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $Username = $_POST['Username'];
     $Email = $_POST['Email'];
     $Password = $_POST['Password'];
+    $ConfirmPassword = $_POST['ConfirmPassword']; // 비밀번호 확인 필드 추가
     $PhoneNumber = $_POST['PhoneNumber'];
     $Birth = $_POST['Birth'];
     $Gender = $_POST['Gender'];
 
+    // 비밀번호와 비밀번호 확인 필드 비교
+    if ($Password !== $ConfirmPassword) {
+        echo "<script>alert('비밀번호가 일치하지 않습니다. 다시 입력해주세요.'); window.location.href = 'register.html';</script>";
+        exit; // 처리 중지
+    }
+
+    // 필수 입력 필드 확인
     if (empty($Username) || empty($Email) || empty($Password) || empty($PhoneNumber) || empty($Birth) || empty($Gender)) {
-        echo "All fields are required.";
+        echo "모든 필드를 입력해주세요.";
     } else {
-        // Prepare SQL statement to check if email already exists
+        // 이메일 중복 확인을 위한 SQL 문 준비
         $stmt = $conn->prepare("SELECT UserID FROM user_registration WHERE Email = ?");
         $stmt->bind_param("s", $Email);
         $stmt->execute();
         $stmt->store_result();
 
+        // 이미 등록된 이메일인 경우
         if ($stmt->num_rows > 0) {
-            // Email already exists
-            echo "<script>alert('The Email is already registered. Please use a different email.'); window.location.href = 'register.html';</script>";
+            echo "<script>alert('이미 등록된 이메일입니다. 다른 이메일을 사용해주세요.'); window.location.href = 'register.html';</script>";
         } else {
-            // Hash the password
+            // 비밀번호 해싱
             $hashedPassword = password_hash($Password, PASSWORD_DEFAULT);
 
-            // Prepare an insert statement
+            // 회원 등록을 위한 SQL 문 준비
             $stmt = $conn->prepare("INSERT INTO user_registration (Username, Email, Password, PhoneNumber, Birth, Gender) VALUES (?, ?, ?, ?, ?, ?)");
             $stmt->bind_param("ssssss", $Username, $Email, $hashedPassword, $PhoneNumber, $Birth, $Gender);
 
+            // 실행 여부에 따라 메시지 출력
             if ($stmt->execute()) {
-                echo "<script>alert('Registration successful.'); window.location.href = 'Nlogin.html';</script>";
+                echo "<script>alert('회원 가입이 완료되었습니다.'); window.location.href = 'Nlogin.html';</script>";
             } else {
-                echo "Error: " . $stmt->error;
+                echo "오류: " . $stmt->error;
             }
         }
 
@@ -52,5 +63,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
+// 데이터베이스 연결 종료
 $conn->close();
 ?>
