@@ -13,11 +13,11 @@ $(document).ready(function () {
                 $('#birthdayInput').val(data.birthday);
                 $('#phoneInput').val(data.phone);
 
-                var coursesList = $('#coursesList');
-                coursesList.empty();
-                data.courses.forEach(function (course) {
-                    var listItem = '<li class="list-group-item">' + course + '</li>';
-                    coursesList.append(listItem);
+                    var coursesList = $('#coursesList');
+                    coursesList.empty();
+                    data.courses.forEach(function (course) {
+                        var listItem = '<li class="list-group-item">' + course + '</li>';
+                        coursesList.append(listItem);
                 }); 
 
                 if (!data.emailConfirmed) {
