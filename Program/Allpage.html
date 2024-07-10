@@ -46,9 +46,10 @@
                     <li>Do Not Miss Out This Chance!</li>
                 </ul>
                 <p><strong>Price:</strong> RM 599 one-time purchase</p> 
-                <button onclick="addAllSubjectsToCart()">Add to Cart</button>
+                <button id="addToCartBtn" onclick="addAllSubjectsToCart()">Add to Cart</button>
                 <p class="cart-feedback" id="cartFeedback">Added to Cart!</p>
                 <p class="cart-feedback" id="cartExistsFeedback" style="color: red;">Already in Cart!</p>
+                <p class="cart-feedback" id="alreadyEnrolledFeedback" style="color: #576490;">You have already enrolled in a program within this package!</p>
             </div>
         </div>
         <div style="width: 45%; height:400px;">
@@ -59,6 +60,24 @@
     </div>
 
     <script>
+        function checkEnrollment(userId) {
+            const packageId = 'all-subject-package';
+            fetch('check_enrollment.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ user_id: userId, program_id: packageId })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.enrolled) {
+                    document.getElementById('alreadyEnrolledFeedback').style.display = 'block';
+                    document.getElementById('addToCartBtn').disabled = true;
+                }
+            });
+        }
+
         function addAllSubjectsToCart() {
             const cart = JSON.parse(localStorage.getItem('cart')) || [];
             const allSubjects = [
@@ -88,6 +107,16 @@
                 feedback.style.display = 'none'; 
             }, 2000); 
         }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('../LogRes_sys/check_session.php')
+            .then(response => response.json())
+            .then(data => {
+                if (data.loggedIn) {
+                    checkEnrollment(data.user_id);
+                }
+            });
+        });
     </script>
     <section style="margin-bottom:10%; height: vh;"></section>
     <footers></footers>
