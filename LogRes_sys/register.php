@@ -3,8 +3,10 @@
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-// Composer autoload 포함
-require 'vendor/autoload.php'; // Composer autoload
+// PHPMailer 클래스 파일 직접 포함
+require 'PHPMailer/src/Exception.php';
+require 'PHPMailer/src/PHPMailer.php';
+require 'PHPMailer/src/SMTP.php';
 
 $servername = "localhost";
 $username = "root";
