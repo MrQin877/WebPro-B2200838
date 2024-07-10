@@ -26,13 +26,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // 비밀번호와 비밀번호 확인 필드 비교
     if ($Password !== $ConfirmPassword) {
-        echo "<script>alert('비밀번호가 일치하지 않습니다. 다시 입력해주세요.'); window.location.href = 'register.html';</script>";
+        echo "<script>alert('Password does not match with Confirm Password, please re-enter.'); window.location.href = 'register.html';</script>";
         exit; // 처리 중지
     }
 
     // 필수 입력 필드 확인
     if (empty($Username) || empty($Email) || empty($Password) || empty($PhoneNumber) || empty($Birth) || empty($Gender)) {
-        echo "모든 필드를 입력해주세요.";
+        echo "Please enter all fields.";
     } else {
         // 이메일 중복 확인을 위한 SQL 문 준비
         $stmt = $conn->prepare("SELECT UserID FROM user_registration WHERE Email = ?");
@@ -42,7 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // 이미 등록된 이메일인 경우
         if ($stmt->num_rows > 0) {
-            echo "<script>alert('이미 등록된 이메일입니다. 다른 이메일을 사용해주세요.'); window.location.href = 'register.html';</script>";
+            echo "<script>alert('This email is already registered, please use another email.'); window.location.href = 'register.html';</script>";
         } else {
             // 비밀번호 해싱
             $hashedPassword = password_hash($Password, PASSWORD_DEFAULT);
@@ -53,7 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             // 실행 여부에 따라 메시지 출력
             if ($stmt->execute()) {
-                echo "<script>alert('회원 가입이 완료되었습니다.'); window.location.href = 'Nlogin.html';</script>";
+                echo "<script>alert('Your registration has been registered.'); window.location.href = 'Nlogin.html';</script>";
             } else {
                 echo "오류: " . $stmt->error;
             }
