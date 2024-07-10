@@ -1,71 +1,89 @@
 <?php
-// register.php
+// PHPMailer 클래스 사용
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+// PHPMailer 라이브러리 포함
+require 'vendor/autoload.php'; // Composer autoload
 
 $servername = "localhost";
 $username = "root";
 $password = "";
 $dbname = "user";
 
-// Database connection
+// 데이터베이스 연결
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-// Show error message and exit if connection fails
+// 연결 오류 시 오류 메시지 출력 후 종료
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Process only if request method is POST
+// 요청 메서드가 POST인 경우만 처리
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $Username = $_POST['Username'];
     $Email = $_POST['Email'];
     $Password = $_POST['Password'];
-    $ConfirmPassword = $_POST['ConfirmPassword']; // Add Confirm Password field
+    $ConfirmPassword = $_POST['ConfirmPassword']; // Confirm Password 필드 추가
     $PhoneNumber = $_POST['PhoneNumber'];
     $Birth = $_POST['Birth'];
     $Gender = $_POST['Gender'];
 
-    // Check if Password and Confirm Password match
+    // 비밀번호와 확인 비밀번호가 일치하는지 확인
     if ($Password !== $ConfirmPassword) {
         echo "<script>alert('Passwords do not match. Please re-enter.'); window.location.href = 'register.html';</script>";
-        exit; // Stop further execution
+        exit; // 이후 실행 중지
     }
 
-    // Check for empty required fields
+    // 필수 필드가 비어 있는지 확인
     if (empty($Username) || empty($Email) || empty($Password) || empty($PhoneNumber) || empty($Birth) || empty($Gender)) {
         echo "Please fill out all fields.";
     } else {
-        // Prepare SQL statement to check if email already exists
+        // 이메일이 이미 존재하는지 확인하는 SQL 문 준비
         $stmt = $conn->prepare("SELECT UserID FROM user_registration WHERE Email = ?");
         $stmt->bind_param("s", $Email);
         $stmt->execute();
         $stmt->store_result();
 
-        // If email already exists
+        // 이메일이 이미 존재하는 경우
         if ($stmt->num_rows > 0) {
             echo "<script>alert('The Email is already registered. Please use a different email.'); window.location.href = 'register.html';</script>";
         } else {
-            // Hash the password
+            // 비밀번호 해싱
             $hashedPassword = password_hash($Password, PASSWORD_DEFAULT);
 
-            // Prepare an insert statement
+            // 삽입 문 준비
             $stmt = $conn->prepare("INSERT INTO user_registration (Username, Email, Password, PhoneNumber, Birth, Gender) VALUES (?, ?, ?, ?, ?, ?)");
             $stmt->bind_param("ssssss", $Username, $Email, $hashedPassword, $PhoneNumber, $Birth, $Gender);
 
-            // If insertion is successful
+            // 삽입이 성공한 경우
             if ($stmt->execute()) {
-                // Send congratulatory email on successful registration
-                $to = $Email;
-                $subject = 'Registration Successful';
-                $message = "Congratulations! You have successfully registered.";
-                $headers = 'From: your-email@example.com' . "\r\n" .
-                    'Reply-To: your-email@example.com' . "\r\n" .
-                    'X-Mailer: PHP/' . phpversion();
+                // PHPMailer 객체 생성 및 초기 설정
+                $mail = new PHPMailer(true);
+                try {
+                    // 서버 설정
+                    $mail->isSMTP();
+                    $mail->Host = 'smtp.gmail.com'; // SMTP 서버 주소
+                    $mail->SMTPAuth = true;
+                    $mail->Username = 'kkjhhyu0405@gmail.com'; // SMTP 사용자명
+                    $mail->Password = ''; // SMTP 비밀번호
+                    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+                    $mail->Port = 587;
 
-                // Send email using PHP mail function
-                if (mail($to, $subject, $message, $headers)) {
+                    // 수신자 설정
+                    $mail->setFrom('your-email@example.com', 'Your Name');
+                    $mail->addAddress($Email, $Username);
+
+                    // 이메일 내용 설정
+                    $mail->isHTML(true);
+                    $mail->Subject = 'Registration Successful';
+                    $mail->Body = '<p>Dear ' . $Username . ',</p><p>Congratulations! You have successfully registered.</p><p>Best regards,<br>Your Company</p>';
+
+                    // 이메일 전송
+                    $mail->send();
                     echo "<script>alert('Registration successful! A congratulatory email has been sent to your registered email.'); window.location.href = 'Nlogin.html';</script>";
-                } else {
-                    echo "<script>alert('Registration successful! However, we were unable to send a congratulatory email. Please try again later.'); window.location.href = 'Nlogin.html';</script>";
+                } catch (Exception $e) {
+                    echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
                 }
             } else {
                 echo "Error: " . $stmt->error;
@@ -76,6 +94,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
-// Close database connection
+// 데이터베이스 연결 종료
 $conn->close();
 ?>
