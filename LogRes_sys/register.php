@@ -3,7 +3,7 @@
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-// PHPMailer 라이브러리 포함
+// Composer autoload 포함
 require 'vendor/autoload.php'; // Composer autoload
 
 $servername = "localhost";
@@ -63,16 +63,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 try {
                     // 서버 설정
                     $mail->isSMTP();
-                    $mail->Host = 'smtp.gmail.com'; // SMTP 서버 주소
+                    $mail->Host = 'smtp.gmail.com'; // Gmail SMTP 서버 주소
                     $mail->SMTPAuth = true;
-                    $mail->Username = 'kkjhhyu0405@gmail.com'; // SMTP 사용자명
-                    $mail->Password = ''; // SMTP 비밀번호
+                    $mail->Username = 'your-email@gmail.com'; // 실제 사용할 Gmail 주소
+                    $mail->Password = 'your-email-password'; // Gmail 비밀번호
                     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
                     $mail->Port = 587;
 
                     // 수신자 설정
-                    $mail->setFrom('your-email@example.com', 'Your Name');
-                    $mail->addAddress($Email, $Username);
+                    $mail->setFrom('your-email@gmail.com', 'Your Name'); // 실제 사용할 Gmail 주소와 발신자 이름
+                    $mail->addAddress($Email, $Username); // 이미 코드에서 설정된 값 그대로 사용
 
                     // 이메일 내용 설정
                     $mail->isHTML(true);
