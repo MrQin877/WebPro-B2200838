@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // 프로그램 목록 배열
     const programs = [
         { title: 'Malay Language', description: 'Learn Malay language basics.', icon: '../images/icon3.jpg', page: 'Malpage.html' },
         { title: 'English Language', description: 'Master English language skills.', icon: '../images/icon4.jpg', page: 'Engpage.html' },
@@ -8,101 +9,64 @@ document.addEventListener('DOMContentLoaded', () => {
         { title: 'All Subjects', description: 'Learn about our every programs.', icon: '../images/icon6.jpg', page: 'Allpage.html' }
     ];
 
+    // HTML 요소 참조
     const programList = document.getElementById('programList');
-    const suggestions = document.getElementById('suggestions');
     const searchInput = document.getElementById('searchInput');
 
-    
-    programs.forEach(program => {
-        const programElement = document.createElement('div');
-        programElement.classList.add('program');
-        programElement.onclick = () => {
-            showProgramDetails(program.page);
-        };
-        programElement.innerHTML = `
-            <div class="program-content">
-                <img src="${program.icon}" alt="${program.title} Icon">
-                <div class="program-info">
-                    <div class="program-title">${program.title}</div>
-                    <div class="program-description">${program.description}</div>
-                </div>
-            </div>
-        `;
-        programList.appendChild(programElement);
-    });
+    // 프로그램 목록을 렌더링하는 함수
+    function renderPrograms(programs) {
+        // 프로그램 리스트를 비움
+        programList.innerHTML = '';
 
-  
-    function renderSuggestions(filteredPrograms) {
-        suggestions.innerHTML = '';
-        filteredPrograms.forEach(program => {
-            const suggestion = document.createElement('div');
-            suggestion.classList.add('suggestion');
-            suggestion.innerHTML = `
+        // 프로그램 배열을 순회하며 각 프로그램을 렌더링
+        programs.forEach(program => {
+            // 프로그램 요소를 생성
+            const programElement = document.createElement('div');
+            programElement.classList.add('program');
+            
+            // 클릭 시 해당 프로그램의 상세 페이지로 이동하도록 설정
+            programElement.onclick = () => {
+                showProgramDetails(program.page);
+            };
+
+            // 프로그램 요소의 내부 HTML 설정
+            programElement.innerHTML = `
                 <div class="program-content">
+                    <img src="${program.icon}" alt="${program.title} Icon">
                     <div class="program-info">
                         <div class="program-title">${program.title}</div>
+                        <div class="program-description">${program.description}</div>
                     </div>
                 </div>
             `;
-            suggestion.onclick = () => {
-                showProgramDetails(program.page);
-            };
-            suggestions.appendChild(suggestion);
-        });
-        suggestions.style.display = filteredPrograms.length > 0 ? 'block' : 'none';
-    }
 
-   
-    window.showAllSuggestions = function() {
-        renderSuggestions(programs);
-    }
-
-    
-    window.filterSuggestions = function() {
-        const searchValue = searchInput.value.toLowerCase();
-        const filteredPrograms = programs.filter(program =>
-            program.title.toLowerCase().includes(searchValue)
-        );
-        renderSuggestions(filteredPrograms);
-    }
-
-    
-    window.searchProgram = function() {
-        const searchValue = searchInput.value.toLowerCase();
-        const programElements = document.querySelectorAll('.program');
-
-        programElements.forEach(program => {
-            const title = program.querySelector('.program-title').innerText.toLowerCase();
-            const description = program.querySelector('.program-description').innerText.toLowerCase();
-
-            if (title.includes(searchValue) || description.includes(searchValue)) {
-                program.style.display = 'block';
-            } else {
-                program.style.display = 'none';
-            }
+            // 프로그램 리스트에 프로그램 요소를 추가
+            programList.appendChild(programElement);
         });
     }
 
-    
-    window.showAllPrograms = function() {
-        programList.querySelectorAll('.program').forEach(program => {
-            program.style.display = 'block';
-        });
-    }
-
-    
-    searchInput.addEventListener('blur', () => {
-        setTimeout(() => {
-            suggestions.style.display = 'none';
-        }, 100); 
-    });
-
-    suggestions.addEventListener('mouseleave', () => {
-        suggestions.style.display = 'none';
-    });
-
-    
+    // 프로그램의 상세 페이지로 이동하는 함수
     function showProgramDetails(page) {
         window.location.href = page;
     }
+
+    // 프로그램 목록을 필터링하는 함수
+    function filterPrograms() {
+        // 검색 입력 값을 소문자로 변환
+        const searchValue = searchInput.value.toLowerCase();
+
+        // 검색어가 프로그램 제목에 포함된 프로그램만 필터링
+        const filteredPrograms = programs.filter(program =>
+            program.title.toLowerCase().includes(searchValue)
+        );
+
+        // 필터링된 프로그램 목록을 렌더링
+        renderPrograms(filteredPrograms);
+    }
+
+    // 검색 입력 필드에 입력 이벤트 리스너 추가
+    searchInput.addEventListener('input', filterPrograms);
+
+    // 초기 프로그램 목록을 렌더링
+    renderPrograms(programs);
 });
