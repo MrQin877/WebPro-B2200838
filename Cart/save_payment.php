@@ -34,14 +34,28 @@ if (isset($data['user_id'], $data['cart'], $data['payment_id'], $data['amount'])
 
     // Iterate over the cart items and insert each one
     foreach ($cart as $item) {
-        $program_id = $item['id']; // Ensure your cart items have an 'id' property that corresponds to Program_id
-        $stmt->bind_param("iisd", $user_id, $program_id, $payment_id, $amount);
-        if (!$stmt->execute()) {
-            file_put_contents('log.txt', 'Failed to execute statement: ' . $stmt->error . "\n", FILE_APPEND);
-            echo json_encode(['status' => 'error', 'message' => 'Failed to execute statement: ' . $stmt->error]);
-            $stmt->close();
-            $conn->close();
-            exit;
+        if (isset($item['items'])) { // This item is the all-subject package
+            foreach ($item['items'] as $subItem) {
+                $program_id = $subItem['id']; 
+                $stmt->bind_param("iisd", $user_id, $program_id, $payment_id, $amount);
+                if (!$stmt->execute()) {
+                    file_put_contents('log.txt', 'Failed to execute statement: ' . $stmt->error . "\n", FILE_APPEND);
+                    echo json_encode(['status' => 'error', 'message' => 'Failed to execute statement: ' . $stmt->error]);
+                    $stmt->close();
+                    $conn->close();
+                    exit;
+                }
+            }
+        } else {
+            $program_id = $item['id']; 
+            $stmt->bind_param("iisd", $user_id, $program_id, $payment_id, $amount);
+            if (!$stmt->execute()) {
+                file_put_contents('log.txt', 'Failed to execute statement: ' . $stmt->error . "\n", FILE_APPEND);
+                echo json_encode(['status' => 'error', 'message' => 'Failed to execute statement: ' . $stmt->error]);
+                $stmt->close();
+                $conn->close();
+                exit;
+            }
         }
     }
     $stmt->close();

@@ -4,7 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>All Subjects-Intensive Program</title>
-    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="program.css">  
+    <link rel="stylesheet" href="../footer-style.css">
+    <link rel="stylesheet" href="../header-style.css">
+    <link rel="stylesheet" href="../Animation.css">
+    <script src="../multiUsage.js" defer></script>
     <style>
         .description-block {
             background-color: #f4f5fb; 
@@ -29,15 +34,6 @@
     <headers></headers>
     <section style="margin-top:9%; height: vh;"></section>
     <h1>&emsp;&ensp;All-Subject Package: Five different subjects at once!</h1>
-
-    <title>Smart Study Sport- HomePage</title>
-    <script type="text/javascript" src="https://db.onlinewebfonts.com/s/71976204cf6d53991ececd406824ec45?family=Jack+Armstrong+BB"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="program.css">  
-    <link rel="stylesheet" href="../footer-style.css">
-    <link rel="stylesheet" href="../header-style.css">
-    <link rel="stylesheet" href="../Animation.css">
-    <script src="../multiUsage.js" defer></script>
     
     <div style="display:flex; flex-direction: row; margin-right:2.5%;margin-left:2.5%">
         <div style="width: 55%; height:400px;">
@@ -50,25 +46,40 @@
                     <li>Do Not Miss Out This Chance!</li>
                 </ul>
                 <p><strong>Price:</strong> RM 599 one-time purchase</p> 
-                <button onclick="addToCart('All Subject Package', 599,'../images/icon6.jpg')">Add to Cart</button>
+                <button onclick="addAllSubjectsToCart()">Add to Cart</button>
                 <p class="cart-feedback" id="cartFeedback">Added to Cart!</p>
-                
+                <p class="cart-feedback" id="cartExistsFeedback" style="color: red;">Already in Cart!</p>
             </div>
         </div>
-        <div style="width: 45%; height:400px; ">
+        <div style="width: 45%; height:400px;">
             <div class="box">
                 <img src="../images/pic6-1.jpg" alt="Mastering Science Program Image" width="600" height="400">
             </div>
         </div>
     </div>
 
-
-
     <script>
-        function addToCart(productName, price, icon) {
+        function addAllSubjectsToCart() {
             const cart = JSON.parse(localStorage.getItem('cart')) || [];
-            const product = { name: productName, price: price, icon: icon, quantity: 1 };
-            cart.push(product);
+            const allSubjects = [
+                { id: '1001', name: 'Mastering Malay Language', price: 0, icon: '../images/icon1.jpg', quantity: 1 },
+                { id: '1002', name: 'Mastering English', price: 0, icon: '../images/icon2.jpg', quantity: 1 },
+                { id: '1003', name: 'Mastering Mathematics', price: 0, icon: '../images/icon3.jpg', quantity: 1 },
+                { id: '1004', name: 'Mastering History', price: 0, icon: '../images/icon4.jpg', quantity: 1 },
+                { id: '1005', name: 'Mastering Science', price: 0, icon: '../images/icon5.jpg', quantity: 1 }
+            ];
+
+            const packageExists = cart.some(item => item.id === 'all-subject-package');
+            if (packageExists) {
+                var existsFeedback = document.getElementById('cartExistsFeedback');
+                existsFeedback.style.display = 'block'; 
+                setTimeout(function() {
+                    existsFeedback.style.display = 'none'; 
+                }, 2000); 
+                return; // Do not add the package again
+            }
+
+            cart.push({ id: 'all-subject-package', name: 'All Subject Package', price: 599, icon: '../images/icon6.jpg', quantity: 1, items: allSubjects });
             localStorage.setItem('cart', JSON.stringify(cart));
 
             var feedback = document.getElementById('cartFeedback');
@@ -79,7 +90,6 @@
         }
     </script>
     <section style="margin-bottom:10%; height: vh;"></section>
-    <footers>
-    </footers>
+    <footers></footers>
 </body>
 </html>
