@@ -19,23 +19,18 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 
-$user_query = "SELECT Username AS username, Email AS email, PhoneNumber AS phone, Birth AS birthday, Gender AS gender FROM user_registration WHERE UserID = ?";
-$stmt = $conn->prepare($user_query);
+$courses_query = "SELECT pr.Program_Name, urpr.purchase_date FROM user_program urpr JOIN program pr ON pr.Program_id = urpr.program_id WHERE urpr.user_ID = ?";
+$stmt = $conn->prepare($courses_query);
 $stmt->bind_param("i", $user_id);
 $stmt->execute();
-$user_result = $stmt->get_result();
-$user_info = $user_result->fetch_assoc();
+$courses_result = $stmt->get_result();
+$purchased_courses = [];
+while ($row = $courses_result->fetch_assoc()) { // Fetching courses
+    $purchased_courses[] = $row['Program_Name'];
+}
 
-
-$response = [
-    "username" => $user_info['username'],
-    "email" => $user_info['email'],
-    "phone" => $user_info['phone'],
-    "birthday" => $user_info['birthday'],
-    "gender" => $user_info['gender'],
-];
-
-echo json_encode($response);
+// Sending the JSON response
+echo json_encode(["courses" => $purchased_courses]);
 
 $stmt->close();
 $conn->close();
