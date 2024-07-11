@@ -1,0 +1,15 @@
+{
+    "name": "user/web-pro-b2200838",
+    "autoload": {
+        "psr-4": {
+            "User\\WebProB2200838\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Jun20220703",
+            "email": "kkjhhyu0405@gmail.com"
+        }
+    ],
+    "require": {}
+}

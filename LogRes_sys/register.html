@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,7 +8,6 @@
     <link rel="stylesheet" href="Nlogin.css">
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
 </head>
-
 <body>
     <div class="wrapper">
         <form id="registrationForm" action="register.php" method="post">
@@ -23,7 +21,8 @@
                 <i class="bx bxs-envelope"></i>
             </div>
             <div class="input-box">
-                <input type="password" class="form-control" id="Password" name="Password" placeholder="Password" required>
+                <input type="password" class="form-control" id="Password" name="Password" placeholder="Password" required
+                       title="Password must be 10 characters or less, include at least one capital letter and one special character (!, @, #, $, %, &).">
                 <i class="bx bxs-lock-alt"></i>
             </div>
             <div class="input-box">
@@ -31,7 +30,8 @@
                 <i class="bx bxs-lock-alt"></i>
             </div>
             <div class="input-box">
-                <input type="text" class="form-control" id="PhoneNumber" name="PhoneNumber" placeholder="Phone Number" required>
+                <input type="text" class="form-control" id="PhoneNumber" name="PhoneNumber" placeholder="Phone Number" required
+                       title="Phone number must contain numbers only.">
                 <i class="bx bxs-phone"></i>
             </div>
             <div class="input-box">
@@ -54,7 +54,7 @@
             <p id="successMessage" class="success-message"></p>
         </form>
     </div>
+    <script src="register.js"></script>
     <script src="Nlogin.js"></script>
 </body>
-
 </html>
