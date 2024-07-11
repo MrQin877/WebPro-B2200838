@@ -1,7 +1,7 @@
 body {
     background: #7796cb;
     margin-top: 20px;
-    font-family: monospace
+    font-family: Jack
 }
 
 .ui-w-80 {
@@ -49,6 +49,11 @@ label.btn {
 .card {
     
     box-shadow     : 0 px 4px rgba(24, 28, 33, 0.012);
+}
+
+.okimg{
+    width: auto;
+    height: 300px ;
 }
 
 .row-bordered {

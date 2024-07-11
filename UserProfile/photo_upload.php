@@ -13,37 +13,42 @@ if ($conn->connect_error) {
 
 // Retrieve user's current profile picture
 $user_id = $_SESSION['user_id'];
-$getImageSql = "SELECT file_path FROM up_load WHERE UserID = ? ORDER BY upload_time DESC LIMIT 1";
+$getImageSql = "SELECT file_path FROM up_load WHERE UserID = ?";
 $stmt = $conn->prepare($getImageSql);
 $stmt->bind_param("i", $user_id);
 $stmt->execute();
 $result = $stmt->get_result();
-$currentImage = $result->fetch_assoc()['file_path'] ?? "../images/photo-icon.png"; // Default profile picture
+echo json_encode(["images" => $result]);
+ // Default profile picture
 
 if (isset($_POST["action"]) && $_POST["action"] === "uploadPhoto" && isset($_FILES["fileToUpload"])) {
-    $targetDirectory = "uploads/";
+    $targetDirectory = "../UserProfile/uploads/";
     $targetFile = $targetDirectory . basename($_FILES["fileToUpload"]["name"]);
     $uploadOk = 1;
     $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
 
+    // Check if file already exists
     if (file_exists($targetFile)) {
-        echo "Sorry, file already exists.";
+        echo "<script>alert('Sorry, file already exists.')</script>";
         $uploadOk = 0;
     }
 
+    // Check file size
     if ($_FILES["fileToUpload"]["size"] > 800000) {
-        echo "Sorry, your file is too large.";
+        echo "<script>alert(Sorry, your file is too large.')</script>";
         $uploadOk = 0;
     }
 
+    // Allow certain file formats
     if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") {
-        echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+        echo "<script>alert(Sorry, only JPG, JPEG, PNG & GIF files are allowed.')</script>";
         $uploadOk = 0;
     }
 
     if ($uploadOk == 0) {
-        echo "Sorry, your file was not uploaded.";
+        echo "<script>alert(Sorry, your file was not uploaded.')</script>";
     } else {
+        // If file is valid, upload it
         if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $targetFile)) {
             $fileName = basename($_FILES["fileToUpload"]["name"]);
             $filePath = $targetFile;
@@ -53,14 +58,29 @@ if (isset($_POST["action"]) && $_POST["action"] === "uploadPhoto" && isset($_FIL
                 unlink($currentImage);
             }
 
-            // Insert new profile picture information into the database
-            $insertSql = "INSERT INTO up_load (UserID, file_name, file_path, upload_time) VALUES (?, ?, ?, NOW())";
-            $stmt = $conn->prepare($insertSql);
-            $stmt->bind_param("iss", $user_id, $fileName, $filePath);
+            // Update existing record or insert a new one
+            $sql = "SELECT file_name, file_path FROM up_load WHERE UserID = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("i", $user_id);
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            if ($result->num_rows > 0) {
+                // Update existing record
+                $sql = "UPDATE up_load SET file_name=?, file_path=?, upload_time=NOW() WHERE UserID = ?";
+                $stmt = $conn->prepare($sql);
+                $stmt->bind_param("ssi", $fileName, $filePath, $user_id);
+            } else {
+                // Insert new record
+                $sql = "INSERT INTO up_load (UserID, file_name, file_path, upload_time) VALUES (?, ?, ?, NOW())";
+                $stmt = $conn->prepare($sql);
+                $stmt->bind_param("iss", $user_id, $fileName, $filePath);
+            }
 
             if ($stmt->execute()) {
-                echo "The file " . htmlspecialchars($fileName) . " has been uploaded and saved.";
-                $currentImage = $filePath; // Update current image path
+                $_SESSION['profile_image'] = $filePath; // Store the path in the session
+                echo "<script>alert('The file " . htmlspecialchars($fileName) . " has been uploaded and saved.'); window.location.href='profile.html';</script>";
+                exit();
             } else {
                 echo "Error saving file information: " . $stmt->error;
             }
