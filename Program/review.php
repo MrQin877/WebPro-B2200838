@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // 사용자 ID 가져오기 (세션 사용 예시)
     $userId = $_SESSION['UserID']; // 이 부분은 실제 세션 변수에 맞게 수정해야 합니다.
 
-    // 리뷰 텍스트 및 별점 가져오기
+    // 리뷰 텍스트, 별점, 프로그램 이름 가져오기
     $reviewText = $_POST['review'];
     $star = $_POST['star'];
     $program = $_POST['program']; // 프로그램 이름 가져오기
