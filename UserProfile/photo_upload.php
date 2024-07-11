@@ -1,76 +1,85 @@
 <?php
+session_start();
+
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "project2024";
+$dbname = "user";
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-// Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-if (isset($_POST["submit"])) {
+// Check if the form was submitted with a file upload
+if (isset($_POST["action"]) && $_POST["action"] === "uploadPhoto" && isset($_FILES["fileToUpload"])) {
     $targetDirectory = "uploads/"; // Directory where uploaded files will be stored
     $targetFile = $targetDirectory . basename($_FILES["fileToUpload"]["name"]);
     $uploadOk = 1;
-    $fileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
-    
+    $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
+
     // Check if file already exists
     if (file_exists($targetFile)) {
-        echo "File already exists.";
+        echo "Sorry, file already exists.";
         $uploadOk = 0;
     }
-    
+
+    // Check file size (max size of 800KB)
+    if ($_FILES["fileToUpload"]["size"] > 800000) {
+        echo "Sorry, your file is too large.";
+        $uploadOk = 0;
+    }
+
+    // Allow certain file formats
+    if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") {
+        echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+        $uploadOk = 0;
+    }
+
     // Check if $uploadOk is set to 0 by an error
     if ($uploadOk == 0) {
         echo "Sorry, your file was not uploaded.";
     } else {
-        session_start();
+        // File upload is valid, proceed with database operations
+
         $user_id = $_SESSION['user_id'];
-        
-        $checksql = "SELECT file_name, file_path FROM up_load WHERE UserID = ?";
-        $stmt = $conn->prepare($checksql);
-        $stmt->bind_param("i", $user_id);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $row = $result->fetch_assoc();
-        
-        if ($row) {
-            echo "The file " . basename($_FILES["fileToUpload"]["name"]) . " has been uploaded.";
-            
-            // Save file information to the database
+
+        // Move the uploaded file to the target directory
+        if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $targetFile)) {
+            // Update user's profile picture in the database
             $fileName = basename($_FILES["fileToUpload"]["name"]);
             $filePath = $targetFile;
-            
-            $update_query = "UPDATE up_load SET file_name='$fileName', file_path='$filePath' WHERE UserID='$user_id'";
-            
-            if ($conn->query($update_query) === TRUE) {
-                echo "File information updated in the database.";
+
+            // Check if there's already a record for this user in the database
+            $checkSql = "SELECT * FROM user_profile WHERE user_id = ?";
+            $stmt = $conn->prepare($checkSql);
+            $stmt->bind_param("i", $user_id);
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            if ($result->num_rows > 0) {
+                // Update existing record
+                $updateSql = "UPDATE user_profile SET profile_picture=? WHERE user_id=?";
+                $stmt = $conn->prepare($updateSql);
+                $stmt->bind_param("si", $filePath, $user_id);
             } else {
-                echo "Error: " . $update_query . "<br>" . $conn->error;
+                // Insert new record
+                $insertSql = "INSERT INTO user_profile (user_id, profile_picture) VALUES (?, ?)";
+                $stmt = $conn->prepare($insertSql);
+                $stmt->bind_param("is", $user_id, $filePath);
+            }
+
+            if ($stmt->execute()) {
+                echo "The file " . htmlspecialchars(basename($_FILES["fileToUpload"]["name"])) . " has been uploaded and profile picture updated.";
+            } else {
+                echo "Error updating profile picture: " . $stmt->error;
             }
         } else {
-            if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $targetFile)) {
-                echo "The file " . basename($_FILES["fileToUpload"]["name"]) . " has been uploaded.";
-                
-                // Save file information to the database
-                $fileName = basename($_FILES["fileToUpload"]["name"]);
-                $filePath = $targetFile;
-                
-                $sql = "INSERT INTO up_load (UserID, file_name, file_path) VALUES ('$user_id', '$fileName', '$filePath')";
-                
-                if ($conn->query($sql) === TRUE) {
-                    echo "File information saved to the database.";
-                } else {
-                    echo "Error: " . $sql . "<br>" . $conn->error;
-                }
-            } else {
-                echo "Sorry, there was an error uploading your file.";
-            }
+            echo "Sorry, there was an error uploading your file.";
         }
-        $stmt->close();
     }
+} else {
+    echo "No file uploaded or action is invalid.";
 }
 
 $conn->close();
