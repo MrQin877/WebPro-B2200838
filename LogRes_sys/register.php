@@ -53,7 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // 삽입이 성공한 경우
             if ($stmt->execute()) {
                 // 이메일 전송 파일 포함 및 전송 함수 호출
-                include 'register_email.php';
+                include __DIR__ . '/register_email.php';
                 sendWelcomeEmail($Email, $Username);
                 echo "<script>alert('Registration successful! A congratulatory email has been sent to your registered email.'); window.location.href = 'Nlogin.html';</script>";
             } else {
