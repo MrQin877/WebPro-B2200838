@@ -10,15 +10,15 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         })
         .catch(error => {
-            console.error('Error fetching login status:', error);
+            console.error('Error fetching courses:', error);
         });
 }); 
 
 function updateDisplay(courses) {
-    var coursesList = $('#coursesList');
-    coursesList.empty();
-    courses.forEach(function (course) {
+    var coursesList = document.getElementById('coursesList');
+    coursesList.innerHTML = '';
+    courses.forEach(function(course) {
         var listItem = '<li class="list-group-item">' + course + '</li>';
-        coursesList.append(listItem);
+        coursesList.innerHTML += listItem;
     });
 }
