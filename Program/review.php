@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // 리뷰 텍스트 및 별점 가져오기
     $reviewText = $_POST['review'];
     $star = $_POST['star'];
-    $program = $_POST['program']; // 추가된 과목 데이터 가져오기
+    $program = $_POST['program']; // 프로그램 이름 가져오기
 
     // SQL 쿼리 생성
     $sql = "INSERT INTO user_review (review, star, UserID, program) VALUES (?, ?, ?, ?)";
@@ -38,10 +38,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // 매개변수 바인딩 및 실행
-    $stmt->bind_param("ssis", $reviewText, $star, $userId, $program);
+    $stmt->bind_param("siss", $reviewText, $star, $userId, $program);
     if ($stmt->execute() === true) {
-        $reviewId = $stmt->insert_id; // 삽입된 reviewID 가져오기
-        echo "Review saved successfully. Review ID: " . $reviewId; // 성공 메시지 반환
+        echo "Review saved successfully."; // 성공 메시지 반환
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error; // 오류 메시지 반환
     }
