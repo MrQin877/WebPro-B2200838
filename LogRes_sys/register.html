@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,7 +8,6 @@
     <link rel="stylesheet" href="Nlogin.css">
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
 </head>
-
 <body>
     <div class="wrapper">
         <form id="registrationForm" action="register.php" method="post">
@@ -25,6 +23,7 @@
             <div class="input-box">
                 <input type="password" class="form-control" id="Password" name="Password" placeholder="Password" required>
                 <i class="bx bxs-lock-alt"></i>
+                <small>Password must be 10 characters or less, include at least one capital letter and one special character (!, @, #, $, %, &).</small>
             </div>
             <div class="input-box">
                 <input type="password" class="form-control" id="ConfirmPassword" name="ConfirmPassword" placeholder="Confirm Password" required>
@@ -33,6 +32,7 @@
             <div class="input-box">
                 <input type="text" class="form-control" id="PhoneNumber" name="PhoneNumber" placeholder="Phone Number" required>
                 <i class="bx bxs-phone"></i>
+                <small>Phone number must contain numbers only.</small>
             </div>
             <div class="input-box">
                 <input type="date" class="form-control" id="Birth" name="Birth" placeholder="Birthdate" required>
@@ -57,5 +57,4 @@
     <script src="register.js"></script>
     <script src="Nlogin.js"></script>
 </body>
-
 </html>
