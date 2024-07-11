@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $star = $_POST['rating'];
 
     // SQL 쿼리 생성
-    $sql = "INSERT INTO user_reviews (review, star, UserID) VALUES (?, ?, ?)";
+    $sql = "INSERT INTO user_review (review, star, UserID) VALUES (?, ?, ?)";
 
     // SQL 문 준비
     $stmt = $conn->prepare($sql);
