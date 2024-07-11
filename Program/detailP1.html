@@ -103,12 +103,12 @@
             <div class="subject-selector" id="subjectSelector" style="display: none;">
                 <label for="subject">Select Program:</label>
                 <select id="subject">
-                    <option value="subject1">Malay Language</option>
-                    <option value="subject2">English Language</option>
-                    <option value="subject3">Mathematics</option>
-                    <option value="subject4">History</option>
-                    <option value="subject5">Science</option>
-                    <option value="subject6">All subjects</option>
+                    <option value="Malay Language">Malay Language</option>
+                    <option value="English Language">English Language</option>
+                    <option value="Mathematics">Mathematics</option>
+                    <option value="History">History</option>
+                    <option value="Science">Science</option>
+                    <option value="All subjects">All subjects</option>
                     <!-- Add more options as needed -->
                 </select>
             </div>
@@ -171,21 +171,36 @@
             console.log("Rating: " + rating);
             console.log("Subject: " + subject);
 
-            // Assume submission logic succeeds
             if (commentText && rating && subject) {
-                // Show submission success message
-                var messageElement = document.createElement("div");
-                messageElement.textContent = "Your comment and rating for " + subject + " have been submitted successfully!";
-                messageElement.style.color = "green"; // Optional: Styling for success message
-                document.getElementById("review-section").appendChild(messageElement);
-                
-                // Optional: Clear input fields or hide comment input after submission
-                document.getElementById("commentText").value = "";
-                document.getElementById("commentInput").style.display = "none";
-                document.getElementById("subjectSelector").style.display = "none";
-                document.getElementById("writeReviewBtn").textContent = "Write a Review or feedback";
+                // AJAX 요청 생성
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", "review.php", true);
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+                        // 성공 메시지 표시
+                        var messageElement = document.createElement("div");
+                        messageElement.textContent = "Your comment and rating for " + subject + " have been submitted successfully!";
+                        messageElement.style.color = "green"; // 성공 메시지 스타일링 (선택 사항)
+                        document.getElementById("review-section").appendChild(messageElement);
+
+                        // 입력 필드 초기화 또는 제출 후 숨기기 (선택 사항)
+                        document.getElementById("commentText").value = "";
+                        document.getElementById("commentInput").style.display = "none";
+                        document.getElementById("subjectSelector").style.display = "none";
+                        document.getElementById("writeReviewBtn").textContent = "Write a Review or feedback";
+                    } else if (xhr.readyState === 4) {
+                        // 오류 메시지 표시
+                        alert("There was an error submitting your review. Please try again.");
+                    }
+                };
+
+                // 데이터 전송
+                xhr.send("review=" + encodeURIComponent(commentText) + "&star=" + rating + "&program=" + subject);
+
             } else {
-                // Show error message if comment, rating, or subject is missing
+                // 코멘트, 평점 또는 주제가 없으면 오류 메시지 표시
                 alert("Please enter both a comment, a rating, and select a subject.");
             }
         }
