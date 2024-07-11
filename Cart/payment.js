@@ -39,7 +39,7 @@ document.getElementById('paymentForm').addEventListener('submit', function(e) {
                                 if (response.status === 'success') {
                                     alert("Payment details successfully saved!");
                                     localStorage.removeItem('cart'); // Clear cart after successful payment
-                                    window.location.href = '../A-HomePage/HomePage.html'; // Redirect to homepage or success page
+                                    window.location.href = 'cart.html'; // Redirect to homepage or success page
                                 } else {
                                     alert('Failed to save transaction details: ' + response.message);
                                 }
