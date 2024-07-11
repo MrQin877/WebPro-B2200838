@@ -26,16 +26,19 @@ if (isset($_POST["action"]) && $_POST["action"] === "uploadPhoto" && isset($_FIL
     $uploadOk = 1;
     $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
 
+    // Check if file already exists
     if (file_exists($targetFile)) {
         echo "Sorry, file already exists.";
         $uploadOk = 0;
     }
 
+    // Check file size
     if ($_FILES["fileToUpload"]["size"] > 800000) {
         echo "Sorry, your file is too large.";
         $uploadOk = 0;
     }
 
+    // Allow certain file formats
     if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") {
         echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
         $uploadOk = 0;
@@ -59,8 +62,10 @@ if (isset($_POST["action"]) && $_POST["action"] === "uploadPhoto" && isset($_FIL
             $stmt->bind_param("iss", $user_id, $fileName, $filePath);
 
             if ($stmt->execute()) {
+                $_SESSION['profile_image'] = $filePath; // Store the path in the session
                 echo "The file " . htmlspecialchars($fileName) . " has been uploaded and saved.";
-                $currentImage = $filePath; // Update current image path
+                header('Location: profile.html'); // Redirect to the profile page to display the new image
+                exit();
             } else {
                 echo "Error saving file information: " . $stmt->error;
             }
