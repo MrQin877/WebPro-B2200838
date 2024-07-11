@@ -1,0 +1,15 @@
+{
+    "name": "webpro-b2200838/my-awesome-package",
+    "description": "good",
+    "autoload": {
+        "psr-4": {
+            "WebproB2200838\\MyAwesomePackage\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "juhyeong"
+        }
+    ],
+    "require": {}
+}
