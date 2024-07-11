@@ -35,6 +35,7 @@ registrationForm.addEventListener("submit", function(e) {
     const Username = UsenameInput.value.trim();
     const Email = EmailInput.value.trim();
     const Password = PasswordInput.value.trim();
+    const ConfirmPassword = ConfirmPasswordInput.value.trim();
     const PhoneNumber = PhoneNumberInput.value.trim();
     const Birth = BirthInput.value.trim();
     const Gender = GenderInput.value.trim();

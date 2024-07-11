@@ -52,9 +52,10 @@
                     <li>Access to exclusive live Q&A sessions</li><br>
                 </ul>
                 <p><strong>Price:</strong> RM 199 one-time purchase</p>
-                <button onclick="addToCart('1005','Mastering Science: Our First Step To Become Little Scientists', 199,'../images/icon1.jpg')">Add to Cart</button>
+                <button id="addToCartBtn" onclick="addToCart('1005','Mastering Science: Our First Step To Become Little Scientists', 199,'../images/icon1.jpg')">Add to Cart</button>
                 <p class="cart-feedback" id="cartFeedback">Added to Cart!</p>
                 <p class="cart-feedback" id="cartExistsFeedback" style="color: red;">Already in Cart!</p>
+                <p class="cart-feedback" id="alreadyEnrolledFeedback" style="color:#576490;">You have already enrolled in this program!</p>
             </div>
         </div>
         <div style="width: 45%; height:400px; ">
@@ -66,21 +67,37 @@
 
 
     <script>
-        function addToCart(programId, productName, price, icon) {
-            const cart = JSON.parse(localStorage.getItem('cart')) || [];
-            const product = { id: programId, name: productName, price: price, icon: icon, quantity: 1 };
+        function checkEnrollment(userId) {
+            const programId = '1005';
+            fetch('check_enrollment.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ user_id: userId, program_id: programId })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.enrolled) {
+                    document.getElementById('alreadyEnrolledFeedback').style.display = 'block';
+                    document.getElementById('addToCartBtn').disabled = true;
+                }
+            });
+        }
 
-            const productExists = cart.some(item => item.id === programId);
-            if (productExists) {
+        function addToCart(programId, programName, price, icon) {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const itemExists = cart.some(item => item.id === programId);
+            if (itemExists) {
                 var existsFeedback = document.getElementById('cartExistsFeedback');
                 existsFeedback.style.display = 'block'; 
                 setTimeout(function() {
                     existsFeedback.style.display = 'none'; 
                 }, 2000); 
-                return; // Do not add the product again
+                return; // Do not add the program again
             }
 
-            cart.push(product);
+            cart.push({ id: programId, name: programName, price: price, icon: icon, quantity: 1 });
             localStorage.setItem('cart', JSON.stringify(cart));
 
             var feedback = document.getElementById('cartFeedback');
@@ -89,6 +106,16 @@
                 feedback.style.display = 'none'; 
             }, 2000); 
         }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('../LogRes_sys/check_session.php')
+            .then(response => response.json())
+            .then(data => {
+                if (data.loggedIn) {
+                    checkEnrollment(data.user_id);
+                }
+            });
+        });
     </script>
     <section style="margin-bottom:10%; height: vh;"></section>
     <footers>
