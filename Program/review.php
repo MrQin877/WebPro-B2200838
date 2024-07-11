@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // 리뷰 텍스트 및 별점 가져오기
     $reviewText = $_POST['review'];
-    $star = $_POST['star'];
+    $star = $_POST['rating'];
 
     // SQL 쿼리 생성
     $sql = "INSERT INTO user_reviews (review, star, UserID) VALUES (?, ?, ?)";
@@ -39,9 +39,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // 매개변수 바인딩 및 실행
     $stmt->bind_param("ssi", $reviewText, $star, $userId);
     if ($stmt->execute() === true) {
-        echo "Review saved successfully."; // 성공 메시지 반환
+        // 성공 메시지 반환 (JSON 형식)
+        $response = array('message' => 'Review submitted successfully!');
+        echo json_encode($response);
     } else {
-        echo "Error: " . $sql . "<br>" . $conn->error; // 오류 메시지 반환
+        // 오류 메시지 반환 (JSON 형식)
+        $response = array('message' => 'Error submitting review.');
+        echo json_encode($response);
     }
 
     // 문 닫기
