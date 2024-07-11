@@ -37,7 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // 매개변수 바인딩 및 실행
-    $stmt->bind_param("sii", $reviewText, $star, $userId);
+    $stmt->bind_param("ssi", $reviewText, $star, $userId);
     if ($stmt->execute() === true) {
         echo "Review saved successfully."; // 성공 메시지 반환
     } else {

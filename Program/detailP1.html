@@ -70,6 +70,15 @@
         .rating-reverse {
             flex-direction: row-reverse; /* Reverse direction for rating */
         }
+
+        .subject-selector {
+            margin-top: 20px; /* Adjust top margin as needed */
+        }
+
+        .subject-selector select {
+            padding: 10px;
+            font-size: 16px;
+        }
     </style>
 </head>
 <body>
@@ -88,7 +97,21 @@
         <section id="review-section" style="text-align: center; margin-top: 50px;">
             <h2>Share Your Experience</h2>
             <!-- Toggle Comment Input -->
-            <button onclick="toggleCommentInput('review')">Write a Review or feedback</button>
+            <button id="writeReviewBtn" onclick="toggleCommentInput('review')">Write a Review or feedback</button>
+            
+            <!-- Subject Selector -->
+            <div class="subject-selector" id="subjectSelector" style="display: none;">
+                <label for="subject">Select Program:</label>
+                <select id="subject">
+                    <option value="subject1">Malay Language</option>
+                    <option value="subject2">English Language</option>
+                    <option value="subject3">Mathematics</option>
+                    <option value="subject4">History</option>
+                    <option value="subject5">Science</option>
+                    <option value="subject6">All subjects</option>
+                    <!-- Add more options as needed -->
+                </select>
+            </div>
             
             <!-- Comment Input -->
             <div id="commentInput" class="comment-input" style="display: none;">
@@ -123,38 +146,47 @@
         function toggleCommentInput(type) {
             var commentInput = document.getElementById("commentInput");
             var commentText = document.getElementById("commentText");
+            var subjectSelector = document.getElementById("subjectSelector");
 
-            // Toggle visibility of comment input
+            // Toggle visibility of comment input and subject selector
             if (commentInput.style.display === "none" || commentInput.style.display === "") {
                 commentInput.style.display = "block";
+                subjectSelector.style.display = "block";
                 commentText.placeholder = "Write your " + type + "...(255 Characters limit)";
+                document.getElementById("writeReviewBtn").textContent = "Cancel";
             } else {
                 commentInput.style.display = "none";
+                subjectSelector.style.display = "none";
+                document.getElementById("writeReviewBtn").textContent = "Write a Review or feedback";
             }
         }
 
         function submitComment() {
             var commentText = document.getElementById("commentText").value;
             var rating = getSelectedRating(); // Implement function to get selected rating
+            var subject = document.getElementById("subject").value; // Get selected subject
 
-            // Implement logic to submit comment and rating to server
+            // Implement logic to submit comment, rating, and subject to server
             console.log("Comment: " + commentText);
             console.log("Rating: " + rating);
+            console.log("Subject: " + subject);
 
             // Assume submission logic succeeds
-            if (commentText && rating) {
+            if (commentText && rating && subject) {
                 // Show submission success message
                 var messageElement = document.createElement("div");
-                messageElement.textContent = "Your comment and rating have been submitted successfully!";
+                messageElement.textContent = "Your comment and rating for " + subject + " have been submitted successfully!";
                 messageElement.style.color = "green"; // Optional: Styling for success message
                 document.getElementById("review-section").appendChild(messageElement);
                 
                 // Optional: Clear input fields or hide comment input after submission
                 document.getElementById("commentText").value = "";
                 document.getElementById("commentInput").style.display = "none";
+                document.getElementById("subjectSelector").style.display = "none";
+                document.getElementById("writeReviewBtn").textContent = "Write a Review or feedback";
             } else {
-                // Show error message if comment or rating is missing
-                alert("Please enter both a comment and a rating.");
+                // Show error message if comment, rating, or subject is missing
+                alert("Please enter both a comment, a rating, and select a subject.");
             }
         }
 
