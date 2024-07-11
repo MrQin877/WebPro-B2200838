@@ -1,15 +1,13 @@
 {
     "name": "webpro-b2200838/my-awesome-package",
-    "description": "good",
+    "description": "A description of your awesome package",
     "autoload": {
         "psr-4": {
             "WebproB2200838\\MyAwesomePackage\\": "src/"
         }
     },
-    "authors": [
-        {
-            "name": "juhyeong"
-        }
-    ],
-    "require": {}
+    "config": {
+        "http-proxy": "http://your-proxy-host:port",
+        "https-proxy": "http://your-proxy-host:port"
+    }
 }
