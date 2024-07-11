@@ -21,14 +21,19 @@ session_start();
 // POST 데이터 가져오기
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // 사용자 ID 가져오기 (세션 사용 예시)
-    $userId = $_SESSION['UserID']; // 이 부분은 실제 세션 변수에 맞게 수정해야 합니다.
+    if (isset($_SESSION['UserID'])) {
+        $userId = $_SESSION['UserID'];
+    } else {
+        die("User ID not found in session.");
+    }
 
     // 리뷰 텍스트 및 별점 가져오기
-    $reviewText = $_POST['review'];
-    $star = $_POST['star'];
+    $reviewText = $_POST['commentText'];
+    $star = $_POST['rating'];
+    $program = $_POST['subject'];
 
     // SQL 쿼리 생성
-    $sql = "INSERT INTO user_review (review, star, UserID) VALUES (?, ?, ?)";
+    $sql = "INSERT INTO user_review (review, star, UserID, program) VALUES (?, ?, ?, ?)";
 
     // SQL 문 준비
     $stmt = $conn->prepare($sql);
@@ -37,7 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // 매개변수 바인딩 및 실행
-    $stmt->bind_param("ssi", $reviewText, $star, $userId);
+    $stmt->bind_param("siss", $reviewText, $star, $userId, $program);
     if ($stmt->execute() === true) {
         echo "Review saved successfully."; // 성공 메시지 반환
     } else {
