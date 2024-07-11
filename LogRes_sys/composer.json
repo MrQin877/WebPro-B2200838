@@ -11,3 +11,10 @@
         "https-proxy": "http://your-proxy-host:port"
     }
 }
+{
+    "autoload": {
+        "psr-4": {
+            "Namespace\\Prefix\\": "src/"
+        }
+    }
+}
