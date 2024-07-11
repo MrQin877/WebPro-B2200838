@@ -1,6 +1,11 @@
 <?php
 session_start();
 
+if (!isset($_SESSION['user_id'])) {
+    echo json_encode(['error' => 'User not logged in']);
+    exit();
+}
+
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -13,19 +18,21 @@ if ($conn->connect_error) {
 
 $user_id = $_SESSION['user_id'];
 
-// Initialize an array to store user data
 $userData = [
     'username' => '',
     'email' => '',
     'birthday' => '',
     'phone' => '',
     'nickname' => '',
-    'bio' => '',
-    'photo' => ''
+    'bio' => ''
 ];
 
-// Get data from user_registration
-$sql = "SELECT username, email, birthday, phone FROM user_registration WHERE id = ?";
+$sql = "SELECT ur.Username, ur.Email, ur.Birth, ur.PhoneNumber, 
+               COALESCE(uop.nickname, '') AS nickname, 
+               COALESCE(uop.bio, '') AS bio
+        FROM user_registration ur
+        LEFT JOIN user_optional uop ON ur.UserID = uop.user_id
+        WHERE ur.UserID = ?;";
 $stmt = $conn->prepare($sql);
 if ($stmt === false) {
     die("Error preparing statement: " . $conn->error);
@@ -38,22 +45,6 @@ if ($result->num_rows > 0) {
 }
 $stmt->close();
 
-// Get data from user_optional
-$sql = "SELECT nickname, bio FROM user_optional WHERE user_id = ?";
-$stmt = $conn->prepare($sql);
-if ($stmt === false) {
-    die("Error preparing statement: " . $conn->error);
-}
-$stmt->bind_param("i", $user_id);
-$stmt->execute();
-$result = $stmt->get_result();
-if ($result->num_rows > 0) {
-    $userData = array_merge($userData, $result->fetch_assoc());
-}
-$stmt->close();
-
-
-// Output JSON response
 header('Content-Type: application/json');
 echo json_encode($userData);
 

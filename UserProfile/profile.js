@@ -1,8 +1,6 @@
 document.addEventListener("DOMContentLoaded", function() {
     const saveChangesForm = document.getElementById('saveChangesForm');
     const optionalDataInput = document.getElementById('optionalData');
-    const fileInput = document.getElementById('fileToUpload');
-
     // Fetch user data on page load
     fetchUserData();
 
@@ -17,9 +15,6 @@ document.addEventListener("DOMContentLoaded", function() {
             // Store optional data in hidden input
             optionalDataInput.value = JSON.stringify({ nickname, bio });
             saveChangesForm.action = 'save_optional.php';
-        } else if (action === 'uploadPhoto') {
-            // Handle file upload
-            saveChangesForm.action = 'photo_upload.php';
         }
     });
 
@@ -40,6 +35,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 
+
 function fetchUserData() {
     fetch('get_user_data.php')
         .then(response => {
@@ -49,15 +45,15 @@ function fetchUserData() {
             return response.json();
         })
         .then(data => {
-            document.getElementById('usernameInput').value = data.username || '';
-            document.getElementById('emailInput').value = data.email || '';
-            document.getElementById('birthdayInput').value = data.birthday || '';
-            document.getElementById('phoneNumberInput').value = data.phone || '';
-            document.getElementById('nicknameInput').value = data.nickname || '';
-            document.getElementById('bioInput').value = data.bio || '';
-
-            if (data.photo) {
-                document.getElementById('profilePicture').src = data.photo;
+            if (data.error) {
+                console.error('Error:', data.error);
+            } else {
+                document.getElementById('usernameInput').value = data.username || '';
+                document.getElementById('emailInput').value = data.email || '';
+                document.getElementById('birthdayInput').value = data.birthday || '';
+                document.getElementById('phoneNumberInput').value = data.phone || '';
+                document.getElementById('nicknameInput').value = data.nickname || '';
+                document.getElementById('bioInput').value = data.bio || '';
             }
         })
         .catch(error => {
