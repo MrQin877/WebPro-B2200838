@@ -86,12 +86,11 @@
         </section>
         <main id="programList" class="program-grid"></main>
         
-        <!-- Feedback and Review Section -->
-        <section id="feedback-section" style="text-align: center; margin-top: 50px;">
-            <h2>Share Your Experiences</h2>
-            <!-- Buttons to Toggle Comment Input -->
-            <button onclick="toggleCommentInput('review')">Write a Review</button>
-            <button onclick="toggleCommentInput('feedback')">Leave Feedback</button>
+        <!-- Write a Review Section -->
+        <section id="review-section" style="text-align: center; margin-top: 50px;">
+            <h2>Share Your Experience</h2>
+            <!-- Toggle Comment Input -->
+            <button onclick="toggleCommentInput('review')">Write a Review or feedback</button>
             
             <!-- Comment Input -->
             <div id="commentInput" class="comment-input" style="display: none;">
@@ -103,7 +102,7 @@
                     <input type="radio" id="star1" name="rating" value="1"><label for="star1"></label>
                 </div>
                 <br>
-                <textarea id="commentText" rows="4" placeholder="Write your comment..."></textarea>
+                <textarea id="commentText" rows="4" placeholder="Write your review or feedback..."></textarea>
                 <br>
                 <button type="button" onclick="submitComment()">Submit</button>
             </div>
@@ -118,6 +117,7 @@
     <footers></footers>
     
     <script>
+        // Functions for handling ratings and comments
         function toggleCommentInput(type) {
             var commentInput = document.getElementById("commentInput");
             var commentText = document.getElementById("commentText");
@@ -125,7 +125,7 @@
             // Toggle visibility of comment input
             if (commentInput.style.display === "none" || commentInput.style.display === "") {
                 commentInput.style.display = "block";
-                commentText.placeholder = "Write your " + type + "...(255Characters)";
+                commentText.placeholder = "Write your " + type + "...(255Characters limit)";
             } else {
                 commentInput.style.display = "none";
             }
