@@ -68,3 +68,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 // 데이터베이스 연결 종료
 $conn->close();
 ?>
+composer --version
