@@ -8,6 +8,71 @@
     <link rel="stylesheet" href="../footer-style.css">
     <link rel="stylesheet" href="../header-style.css">
     <script src="../multiUsage.js" defer></script>
+    <script src="detailP3.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <style>
+        .rating {
+            display: flex;
+            justify-content: center; /* Center align stars */
+            unicode-bidi: bidi-override;
+            font-size: 0;
+            position: relative;
+            margin-bottom: 20px; /* Adjust spacing between rating and input box */
+        }
+
+        .rating > input {
+            display: none;
+        }
+
+        .rating > label {
+            position: relative;
+            font-size: 40px; /* Adjust size as needed */
+            cursor: pointer;
+            margin-left: 10px; /* Adjust spacing between stars */
+        }
+
+        .rating > label:before {
+            content: "★";
+            display: block;
+        }
+
+        .rating > input:checked ~ label,
+        .rating > input:checked ~ label ~ label {
+            color: #fdd835; /* Color when checked */
+        }
+
+        .rating > label:hover,
+        .rating > label:hover ~ label {
+            color: #fdd835; /* Color on hover */
+        }
+
+        .comment-input {
+            margin-top: 20px; /* Adjust top margin as needed */
+        }
+
+        .comment-input textarea {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            margin-top: 10px; /* Adjust top margin as needed */
+        }
+
+        .comment-input button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #fdd835; /* Button background color */
+            color: #fff; /* Button text color */
+            border: none;
+            border-radius: 5px;
+            margin-top: 10px; /* Adjust top margin as needed */
+        }
+
+        .rating-reverse {
+            flex-direction: row-reverse; /* Reverse direction for rating */
+        }
+    </style>
 </head>
 <body>
     <headers></headers>
@@ -20,10 +85,76 @@
             </div>
         </section>
         <main id="programList" class="program-grid"></main>
+        
+        <!-- Feedback and Review Section -->
+        <section id="feedback-section" style="text-align: center; margin-top: 50px;">
+            <h2>Share Your Experiences</h2>
+            <!-- Buttons to Toggle Comment Input -->
+            <button onclick="toggleCommentInput('review')">Write a Review</button>
+            <button onclick="toggleCommentInput('feedback')">Leave Feedback</button>
+            
+            <!-- Comment Input -->
+            <div id="commentInput" class="comment-input" style="display: none;">
+                <div class="rating rating-reverse">
+                    <input type="radio" id="star5" name="rating" value="5"><label for="star5"></label>
+                    <input type="radio" id="star4" name="rating" value="4"><label for="star4"></label>
+                    <input type="radio" id="star3" name="rating" value="3"><label for="star3"></label>
+                    <input type="radio" id="star2" name="rating" value="2"><label for="star2"></label>
+                    <input type="radio" id="star1" name="rating" value="1"><label for="star1"></label>
+                </div>
+                <br>
+                <textarea id="commentText" rows="4" placeholder="Write your comment..."></textarea>
+                <br>
+                <button type="button" onclick="submitComment()">Submit</button>
+            </div>
+            
+            <!-- Review Display Section -->
+            <div id="reviews">
+                <!-- Reviews will be dynamically loaded here -->
+            </div>
+        </section>
     </div>
-    <script src="detailP3.js"></script>
+    
     <footers></footers>
-    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    
+    <script>
+        function toggleCommentInput(type) {
+            var commentInput = document.getElementById("commentInput");
+            var commentText = document.getElementById("commentText");
+
+            // Toggle visibility of comment input
+            if (commentInput.style.display === "none" || commentInput.style.display === "") {
+                commentInput.style.display = "block";
+                commentText.placeholder = "Write your " + type + "...(255Characters)";
+            } else {
+                commentInput.style.display = "none";
+            }
+        }
+
+        function submitComment() {
+            var commentText = document.getElementById("commentText").value;
+            var rating = getSelectedRating(); // Implement function to get selected rating
+
+            // Implement logic to submit comment and rating to server
+            console.log("Comment: " + commentText);
+            console.log("Rating: " + rating);
+
+            // Optional: Clear input fields or hide comment input after submission
+            // document.getElementById("commentText").value = "";
+            // document.getElementById("commentInput").style.display = "none";
+        }
+
+        function getSelectedRating() {
+            var stars = document.getElementsByName("rating");
+
+            for (var i = 0; i < stars.length; i++) {
+                if (stars[i].checked) {
+                    return stars[i].value;
+                }
+            }
+
+            return null; // No rating selected
+        }
+    </script>
 </body>
 </html>
