@@ -1,13 +1,5 @@
 <?php
-// PHPMailer 클래스 사용
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
-
-// PHPMailer 클래스 파일 직접 포함
-require 'PHPMailer/src/Exception.php';
-require 'PHPMailer/src/PHPMailer.php';
-require 'PHPMailer/src/SMTP.php';
-
+// 데이터베이스 연결 정보
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -60,33 +52,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             // 삽입이 성공한 경우
             if ($stmt->execute()) {
-                // PHPMailer 객체 생성 및 초기 설정
-                $mail = new PHPMailer(true);
-                try {
-                    // 서버 설정
-                    $mail->isSMTP();
-                    $mail->Host = 'smtp.gmail.com'; // Gmail SMTP 서버 주소
-                    $mail->SMTPAuth = true;
-                    $mail->Username = 'your-email@gmail.com'; // 실제 사용할 Gmail 주소
-                    $mail->Password = 'your-email-password'; // Gmail 비밀번호
-                    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-                    $mail->Port = 587;
-
-                    // 수신자 설정
-                    $mail->setFrom('your-email@gmail.com', 'Your Name'); // 실제 사용할 Gmail 주소와 발신자 이름
-                    $mail->addAddress($Email, $Username); // 이미 코드에서 설정된 값 그대로 사용
-
-                    // 이메일 내용 설정
-                    $mail->isHTML(true);
-                    $mail->Subject = 'Registration Successful';
-                    $mail->Body = '<p>Dear ' . $Username . ',</p><p>Congratulations! You have successfully registered.</p><p>Best regards,<br>Your Company</p>';
-
-                    // 이메일 전송
-                    $mail->send();
-                    echo "<script>alert('Registration successful! A congratulatory email has been sent to your registered email.'); window.location.href = 'Nlogin.html';</script>";
-                } catch (Exception $e) {
-                    echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
-                }
+                // 이메일 전송 파일 포함 및 전송 함수 호출
+                include 'send_email.php';
+                sendWelcomeEmail($Email, $Username);
+                echo "<script>alert('Registration successful! A congratulatory email has been sent to your registered email.'); window.location.href = 'Nlogin.html';</script>";
             } else {
                 echo "Error: " . $stmt->error;
             }
