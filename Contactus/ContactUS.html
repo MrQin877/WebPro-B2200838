@@ -56,7 +56,54 @@
                     <img src="../images/Contact-icon3.png" alt="phone-icon" class="icon">
                     <p style="text-decoration: underline;">SmartStudySport@gmail.com</p>
                 </div>
-                <button type="button" class="btn btn-secondary">Click Me For More Detail</button>
+                <button type="button" class="btn btn-secondary" onclick="window.location.href='#popup'">Click Me For More Detail</button>
+            </div>
+
+            <div id="popup" class="overlay">
+                <div class="wrapper">
+                    <a href="#" class="exit">&times;</a>
+                    <div class="contact-form">
+                        <h1>Contact Form</h1>
+                        <form class="form" action="contactform.php" method="POST">
+                            <div class="form-group">
+                                <label for="name">Name:</label>
+                                <input type="text" class="form-control" id="name" placeholder="Enter name" name="name" required>
+                            </div>
+                            <div style="height: 20px;"></div>
+                            <div class="form-group">
+                                <label for="email">Email:</label>
+                                <input type="email" class="form-control" id="email" placeholder="Enter email" name="email" required>
+                            </div>
+                            <div style="height: 20px;"></div>
+                            <div class="form-group">
+                                <label for="phnum">Phone Number:</label>
+                                <input type="number" class="form-control" id="phnum" placeholder="Enter phone number" name="phnum" required>
+                            </div>
+                            <div style="height: 20px;"></div>
+                            <div class="form-group">
+                                <label for="question">Question (optional):</label>
+                                <input type="text" class="form-control" id="question" placeholder="Any question to ask?" name="question">
+                            </div>
+                            <div style="height: 20px;"></div>
+                            <div class="form-group">
+                                <label for="program">Your Interest Subject:</label>
+                                <select name="program" id="program" required>
+                                    <option value="malay">Malay</option>
+                                    <option value="english">English</option>
+                                    <option value="science">Science</option>
+                                    <option value="math">Math</option>
+                                    <option value="history">History</option>
+                                    <option value="all">All</option>
+                                </select>
+                            </div>
+                            <div style="height: 20px;"></div>
+                            <button type="submit" class="btn btn-secondary">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+                    </div>
+                </div>
             </div>
     
         </div>
