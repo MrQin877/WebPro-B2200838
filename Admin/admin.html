@@ -33,7 +33,7 @@
                                 
                         <div class="tab-pane fade" id="account-teacher">
                             <div class="card-body pb-2">
-                                <form action="teacher.php" method="POST" id="teacherForm" enctype="multipart/form-data" class="card-body media align-items-center">
+                                <form action="teach_upd.php" method="POST" id="teacherForm" enctype="multipart/form-data" class="card-body media align-items-center">
                                     <input type="hidden" name="teacher_id" id="teacher_id">
                                     <div style="display: flex; flex-direction: row;">
                                         <label class="btn btn-outline-primary">
@@ -109,64 +109,11 @@
                 $(document).ready(function () {
                     // 로그아웃 버튼 이벤트 리스너
                     $('#logoutButton').click(function () {
-                        window.location.href = '/path/to/logout.php';  // 로그아웃 PHP 파일 경로
+                        window.location.href = '../logout.php';  // 로그아웃 PHP 파일 경로
                     });
             
-                    // 계정 삭제 확인 모달의 삭제 버튼 이벤트 리스너
-                    $('#confirmDeleteButton').click(function () {
-                        var password = $('#deletePasswordInput').val();
-                        $.ajax({
-                            url: '/path/to/delete_account.php',  // 계정 삭제 PHP 파일 경로
-                            type: 'POST',
-                            data: { password: password },
-                            success: function (response) {
-                                var data = JSON.parse(response);
-                                if (data.success) {
-                                    alert('Your account has been deleted.');
-                                    window.location.href = '/login.html';  // 계정 삭제 후 리다이렉트할 페이지
-                                } else {
-                                    alert('Failed to delete account.');
-                                }
-                            },
-                            error: function () {
-                                console.error('Failed to delete account.');
-                            }
-                        });
-                    });
-            
-                    // Save changes 버튼 이벤트 리스너
-                    $('#saveChangesButton').click(function () {
-                        var userData = {
-                            username: $('#usernameInput').val(),
-                            name: $('#nameInput').val(),
-                            email: $('#emailInput').val(),
-                            bio: $('#bioTextarea').val(),
-                            birthday: $('#birthdayInput').val(),
-                            phone: $('#phoneInput').val(),
-                            notifications: $('#notificationsSwitch').is(':checked') ? 1 : 0 // 예시로 한 가지 알림 설정만 포함
-                        };
-            
-                        $.ajax({
-                            url: '/path/to/save_changes.php',  // 저장 PHP 파일 경로
-                            type: 'POST',
-                            data: userData,
-                            success: function (response) {
-                                var data = JSON.parse(response);
-                                if (data.success) {
-                                    alert('Changes saved successfully.');
-                                } else {
-                                    alert('Failed to save changes.');
-                                }
-                            },
-                            error: function () {
-                                console.error('Failed to save changes.');
-                            }
-                        });
-                    });
-            
-                    // Cancel 버튼 이벤트 리스너
                     $('#backButton').click(function () {
-                        window.history.back();
+                        window.location.href='../A-HomePage/HomePage.html';
                     });
                 });
             </script>

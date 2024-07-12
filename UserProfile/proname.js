@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 console.error('Error:', data.error);
             } else {
                 // Call updateDisplay with the courses from the server
-                updateDisplay(data.courses);
+                courseDisplay(data.courses);
             }
         })
         .catch(error => {
@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function() {
         });
 }); 
 
-function updateDisplay(courses) {
+function courseDisplay(courses) {
     var coursesList = document.getElementById('coursesList');
     coursesList.innerHTML = '';
     courses.forEach(function(course) {
