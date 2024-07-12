@@ -22,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Validate input
     if (empty($Email) || empty($Password)) {
-        echo "<script>alert('Email and Password are required fields.'); window.location.href = 'login.html';</script>";
+        echo "<script>alert('Email and Password are required fields.'); window.location.href = 'Nlogin.html';</script>";
     } else {
         // Prepare a select statement
         $stmt = $conn->prepare("SELECT UserID, password FROM user_registration WHERE Email = ?");
@@ -40,10 +40,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $_SESSION['user_id'] = $UserID;
                 echo "<script>alert('Login successful.'); window.location.href = '../A-HomePage/HomePage.html';</script>";
             } else {
-                echo "<script>alert('Invalid email or password.'); window.location.href = 'login.html';</script>";
+                echo "<script>alert('Invalid email or password.'); window.location.href = 'Nlogin.html';</script>";
             }
         } else {
-            echo "<script>alert('No account found with that email.'); window.location.href = 'login.html';</script>";
+            echo "<script>alert('No account found with that email.'); window.location.href = 'Nlogin.html';</script>";
         }
 
         $stmt->close();
