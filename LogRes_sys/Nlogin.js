@@ -31,6 +31,18 @@ function showSuccessMessage(event, type) {
     successMessage.style.display = 'block';
 }
 
+function showErrorMessage(event, type) {
+    event.preventDefault();
+    const errorMessage = document.getElementById('errorMessage');
+    if (type === 'login-fail') {
+        errorMessage.textContent = 'Login failed! Please try again.';
+        setTimeout(() => {
+            window.location.href = 'Nlogin.html';
+        }, 2000);
+    }
+    errorMessage.style.display = 'block';
+}
+
 function redirectToHomePage() {
     window.location.href = '../HomePage.html';
 }
