@@ -22,9 +22,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     const errorMessage = document.getElementById('errorMessage');
                     errorMessage.textContent = 'Email and Password are required fields.';
                     errorMessage.style.display = 'block';
-                    setTimeout(() => {
-                        window.location.href = 'login.html';
-                    }, 2000);
                 });
               </script>";
     } else {
@@ -49,9 +46,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             const errorMessage = document.getElementById('errorMessage');
                             errorMessage.textContent = 'Invalid email or password.';
                             errorMessage.style.display = 'block';
-                            setTimeout(() => {
-                                window.location.href = 'login.html';
-                            }, 2000);
                         });
                       </script>";
             }
@@ -61,9 +55,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         const errorMessage = document.getElementById('errorMessage');
                         errorMessage.textContent = 'No account found with that email.';
                         errorMessage.style.display = 'block';
-                        setTimeout(() => {
-                            window.location.href = 'login.html';
-                        }, 2000);
                     });
                   </script>";
         }
