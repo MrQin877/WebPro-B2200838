@@ -3,6 +3,7 @@ function redirectToResetPage(event) {
     const email = document.querySelector('#passwordRecoveryForm input[type="email"]').value;    
     window.location.href = `reset.html?email=${encodeURIComponent(email)}`;
 }
+
 function showSuccessMessage(event, type) {
     event.preventDefault();
     const successMessage = document.getElementById('successMessage');
@@ -24,6 +25,25 @@ function showSuccessMessage(event, type) {
     }
     successMessage.style.display = 'block';
 }
+
+function showErrorMessage(event, type) {
+    event.preventDefault();
+    const errorMessage = document.getElementById('errorMessage');
+    if (type === 'login-fail') {
+        errorMessage.textContent = 'Login failed! Please try again.';
+        setTimeout(() => {
+            window.location.href = 'Nlogin.html';
+        }, 2000);
+    }
+    errorMessage.style.display = 'block';
+}
+
 function redirectToHomePage() {
     window.location.href = '../HomePage.html';
 }
+
+// Example usage for login form submission handling
+document.getElementById('loginForm').addEventListener('submit', function(event) {
+    // Simulating a login failure
+    showErrorMessage(event, 'login-fail');
+});
