@@ -198,6 +198,11 @@
             document.getElementById("commentInput").style.display = "none";
             document.getElementById("subjectSelector").style.display = "none";
             document.getElementById("writeReviewBtn").textContent = "Write a Review or feedback";
+
+            // Remove success message after 5 seconds
+            setTimeout(function() {
+                successMessage.remove();
+            }, 5000);
         }
 
         function getSelectedRating() {
@@ -208,7 +213,7 @@
                     return stars[i].value;
                 }
             }
-return null; // No rating selected
+            return null; // No rating selected
         }
     </script>
 </body>
