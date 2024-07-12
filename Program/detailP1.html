@@ -124,7 +124,7 @@
             </div>
             
             <!-- Comment Input -->
-            <div id="commentInput" class="comment-input" style="display: none;">
+            <div id="commentInput" class="comment-input"style="display: none;">
                 <div class="rating rating-reverse">
                     <input type="radio" id="star5" name="rating" value="5"><label for="star5"></label>
                     <input type="radio" id="star4" name="rating" value="4"><label for="star4"></label>
@@ -178,48 +178,24 @@
             var rating = getSelectedRating(); // Implement function to get selected rating
             var subject = document.getElementById("subject").value; // Get selected subject
 
-            // Implement logic to submit comment, rating, and subject to server
-            console.log("Comment: " + commentText);
-            console.log("Rating: " + rating);
-            console.log("Subject: " + subject);
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "review.php", true);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
-            if (commentText && rating && subject) {
-                // AJAX 요청 생성
-                var xhr = new XMLHttpRequest();
-                xhr.open("POST", "review.php", true);
-                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            var formData = "review=" + encodeURIComponent(commentText) + "&star=" + rating + "&program=" + subject;
+            xhr.send(formData);
 
-                xhr.onreadystatechange = function() {
-                    if (xhr.readyState === 4 && xhr.status === 200) {
-                        // 성공 메시지 표시
-                        var messageElement = document.createElement("div");
-                        messageElement.textContent = "Your comment and rating for " + subject + " have been submitted successfully!";
-                        messageElement.style.color = "green"; // 성공 메시지 스타일링 (선택 사항)
-                        document.getElementById("review-section").appendChild(messageElement);
+            // Display success message
+            var successMessage = document.createElement("div");
+            successMessage.textContent = "Your review has been submitted successfully!";
+            successMessage.style.color = "green";
+            document.getElementById("review-section").appendChild(successMessage);
 
-                        // 메시지를 5초 후에 제거
-                        setTimeout(function() {
-                            document.getElementById("review-section").removeChild(messageElement);
-                        }, 5000);
-
-                        // 입력 필드 초기화 또는 제출 후 숨기기 (선택 사항)
-                        document.getElementById("commentText").value = "";
-                        document.getElementById("commentInput").style.display = "none";
-                        document.getElementById("subjectSelector").style.display = "none";
-                        document.getElementById("writeReviewBtn").textContent = "Write a Review or feedback";
-                    } else if (xhr.readyState === 4) {
-                        // 오류 메시지 표시
-                        alert("There was an error submitting your review. Please try again.");
-                    }
-                };
-
-                // 데이터 전송
-                xhr.send("review=" + encodeURIComponent(commentText) + "&star=" + rating + "&program=" + subject);
-
-            } else {
-                // 코멘트, 평점 또는 주제가 없으면 오류 메시지 표시
-                alert("Please enter both a comment, a rating, and select a subject.");
-            }
+            // Clear input fields
+            document.getElementById("commentText").value = "";
+            document.getElementById("commentInput").style.display = "none";
+            document.getElementById("subjectSelector").style.display = "none";
+            document.getElementById("writeReviewBtn").textContent = "Write a Review or feedback";
         }
 
         function getSelectedRating() {
@@ -230,13 +206,8 @@
                     return stars[i].value;
                 }
             }
-
-            return null; // No rating selected
+return null; // No rating selected
         }
-
-        // Dummy functions for simulation (replace with actual implementation)
-        function filterSuggestions() {}
-        function showAllSuggestions() {}
     </script>
 </body>
 </html>
