@@ -3,6 +3,7 @@ function redirectToResetPage(event) {
     const email = document.querySelector('#passwordRecoveryForm input[type="email"]').value;    
     window.location.href = `reset.html?email=${encodeURIComponent(email)}`;
 }
+
 function showSuccessMessage(event, type) {
     event.preventDefault();
     const successMessage = document.getElementById('successMessage');
@@ -21,9 +22,15 @@ function showSuccessMessage(event, type) {
         setTimeout(() => {
             window.location.href = 'Nlogin.html'; 
         }, 2000); 
+    } else if (type === 'login-fail') {
+        successMessage.textContent = 'Login failed! Please try again.';
+        setTimeout(() => {
+            window.location.href = 'Nlogin.html';
+        }, 2000);
     }
     successMessage.style.display = 'block';
 }
+
 function redirectToHomePage() {
     window.location.href = '../HomePage.html';
 }
