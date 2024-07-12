@@ -46,3 +46,9 @@ function showErrorMessage(event, type) {
 function redirectToHomePage() {
     window.location.href = '../HomePage.html';
 }
+
+// Example usage for login form submission handling
+document.getElementById('loginForm').addEventListener('submit', function(event) {
+    // Simulating a login failure
+    showErrorMessage(event, 'login-fail');
+});
