@@ -21,12 +21,21 @@ session_start();
 // POST 데이터 가져오기
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // 사용자 ID 가져오기 (세션 사용 예시)
-    $userId = $_SESSION['UserID']; // 이 부분은 실제 세션 변수에 맞게 수정해야 합니다.
+    if (isset($_SESSION['UserID'])) {
+        $userId = $_SESSION['UserID'];
+    } else {
+        die("User ID not found. Please log in.");
+    }
 
     // 리뷰 텍스트, 별점, 프로그램 이름 가져오기
-    $reviewText = $_POST['review'];
-    $star = $_POST['star'];
-    $program = $_POST['program']; // 프로그램 이름 가져오기
+    $reviewText = isset($_POST['review']) ? $_POST['review'] : '';
+    $star = isset($_POST['star']) ? $_POST['star'] : '';
+    $program = isset($_POST['program']) ? $_POST['program'] : '';
+
+    // 입력 값 유효성 검사
+    if (empty($reviewText) || empty($star) || empty($program)) {
+        die("Please provide review text, star rating, and program.");
+    }
 
     // SQL 쿼리 생성
     $sql = "INSERT INTO user_review (review, star, UserID, program) VALUES (?, ?, ?, ?)";
@@ -42,7 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($stmt->execute() === true) {
         echo "Review saved successfully."; // 성공 메시지 반환
     } else {
-        echo "Error: " . $sql . "<br>" . $conn->error; // 오류 메시지 반환
+        echo "Error: " . $sql . "<br>" . $stmt->error; // 오류 메시지 반환
     }
 
     // 문 닫기
