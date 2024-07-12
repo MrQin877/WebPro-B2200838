@@ -4,13 +4,12 @@ function redirectToResetPage(event) {
     window.location.href = `reset.html?email=${encodeURIComponent(email)}`;
 }
 
-function showSuccessMessage(event, type) {
-    event.preventDefault();
+function showSuccessMessage(type) {
     const successMessage = document.getElementById('successMessage');
     if (type === 'login') {
-        successMessage.textContent = 'Successfully login!';
+        successMessage.textContent = 'Successfully logged in!';
         setTimeout(() => {
-            window.location.href = 'Nlogin.html'; 
+            window.location.href = '../A-HomePage/HomePage.html'; 
         }, 2000); 
     } else if (type === 'register') {
         successMessage.textContent = 'You have registered!';
@@ -26,24 +25,12 @@ function showSuccessMessage(event, type) {
     successMessage.style.display = 'block';
 }
 
-function showErrorMessage(event, type) {
-    event.preventDefault();
-    const errorMessage = document.getElementById('errorMessage');
-    if (type === 'login-fail') {
-        errorMessage.textContent = 'Login failed! Please try again.';
-        setTimeout(() => {
-            window.location.href = 'Nlogin.html';
-        }, 2000);
+// This function can be used to display success messages
+function handleServerResponse(response) {
+    if (response.status === 'success') {
+        showSuccessMessage(response.type);
+    } else {
+        showErrorMessage(response.type);
     }
-    errorMessage.style.display = 'block';
 }
 
-function redirectToHomePage() {
-    window.location.href = '../HomePage.html';
-}
-
-// Example usage for login form submission handling
-document.getElementById('loginForm').addEventListener('submit', function(event) {
-    // Simulating a login failure
-    showErrorMessage(event, 'login-fail');
-});

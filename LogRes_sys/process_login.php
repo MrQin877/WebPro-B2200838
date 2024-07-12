@@ -1,12 +1,10 @@
 <?php
-// /login/process_login.php
-
-session_start(); // Start the session
+session_start();
 
 $servername = "localhost";
 $username = "root";
-$password = "";  // Change this to your actual database password
-$dbname = "user"; // Change this to your actual database name
+$password = "";
+$dbname = "user";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -38,12 +36,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Verify password
             if (password_verify($Password, $hashedPassword)) {
                 $_SESSION['user_id'] = $UserID;
-                echo "<script>alert('Login successful.'); window.location.href = '../A-HomePage/HomePage.html';</script>";
+                echo "<script>window.location.href = '../A-HomePage/HomePage.html';</script>";
             } else {
-                echo "<script>alert('Invalid email or password.'); window.location.href = 'Nlogin.html';</script>";
+                echo "<script>window.location.href = 'Nlogin.html?error=invalid';</script>";
             }
         } else {
-            echo "<script>alert('No account found with that email.'); window.location.href = 'Nlogin.html';</script>";
+            echo "<script>window.location.href = 'Nlogin.html?error=noaccount';</script>";
         }
 
         $stmt->close();
