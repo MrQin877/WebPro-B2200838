@@ -40,10 +40,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $_SESSION['user_id'] = $UserID;
                 echo "<script>alert('Login successful.'); window.location.href = '../A-HomePage/HomePage.html';</script>";
             } else {
-                echo "<script>alert('Invalid email or password.'); window.location.href = 'login.html';</script>";
+                echo "<script>
+                        alert('Invalid email or password.');
+                        window.onload = function() {
+                            showErrorMessage(null, 'login-fail');
+                        };
+                      </script>";
             }
         } else {
-            echo "<script>alert('No account found with that email.'); window.location.href = 'login.html';</script>";
+            echo "<script>
+                    alert('No account found with that email.');
+                    window.onload = function() {
+                        showErrorMessage(null, 'login-fail');
+                    };
+                  </script>";
         }
 
         $stmt->close();

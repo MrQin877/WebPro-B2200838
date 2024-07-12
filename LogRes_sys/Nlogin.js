@@ -5,7 +5,7 @@ function redirectToResetPage(event) {
 }
 
 function showSuccessMessage(event, type) {
-    event.preventDefault();
+    if (event) event.preventDefault();
     const successMessage = document.getElementById('successMessage');
     if (type === 'login') {
         successMessage.textContent = 'Successfully login!';
@@ -32,7 +32,7 @@ function showSuccessMessage(event, type) {
 }
 
 function showErrorMessage(event, type) {
-    event.preventDefault();
+    if (event) event.preventDefault();
     const errorMessage = document.getElementById('errorMessage');
     if (type === 'login-fail') {
         errorMessage.textContent = 'Login failed! Please try again.';
@@ -46,9 +46,3 @@ function showErrorMessage(event, type) {
 function redirectToHomePage() {
     window.location.href = '../HomePage.html';
 }
-
-// Example usage for login form submission handling
-document.getElementById('loginForm').addEventListener('submit', function(event) {
-    // Simulating a login failure
-    showErrorMessage(event, 'login-fail');
-});
