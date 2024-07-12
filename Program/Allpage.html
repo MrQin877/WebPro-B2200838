@@ -16,8 +16,10 @@
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
+
     gtag('config', 'G-2EB6P2R86H');
     </script>
+
     <style>
         .description-block {
             background-color: #f4f5fb; 
@@ -105,13 +107,6 @@
                 }, 2000); 
                 return; // Do not add the package again
             }
-
-            // Track 'add to cart' event with Google Analytics
-            gtag('event', 'Allpackage_add_to_cart', {
-                'event_category': 'E-commerce',
-                'event_label': programName,
-                'value': 1
-            });
 
             cart.push({ id: 'all-subject-package', name: 'All Subject Package', price: 599, icon: '../images/icon6.jpg', quantity: 1, items: allSubjects });
             localStorage.setItem('cart', JSON.stringify(cart));
