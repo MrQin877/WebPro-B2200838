@@ -92,7 +92,7 @@
     </style>
 </head>
 <body>
-    <header></header>
+    <headers></headers>
     <div class="container" style="margin-bottom: 10%;">
         <section class="align-center" style="margin-top: 9%;">
             <h1>Program List</h1>
@@ -123,13 +123,8 @@
                 </select>
             </div>
             
-            <!-- Email Input -->
-            <div id="emailInput" class="comment-input" style="display: none;">
-                <input type="email" id="userEmail" placeholder="Your email address...">
-            </div>
-            
             <!-- Comment Input -->
-            <div id="commentInput" class="comment-input" style="display: none;">
+            <div id="commentInput" class="comment-input"style="display: none;">
                 <div class="rating rating-reverse">
                     <input type="radio" id="star5" name="rating" value="5"><label for="star5"></label>
                     <input type="radio" id="star4" name="rating" value="4"><label for="star4"></label>
@@ -153,45 +148,27 @@
         </section>
     </div>
     
-    <footer></footer>
+    <footers></footers>
     
     <script src="../multiUsage.js" defer></script>
     <script src="detailP3.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     <script>
-        // Function to check if user email matches logged-in email
-        function checkUserEmail(email) {
-            // You can implement your own logic here to check against logged-in user's email
-            // For demonstration, I'm using a hardcoded example
-            var loggedInEmail = "user@example.com"; // Replace with actual logged-in user email
-
-            if (email === loggedInEmail) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-
         // Functions for handling ratings and comments
         function toggleCommentInput(type) {
             var commentInput = document.getElementById("commentInput");
             var commentText = document.getElementById("commentText");
             var subjectSelector = document.getElementById("subjectSelector");
-            var userEmail = document.getElementById("userEmail");
-            var emailInput = document.getElementById("emailInput");
 
-            // Toggle visibility of comment input, subject selector, email input
+            // Toggle visibility of comment input and subject selector
             if (commentInput.style.display === "none" || commentInput.style.display === "") {
                 commentInput.style.display = "block";
                 subjectSelector.style.display = "block";
-                emailInput.style.display = "block";
-                commentText.placeholder = "Write your " + type + "... (255 Characters limit)";
-                document.getElementById("writeReviewBtn").textContent = "Hide Review Form";
+                commentText.placeholder = "Write your " + type + "...(255 Characters limit)";
             } else {
                 commentInput.style.display = "none";
                 subjectSelector.style.display = "none";
-                emailInput.style.display = "none";
                 document.getElementById("writeReviewBtn").textContent = "Write a Review or feedback";
             }
         }
@@ -200,19 +177,12 @@
             var commentText = document.getElementById("commentText").value;
             var rating = getSelectedRating(); // Implement function to get selected rating
             var subject = document.getElementById("subject").value; // Get selected subject
-            var userEmail = document.getElementById("userEmail").value; // Get user email
-
-            // Check if user email matches logged-in email
-            if (!checkUserEmail(userEmail)) {
-                alert("Please enter your correct email address.");
-                return;
-            }
 
             var xhr = new XMLHttpRequest();
-            xhr.open("POST", "saved_review.php", true);
+            xhr.open("POST", "review.php", true);
             xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
-            var formData = "review=" + encodeURIComponent(commentText) + "&star=" + rating + "&program=" + subject + "&email=" + userEmail;
+            var formData = "review=" + encodeURIComponent(commentText) + "&star=" + rating + "&program=" + subject;
             xhr.send(formData);
 
             // Display success message
@@ -225,7 +195,6 @@
             document.getElementById("commentText").value = "";
             document.getElementById("commentInput").style.display = "none";
             document.getElementById("subjectSelector").style.display = "none";
-            document.getElementById("emailInput").style.display = "none";
             document.getElementById("writeReviewBtn").textContent = "Write a Review or feedback";
         }
 
@@ -237,7 +206,7 @@
                     return stars[i].value;
                 }
             }
-            return null; // No rating selected
+return null; // No rating selected
         }
     </script>
 </body>
