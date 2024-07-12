@@ -92,7 +92,7 @@
     </style>
 </head>
 <body>
-    <header></header>
+    <headers></headers>
     <div class="container" style="margin-bottom: 10%;">
         <section class="align-center" style="margin-top: 9%;">
             <h1>Program List</h1>
@@ -148,7 +148,7 @@
         </section>
     </div>
     
-    <footer></footer>
+    <footers></footers>
     
     <script src="../multiUsage.js" defer></script>
     <script src="detailP3.js"></script>
@@ -217,8 +217,8 @@
                 xhr.send("review=" + encodeURIComponent(commentText) + "&star=" + rating + "&program=" + subject);
 
             } else {
-                // 코멘트, 평점, 주제 모두 필수 입력 사항임을 사용자에게 알리는 메시지 (선택 사항)
-                alert("Please enter your comment, rating, and select a subject before submitting.");
+                // 코멘트, 평점 또는 주제가 없으면 오류 메시지 표시
+                alert("Please enter both a comment, a rating, and select a subject.");
             }
         }
 
@@ -234,7 +234,9 @@
             return null; // No rating selected
         }
 
-        // 추가적인 JavaScript 로직 및 이벤트 처리는 여기에 추가
+        // Dummy functions for simulation (replace with actual implementation)
+        function filterSuggestions() {}
+        function showAllSuggestions() {}
     </script>
 </body>
 </html>
