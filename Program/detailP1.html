@@ -56,6 +56,13 @@
             margin-top: 10px; /* Adjust top margin as needed */
         }
 
+        .comment-input .button-container {
+            display: flex;
+            justify-content: center; /* Center align buttons */
+            gap: 10px; /* Add space between buttons */
+            margin-top: 10px; /* Adjust top margin as needed */
+        }
+
         .comment-input button {
             padding: 10px 20px;
             font-size: 16px;
@@ -64,7 +71,10 @@
             color: #fff; /* Button text color */
             border: none;
             border-radius: 5px;
-            margin-top: 10px; /* Adjust top margin as needed */
+        }
+
+        .cancel-button {
+            background-color: #dc3545; /* Cancel button background color */
         }
 
         .rating-reverse {
@@ -125,7 +135,10 @@
                 <br>
                 <textarea id="commentText" rows="4" placeholder="Write your review or feedback..."></textarea>
                 <br>
-                <button type="button" onclick="submitComment()">Submit</button>
+                <div class="button-container">
+                    <button type="button" onclick="submitComment()">Submit</button>
+                    <button type="button" class="cancel-button" onclick="toggleCommentInput('review')">Cancel</button>
+                </div>
             </div>
             
             <!-- Review Display Section -->
