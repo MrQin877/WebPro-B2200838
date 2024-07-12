@@ -38,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // SQL 쿼리 생성
-    $sql = "INSERT INTO user_review (review, star, UserID, program, reviewID) VALUES ($reviewText,$star,$userId,$program)";
+    $sql = "INSERT INTO user_review (review, star, UserID, program) VALUES (?, ?, ?, ?)";
 
     // SQL 문 준비
     $stmt = $conn->prepare($sql);
@@ -51,7 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($stmt->execute() === true) {
         echo "Review saved successfully."; // 성공 메시지 반환
     } else {
-        echo "Error: " . $sql . "<br>" . $stmt->error; // 오류 메시지 반환
+        echo "Error: " . $stmt->error; // 오류 메시지 반환
     }
 
     // 문 닫기
@@ -61,3 +61,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 // 데이터베이스 연결 닫기
 $conn->close();
 ?>
+
