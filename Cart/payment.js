@@ -40,6 +40,20 @@ document.getElementById('paymentForm').addEventListener('submit', function(e) {
                                     alert("Payment details successfully saved!");
                                     localStorage.removeItem('cart'); // Clear cart after successful payment
                                     window.location.href = 'cart.html'; // Redirect to homepage or success page
+
+                                    // Assuming `response` contains payment details and `cart` contains purchased items
+                                    gtag('event', 'purchase', {
+                                        'transaction_id': response.razorpay_payment_id,
+                                        'value': amount / 100, // Convert to the actual amount in MYR
+                                        'currency': 'MYR',
+                                        'items': cart.map(item => ({
+                                        'id': item.id, // Product ID or unique identifier
+                                        'name': item.name, // Product name
+                                        'quantity': item.quantity || 1,
+                                        'price': item.price || (amount / cart.length) / 100 // Adjust if needed
+                                        }))
+                                    });
+
                                 } else {
                                     alert('Failed to save transaction details: ' + response.message);
                                 }
