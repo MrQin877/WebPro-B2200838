@@ -102,6 +102,13 @@
                 return; // Do not add the program again
             }
 
+            // Track 'add to cart' event with Google Analytics
+            gtag('event', '1002_add_to_cart', {
+                'event_category': 'E-commerce',
+                'event_label': programName,
+                'value': 1
+            });
+
             cart.push({ id: programId, name: programName, price: price, icon: icon, quantity: 1 });
             localStorage.setItem('cart', JSON.stringify(cart));
 
