@@ -129,6 +129,13 @@ html:not(.dark-style) .account-settings-links .list-group-item.active {
     font-size:300%
 }
 
+.Jack-normal-word {
+    font-family: "Jack Armstrong BB";
+    font-weight: 500;
+    margin-bottom: 20px;
+    font-size: small;
+}
+
 @media screen and (max-width:760px) {
     .list-group {
         font-size: medium;

@@ -12,7 +12,7 @@ if (isset($_SESSION['user_id'])) {
     $response['loggedIn'] = false;
     $response['isAdmin'] = false;
 }
-
+// password:smartstudy1507@sport gmail: admin1507@smartstudysport.com
 echo json_encode($response);
 ?>
 
