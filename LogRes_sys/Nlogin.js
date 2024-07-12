@@ -22,11 +22,6 @@ function showSuccessMessage(event, type) {
         setTimeout(() => {
             window.location.href = 'Nlogin.html'; 
         }, 2000); 
-    } else if (type === 'login-fail') {
-        successMessage.textContent = 'Login failed! Please try again.';
-        setTimeout(() => {
-            window.location.href = 'Nlogin.html';
-        }, 2000);
     }
     successMessage.style.display = 'block';
 }
