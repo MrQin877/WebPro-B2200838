@@ -15,6 +15,5 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     function ImageDisplay(image) {
-        alert(image)
         document.getElementById('profilePicture').src = image;
     }

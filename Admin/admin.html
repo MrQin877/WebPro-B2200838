@@ -6,22 +6,20 @@
     <title>Smart Study Sport - User Profile</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script type="text/javascript" src="https://db.onlinewebfonts.com/s/71976204cf6d53991ececd406824ec45?family=Jack+Armstrong+BB"></script>
-    <link rel="stylesheet" href="footer-style.css">
-    <link rel="stylesheet" href="header-style.css">
-    <link rel="stylesheet" href="profile.css">
-    <script src="proname.js" defer></script>
-    <script src="profile.js" defer></script>
+
+    <link rel="stylesheet" href="admin.css">
+
     <script src="photo.js" defer></script>
 </head>
 <body>
     <div class="container light-style flex-grow-1 container-p-y">
-        <h4 class="font-weight-bold py-3 mb-4 Jack-large-word">Account settings</h4>
+        <h4 class="font-weight-bold py-3 mb-4 Jack-large-word">Adminstation</h4>
         <div class="card overflow-hidden">
             <div class="row no-gutters row-bordered row-border-light">
                 <div class="col-md-3 pt-0">
                     <div class="list-group list-group-flush account-settings-links">
                         <a class="list-group-item list-group-item-action active" data-bs-toggle="tab" href="#account-general">User Account</a>
-                        <a class="list-group-item list-group-item-action" data-bs-toggle="tab" href="#account-change-password">Change password</a>
+                        <a class="list-group-item list-group-item-action" data-bs-toggle="tab" href="#account-teacher">Lecture Profile</a>
                         <a class="list-group-item list-group-item-action" data-bs-toggle="tab" href="#account-info">Info</a>
                         <a class="list-group-item list-group-item-action" data-bs-toggle="tab" href="#account-courses">Taking Courses</a>
                         <a class="list-group-item list-group-item-action" data-bs-toggle="tab" href="#account-notifications">Notifications</a>
@@ -30,52 +28,33 @@
                 <div class="col-md-9">
                     <div class="tab-content">
                         <div class="tab-pane fade active show" id="account-general">
-                            <form action="photo_upload.php" method="post" enctype="multipart/form-data" class="card-body media align-items-center">
-                                <img class="okimg" id="profilePicture" src="../images/photo-icon.png" width="250" height="250" alt="Profile Picture">
-                                <div class="media-body ml-4">
-                                    <label class="btn btn-outline-primary">
-                                        Upload new photo
-                                        <input type="file" class="account-settings-fileinput" name="fileToUpload" id="fileToUpload">
-                                    </label> &nbsp;
-                                    <div class="text-light small mt-1">Allowed JPG, GIF or PNG. Max size of 800K</div>
-                                </div>
-                                <input type="hidden" name="action" value="uploadPhoto">
-                                <button type="submit" class="btn btn-primary">Save Photo changes</button>
-                            </form>
-                            <hr class="border-light m-0">
-                            <div class="card-body">
-                                <div class="form-group">
-                                    <label class="form-label">Username</label>
-                                    <input type="text" class="form-control mb-1" id="username" readonly>
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label">Nickname (optional)</label>
-                                    <input type="text" class="form-control mb-1" id="nicknameInput">
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label">E-mail</label>
-                                    <input type="text" class="form-control mb-1" id="emailInput" readonly>
-                                </div>
-                            </div>
                         </div>
                                 
-                        <div class="tab-pane fade" id="account-change-password">
+                        <div class="tab-pane fade" id="account-teacher">
                             <div class="card-body pb-2">
-                                <form method="POST" action="password_change.php">
-                                    <div class="form-group">
-                                        <label class="form-label">Current password</label>
-                                        <input type="password" class="form-control" name="currentPasswordInput" id="currentPasswordInput">
+                                <form action="teacher.php" method="post" enctype="multipart/form-data" class="card-body media align-items-center">
+                                    <div style="display: flex; flex-direction: row;">
+                                        <label class="btn btn-outline-primary">
+                                            Upload new photo
+                                            <input type="file" class="account-settings-fileinput" name="fileInput" id="fileInput" >
+                                        </label>
+                                        <input type="text" class="form-control mb-1" id="fileInput" readonly>
                                     </div>
-                                    <div class="form-group">
-                                        <label class="form-label">New password</label>
-                                        <input type="password" class="form-control" name="newPasswordInput" id="newPasswordInput">
+                                    <div>
+                                        <label class="form-label">Teacher Name</label>
+                                        <input type="text" class="form-control mb-1" id="TeachName">
                                     </div>
-                                    <div class="form-group">
-                                        <label class="form-label">Repeat new password</label>
-                                        <input type="password" class="form-control" name="repeatNewPasswordInput" id="repeatNewPasswordInput">
+                                    <div>
+                                        <label class="form-label">Teacher Education</label>
+                                        <input type="text" class="form-control mb-1" id="TeachEdu">
                                     </div>
-                                    <button type="submit" class="btn btn-primary">Change Password</button>
+                                    <div>
+                                        <label class="form-label">Slogan</label>
+                                        <input type="text" class="form-control mb-1" id="Slogan">
+                                    </div>
+                                    <button type="submit">Update or Add Teacher Profile</button>
                                 </form>
+                                <div id="space"><!-- Place for show profile look --></div>
                             </div>
                         </div>
                         
@@ -142,7 +121,7 @@
                 $(document).ready(function () {
                     // 로그아웃 버튼 이벤트 리스너
                     $('#logoutButton').click(function () {
-                        window.location.href = '../logout.php';  // 로그아웃 PHP 파일 경로
+                        window.location.href = '/path/to/logout.php';  // 로그아웃 PHP 파일 경로
                     });
             
                     // 계정 삭제 확인 모달의 삭제 버튼 이벤트 리스너

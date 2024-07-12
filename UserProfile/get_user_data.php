@@ -27,9 +27,12 @@ $userData = [
     'bio' => ''
 ];
 
-$sql = "SELECT ur.Username, ur.Email, ur.Birth, ur.PhoneNumber, 
-               COALESCE(uop.nickname, '') AS nickname, 
-               COALESCE(uop.bio, '') AS bio
+$sql = "SELECT  COALESCE(ur.Username,'')As username,
+                COALESCE(ur.Email, '') As email,
+                COALESCE(ur.Birth, '') AS birthday,
+                COALESCE(ur.PhoneNumber, '') As phone,
+                COALESCE(uop.nickname, '') AS nickname, 
+                COALESCE(uop.bio, '') AS bio
         FROM user_registration ur
         LEFT JOIN user_optional uop ON ur.UserID = uop.user_id
         WHERE ur.UserID = ?;";

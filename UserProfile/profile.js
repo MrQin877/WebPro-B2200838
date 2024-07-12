@@ -29,10 +29,6 @@ document.addEventListener("DOMContentLoaded", function() {
         reader.readAsDataURL(file);
     });
 
-    document.getElementById('resetButton').addEventListener('click', function() {
-        document.getElementById('profilePicture').src = '../images/photo-icon.png'; // Default image
-        fileInput.value = '';
-    });
 });
 
 
@@ -48,12 +44,13 @@ function fetchUserData() {
             if (data.error) {
                 console.error('Error:', data.error);
             } else {
-                document.getElementById('usernameInput').value = data.username || '';
+                document.getElementById('username').value = data.username || '';
                 document.getElementById('emailInput').value = data.email || '';
                 document.getElementById('birthdayInput').value = data.birthday || '';
-                document.getElementById('phoneNumberInput').value = data.phone || '';
+                document.getElementById('phoneNumberInput').value = '+60'+ data.phone || '';
                 document.getElementById('nicknameInput').value = data.nickname || '';
                 document.getElementById('bioInput').value = data.bio || '';
+
             }
         })
         .catch(error => {
