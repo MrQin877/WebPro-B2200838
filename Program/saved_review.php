@@ -1,68 +1,39 @@
 <?php
-// Database connection parameters
-$servername = "localhost";
-$username = "your_username"; // Replace with your MySQL username
-$password = "your_password"; // Replace with your MySQL password
-$dbname = "your_database"; // Replace with your MySQL database name
-$charset = "utf8mb4";
+session_start(); // 세션 시작
+require_once 'db_connect.php'; // 데이터베이스 연결 설정 파일
 
-// Start session (if not already started)
-session_start();
+// POST 데이터에서 값 가져오기
+$review = $_POST['review'];
+$star = $_POST['star'];
+$program = $_POST['program'];
+$email = $_POST['email'];
 
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
+// 현재 로그인된 사용자의 이메일 가져오기
+if (isset($_SESSION['email'])) {
+    $loggedInUserEmail = $_SESSION['email'];
 
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+    // 현재 로그인된 이메일과 입력된 이메일이 일치하는지 확인
+    $stmt = $conn->prepare("SELECT email FROM user_registration WHERE email = ?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $stmt->store_result();
+    $stmt->bind_result($userEmail);
+    $stmt->fetch();
 
-// Function to sanitize input data
-function sanitize_input($data) {
-    global $conn;
-    return htmlspecialchars(mysqli_real_escape_string($conn, trim($data)));
-}
-
-// Function to verify if the logged-in email matches
-function is_logged_in_user($email) {
-    // Check if session variable is set
-    if (isset($_SESSION['logged_in_email'])) {
-        // Get logged-in user's email from session
-        $logged_in_email = $_SESSION['logged_in_email'];
-        // Compare with the email passed from JavaScript
-        return ($logged_in_email === $email);
-    }
-    return false; // Return false if session variable not set
-}
-
-// Handling POST request from JavaScript
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Sanitize and retrieve POST data
-    $review = sanitize_input($_POST['review']);
-    $star = sanitize_input($_POST['star']);
-    $program = sanitize_input($_POST['program']);
-    $email = sanitize_input($_POST['email']); // Assuming email is passed from JavaScript
-
-    // Verify if the logged-in user's email matches
-    if (is_logged_in_user($email)) {
-        // Prepare SQL statement
-        $stmt = $conn->prepare("INSERT INTO user_review (review, star, program, email) VALUES (?, ?, ?, ?)");
-        
-        // Bind parameters and execute
+    if ($stmt->num_rows > 0 && $userEmail == $loggedInUserEmail) {
+        // 일치하는 경우, 리뷰 데이터를 저장
+        $stmt = $conn->prepare("INSERT INTO saved_review (review, star, program, email) VALUES (?, ?, ?, ?)");
         $stmt->bind_param("siss", $review, $star, $program, $email);
-        if ($stmt->execute()) {
-            echo "Review saved successfully!";
-        } else {
-            echo "Error: " . $stmt->error;
-        }
-        
-        // Close statement
+        $stmt->execute();
         $stmt->close();
+
+        echo "Review saved successfully!";
     } else {
-        echo "Error: Logged-in user email does not match!";
+        echo "Error: Current logged-in email does not match the provided email.";
     }
+} else {
+    echo "Error: No user logged in.";
 }
 
-// Close connection
-$conn->close();
+$conn->close(); // 데이터베이스 연결 종료
 ?>
