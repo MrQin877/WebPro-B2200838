@@ -195,18 +195,29 @@
     <script>
         // Function to check login status
         function checkLoginStatus() {
-            // Replace the following line with your actual login check logic
-            var isLoggedIn = false; // Assume user is not logged in by default
-
-            // Update button state based on login status
-            var writeReviewBtn = document.getElementById("writeReviewBtn");
-            if (isLoggedIn) {
-                writeReviewBtn.disabled = false;
-                writeReviewBtn.textContent = "Write a Review or feedback";
-            } else {
-                writeReviewBtn.disabled = true;
-                writeReviewBtn.textContent = "Please log in to write a review";
-            }
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "check_login.php", true); // 서버의 로그인 상태를 확인하는 API 엔드포인트로 대체하세요
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        var response = JSON.parse(xhr.responseText);
+                        var isLoggedIn = response.isLoggedIn;
+                        
+                        // Update button state based on login status
+                        var writeReviewBtn = document.getElementById("writeReviewBtn");
+                        if (isLoggedIn) {
+                            writeReviewBtn.disabled = false;
+                            writeReviewBtn.textContent = "Write a Review or feedback";
+                        } else {
+                            writeReviewBtn.disabled = true;
+                            writeReviewBtn.textContent = "Please log in to write a review";
+                        }
+                    } else {
+                        console.error("Failed to check login status");
+                    }
+                }
+            };
+            xhr.send();
         }
 
         // Function to toggle the comment input
