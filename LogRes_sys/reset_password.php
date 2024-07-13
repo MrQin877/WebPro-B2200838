@@ -48,20 +48,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $update_stmt->bind_param("si", $hashed_password, $userID);
 
                     if ($update_stmt->execute()) {
-                        // Password updated successfully, clear resetPassword field
-                        $clear_sql = "UPDATE user_registration SET resetPassword = NULL WHERE UserID = ?";
-                        $clear_stmt = $conn->prepare($clear_sql);
-
-                        if ($clear_stmt === false) {
-                            echo "Error preparing clear statement: " . $conn->error;
-                        } else {
-                            $clear_stmt->bind_param("i", $userID);
-                            $clear_stmt->execute();
-
-                            // Redirect to homepage (Homepage.html) after successful password update
-                            header("Location: Homepage.html");
-                            exit();
-                        }
+                        // Redirect to homepage (Homepage.html) after successful password update
+                        header("Location: Homepage.html");
+                        exit();
                     } else {
                         echo "Error updating password: " . $conn->error;
                     }
