@@ -12,11 +12,11 @@
     <style>
         .rating {
             display: flex;
-            justify-content: center; /* Center align stars */
+            justify-content: center;
             unicode-bidi: bidi-override;
             font-size: 0;
             position: relative;
-            margin-bottom: 20px; /* Adjust spacing between rating and input box */
+            margin-bottom: 20px;
         }
 
         .rating > input {
@@ -25,9 +25,9 @@
 
         .rating > label {
             position: relative;
-            font-size: 40px; /* Adjust size as needed */
+            font-size: 40px;
             cursor: pointer;
-            margin-left: 10px; /* Adjust spacing between stars */
+            margin-left: 10px;
         }
 
         .rating > label:before {
@@ -37,52 +37,52 @@
 
         .rating > input:checked ~ label,
         .rating > input:checked ~ label ~ label {
-            color: #fdd835; /* Color when checked */
+            color: #fdd835;
         }
 
         .rating > label:hover,
         .rating > label:hover ~ label {
-            color: #fdd835; /* Color on hover */
+            color: #fdd835;
         }
 
         .comment-input {
-            margin-top: 20px; /* Adjust top margin as needed */
+            margin-top: 20px;
         }
 
         .comment-input textarea {
             width: 100%;
             padding: 10px;
             font-size: 16px;
-            margin-top: 10px; /* Adjust top margin as needed */
+            margin-top: 10px;
         }
 
         .comment-input .button-container {
             display: flex;
-            justify-content: center; /* Center align buttons */
-            gap: 10px; /* Add space between buttons */
-            margin-top: 10px; /* Adjust top margin as needed */
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
         }
 
         .comment-input button {
             padding: 10px 20px;
             font-size: 16px;
             cursor: pointer;
-            background-color: #fdd835; /* Button background color */
-            color: #fff; /* Button text color */
+            background-color: #fdd835;
+            color: #fff;
             border: none;
             border-radius: 5px;
         }
 
         .cancel-button {
-            background-color: #dc3545; /* Cancel button background color */
+            background-color: #dc3545;
         }
 
         .rating-reverse {
-            flex-direction: row-reverse; /* Reverse direction for rating */
+            flex-direction: row-reverse;
         }
 
         .subject-selector {
-            margin-top: 20px; /* Adjust top margin as needed */
+            margin-top: 20px;
         }
 
         .subject-selector select {
@@ -119,28 +119,29 @@
                     <option value="History">History</option>
                     <option value="Science">Science</option>
                     <option value="All subjects">All subjects</option>
-                    <!-- Add more options as needed -->
                 </select>
             </div>
             
             <!-- Comment Input -->
-            <div id="commentInput" class="comment-input"style="display: none;">
-                <div class="rating rating-reverse">
-                    <input type="radio" id="star5" name="rating" value="5"><label for="star5"></label>
-                    <input type="radio" id="star4" name="rating" value="4"><label for="star4"></label>
-                    <input type="radio" id="star3" name="rating" value="3"><label for="star3"></label>
-                    <input type="radio" id="star2" name="rating" value="2"><label for="star2"></label>
-                    <input type="radio" id="star1" name="rating" value="1"><label for="star1"></label>
-                </div>
-                <br>
-                <textarea id="commentText" rows="4" placeholder="Write your review or feedback..."></textarea>
-                <br>
-                <input type="email" id="userEmail" name="email" placeholder="Your Email" style="padding: 10px; font-size: 16px; width: 100%; margin-top: 10px;">
-                <br>
-                <div class="button-container">
-                    <button type="button" onclick="submitComment()">Submit</button>
-                    <button type="button" class="cancel-button" onclick="toggleCommentInput('review')">Cancel</button>
-                </div>
+            <div id="commentInput" class="comment-input" style="display: none;">
+                <form action="review.php" method="POST">
+                    <div class="rating rating-reverse">
+                        <input type="radio" id="star5" name="star" value="5"><label for="star5"></label>
+                        <input type="radio" id="star4" name="star" value="4"><label for="star4"></label>
+                        <input type="radio" id="star3" name="star" value="3"><label for="star3"></label>
+                        <input type="radio" id="star2" name="star" value="2"><label for="star2"></label>
+                        <input type="radio" id="star1" name="star" value="1"><label for="star1"></label>
+                    </div>
+                    <br>
+                    <textarea id="commentText" name="review" rows="4" placeholder="Write your review or feedback..."></textarea>
+                    <br>
+                    <input type="email" id="userEmail" name="email" placeholder="Your Email" style="padding: 10px; font-size: 16px; width: 100%; margin-top: 10px;">
+                    <br>
+                    <div class="button-container">
+                        <button type="submit">Submit</button>
+                        <button type="button" class="cancel-button" onclick="toggleCommentInput('review')">Cancel</button>
+                    </div>
+                </form>
             </div>
             
             <!-- Review Display Section -->
@@ -157,13 +158,11 @@
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     <script>
-        // Functions for handling ratings and comments
         function toggleCommentInput(type) {
             var commentInput = document.getElementById("commentInput");
             var commentText = document.getElementById("commentText");
             var subjectSelector = document.getElementById("subjectSelector");
 
-            // Toggle visibility of comment input and subject selector
             if (commentInput.style.display === "none" || commentInput.style.display === "") {
                 commentInput.style.display = "block";
                 subjectSelector.style.display = "block";
@@ -173,47 +172,6 @@
                 subjectSelector.style.display = "none";
                 document.getElementById("writeReviewBtn").textContent = "Write a Review or feedback";
             }
-        }
-
-        function submitComment() {
-            var commentText = document.getElementById("commentText").value;
-            var rating = getSelectedRating(); // Implement function to get selected rating
-            var subject = document.getElementById("subject").value; // Get selected subject
-
-            var xhr = new XMLHttpRequest();
-            xhr.open("POST", "review.php", true);
-            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-
-            var formData = "review=" + encodeURIComponent(commentText) + "&star=" + rating + "&program=" + subject;
-            xhr.send(formData);
-
-            // Display success message
-            var successMessage = document.createElement("div");
-            successMessage.textContent = "Your review has been submitted successfully!";
-            successMessage.style.color = "green";
-            document.getElementById("review-section").appendChild(successMessage);
-
-            // Clear input fields
-            document.getElementById("commentText").value = "";
-            document.getElementById("commentInput").style.display = "none";
-            document.getElementById("subjectSelector").style.display = "none";
-            document.getElementById("writeReviewBtn").textContent = "Write a Review or feedback";
-
-            // Remove success message after 5 seconds
-            setTimeout(function() {
-                successMessage.remove();
-            }, 5000);
-        }
-
-        function getSelectedRating() {
-            var stars = document.getElementsByName("rating");
-
-            for (var i = 0; i < stars.length; i++) {
-                if (stars[i].checked) {
-                    return stars[i].value;
-                }
-            }
-            return null; // No rating selected
         }
     </script>
 </body>

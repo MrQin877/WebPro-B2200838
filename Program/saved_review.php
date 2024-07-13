@@ -2,12 +2,12 @@
 session_start(); // 세션 시작
 
 // 데이터베이스 연결 설정
-$servername = "localhost";  // 서버 이름 (보통 로컬 서버에서는 'localhost')
-$username = "root";  // 데이터베이스 사용자 이름
-$password = "";  // 데이터베이스 사용자 비밀번호
-$dbname = "user";  // 데이터베이스 이름
+$servername = "localhost"; // 또는 데이터베이스 서버 주소
+$username = "root"; // 데이터베이스 사용자 이름
+$password = ""; // 데이터베이스 비밀번호
+$dbname = "user"; // 데이터베이스 이름
 
-// 데이터베이스 연결 생성
+// 데이터베이스 연결
 $conn = new mysqli($servername, $username, $password, $dbname);
 
 // 연결 확인
@@ -26,16 +26,21 @@ if (isset($_SESSION['email'])) {
     $loggedInUserEmail = $_SESSION['email'];
 
     // 현재 로그인된 이메일과 입력된 이메일이 일치하는지 확인
-    if ($email == $loggedInUserEmail) {
+    $stmt = $conn->prepare("SELECT email FROM user_registration WHERE email = ?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $stmt->store_result();
+    $stmt->bind_result($userEmail);
+    $stmt->fetch();
+
+    if ($stmt->num_rows > 0 && $userEmail == $loggedInUserEmail) {
         // 일치하는 경우, 리뷰 데이터를 저장
-        $stmt = $conn->prepare("INSERT INTO user_review (review, star, program, email) VALUES (?, ?, ?, ?)");
-        $stmt->bind_param("siss", $review, $star, $program, $email);
-        if ($stmt->execute()) {
-            echo "Review saved successfully!";
-        } else {
-            echo "Error: " . $stmt->error;
-        }
+        $stmt = $conn->prepare("INSERT INTO user_review (review, star, email) VALUES (?, ?, ?)");
+        $stmt->bind_param("sss", $review, $star, $email);
+        $stmt->execute();
         $stmt->close();
+
+        echo "Review saved successfully!";
     } else {
         echo "Error: Current logged-in email does not match the provided email.";
     }
