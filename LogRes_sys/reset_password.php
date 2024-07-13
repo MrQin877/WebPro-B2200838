@@ -13,38 +13,52 @@ if ($conn->connect_error) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $email = $_POST['email'];
     $reset_token = $_POST['reset_token'];
     $new_password = $_POST['new_password'];
     $confirm_password = $_POST['confirm_password'];
 
     // 입력값 확인
-    if (empty($reset_token) || empty($new_password) || empty($confirm_password)) {
+    if (empty($email) || empty($reset_token) || empty($new_password) || empty($confirm_password)) {
         echo "All fields are required.";
     } else {
-        // 인증 코드 검증
-        if (!isset($_SESSION['reset_token']) || $_SESSION['reset_token'] !== $reset_token) {
-            echo "Invalid or expired reset token.";
-        } else {
-            $user_id = $_SESSION['user_id'];
-            $sql = "UPDATE user_registration SET password = ? WHERE id = ?";
-            $stmt = $conn->prepare($sql);
-            
-            // 비밀번호 해싱
-            $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
-            
-            $stmt->bind_param("si", $hashed_password, $user_id);
-            
-            if ($stmt->execute()) {
-                echo "Password updated successfully.";
-                // 비밀번호 업데이트 후 세션 삭제
-                unset($_SESSION['reset_token']);
-                unset($_SESSION['user_id']);
-            } else {
-                echo "Error updating password: " . $stmt->error;
-            }
+        // 이메일과 암호숫자를 데이터베이스에서 확인
+        $sql = "SELECT * FROM user_registration WHERE email = ? AND reset_token = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ss", $email, $reset_token);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
-            $stmt->close();
+        if ($result->num_rows === 1) {
+            // 이메일과 암호숫자가 일치하는 경우
+            $row = $result->fetch_assoc();
+            $user_id = $row['id'];
+
+            // 비밀번호 일치 여부 확인
+            if ($new_password !== $confirm_password) {
+                echo "New passwords do not match.";
+            } else {
+                // 비밀번호 업데이트
+                $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
+                $update_sql = "UPDATE user_registration SET password = ?, reset_token = NULL WHERE id = ?";
+                $update_stmt = $conn->prepare($update_sql);
+                $update_stmt->bind_param("si", $hashed_password, $user_id);
+
+                if ($update_stmt->execute()) {
+                    echo "Password updated successfully.";
+                    // 세션 변수 초기화
+                    unset($_SESSION['reset_token']);
+                    unset($_SESSION['user_id']);
+                } else {
+                    echo "Error updating password: " . $update_stmt->error;
+                }
+            }
+        } else {
+            echo "Invalid email or reset token.";
         }
+
+        $stmt->close();
+        $update_stmt->close();
     }
 }
 
