@@ -83,5 +83,8 @@ $conn->close();
 // Return error message if exists
 if (!empty($errorMessage)) {
     echo $errorMessage;
+    // Redirect to registration page after displaying error message
+    header("Location: registration_page.php");
+    exit();
 }
 ?>
