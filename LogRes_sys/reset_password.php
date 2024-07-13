@@ -48,8 +48,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $update_stmt->bind_param("si", $hashed_password, $userID);
 
                     if ($update_stmt->execute()) {
-                        // Redirect to homepage (Homepage.html) after successful password update
-                        header("Location: HomePage.html");
+                        // Password updated successfully, redirect to homepage
+                        echo "<script>window.location.href = 'HomePage.html';</script>";
                         exit();
                     } else {
                         echo "Error updating password: " . $conn->error;
