@@ -1,103 +1,37 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // 프로그램 목록 배열
-    const programs = [
-        { title: 'Malay Language', description: 'Learn Malay language basics.', icon: '../images/icon3.jpg', page: 'Malpage.html' },
-        { title: 'English Language', description: 'Master English language skills.', icon: '../images/icon4.jpg', page: 'Engpage.html' },
-        { title: 'Mathematics', description: 'Explore various math concepts.', icon: '../images/icon2.jpg', page: 'Mathpage.html' },
-        { title: 'History', description: 'Study historical events and figures.', icon: '../images/icon5.jpg', page: 'Hispage.html' },
-        { title: 'Science', description: 'Learn about scientific principles.', icon: '../images/icon1.jpg', page: 'Sicpage.html' },
-        { title: 'All Subjects', description: 'Learn about our every programs.', icon: '../images/icon6.jpg', page: 'Allpage.html' }
-    ];
+    // Function to check if user is logged in (example)
+    const isLoggedIn = true; // Replace with actual login check
 
-    // HTML 요소 참조
-    const programList = document.getElementById('programList');
-    const searchInput = document.getElementById('searchInput');
+    // Function to toggle visibility of review section based on login status
+    function toggleReviewSectionVisibility() {
+        const writeReviewBtn = document.getElementById('writeReviewBtn');
+        const commentInput = document.getElementById('commentInput');
+        const subjectSelector = document.getElementById('subjectSelector');
 
-    // 프로그램 목록을 렌더링하는 함수
-    function renderPrograms(programs) {
-        // 프로그램 리스트를 비움
-        programList.innerHTML = '';
-
-        // 프로그램 배열을 순회하며 각 프로그램을 렌더링
-        programs.forEach(program => {
-            // 프로그램 요소를 생성
-            const programElement = document.createElement('div');
-            programElement.classList.add('program');
-            
-            // 클릭 시 해당 프로그램의 상세 페이지로 이동하도록 설정
-            programElement.onclick = () => {
-                showProgramDetails(program.page);
-            };
-
-            // 프로그램 요소의 내부 HTML 설정
-            programElement.innerHTML = `
-                <div class="program-content">
-                    <img src="${program.icon}" alt="${program.title} Icon">
-                    <div class="program-info">
-                        <div class="program-title">${program.title}</div>
-                        <div class="program-description">${program.description}</div>
-                    </div>
-                </div>
-            `;
-
-            // 프로그램 리스트에 프로그램 요소를 추가
-            programList.appendChild(programElement);
-        });
+        if (isLoggedIn) {
+            writeReviewBtn.style.display = 'block';
+            commentInput.style.display = 'none';
+            subjectSelector.style.display = 'none';
+        } else {
+            writeReviewBtn.style.display = 'none';
+            commentInput.style.display = 'none';
+            subjectSelector.style.display = 'none';
+        }
     }
 
-    // 프로그램의 상세 페이지로 이동하는 함수
-    function showProgramDetails(page) {
-        window.location.href = page;
-    }
+    // Initial call to toggle visibility based on login status
+    toggleReviewSectionVisibility();
 
-    // 프로그램 목록을 필터링하는 함수
-    function filterPrograms() {
-        // 검색 입력 값을 소문자로 변환
-        const searchValue = searchInput.value.toLowerCase();
-
-        // 검색어가 프로그램 제목에 포함된 프로그램만 필터링
-        const filteredPrograms = programs.filter(program =>
-            program.title.toLowerCase().includes(searchValue)
-        );
-
-        // 필터링된 프로그램 목록을 렌더링
-        renderPrograms(filteredPrograms);
-    }
-
-    // 검색 입력 필드에 입력 이벤트 리스너 추가
-    searchInput.addEventListener('input', filterPrograms);
-
-    // 초기 프로그램 목록을 렌더링
-    renderPrograms(programs);
-
-    // 로그인 상태 확인 함수
-    function checkLoginStatus() {
-        // 여기에 실제 로그인 상태를 확인하는 로직을 추가하세요.
-        // 예시로 항상 로그인이 되어 있다고 가정합니다.
-        return sessionStorage.getItem('loggedInUser') !== null;
-    }
-
-    // 리뷰 작성 버튼 클릭 시 동작
-    document.getElementById('writeReviewBtn').addEventListener('click', () => {
-        if (checkLoginStatus()) {
+    // Event listener for writeReviewBtn click
+    writeReviewBtn.addEventListener('click', () => {
+        if (isLoggedIn) {
             toggleCommentInput('review');
         } else {
-            alert('로그인 후 리뷰를 작성할 수 있습니다.');
-            // 여기에 로그인 팝업 등을 띄우는 로직을 추가할 수 있습니다.
+            alert('Please log in to write a review.'); // Replace with your login prompt logic
         }
     });
 
-    // 로그인 세션을 설정하는 예시 함수
-    function login(username) {
-        sessionStorage.setItem('loggedInUser', username);
-    }
-
-    // 로그아웃 세션을 설정하는 예시 함수
-    function logout() {
-        sessionStorage.removeItem('loggedInUser');
-    }
-
-    // 리뷰 작성 입력창 토글 함수
+    // Function to toggle comment input visibility
     function toggleCommentInput(type) {
         var commentInput = document.getElementById("commentInput");
         var commentText = document.getElementById("commentText");
@@ -107,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (commentInput.style.display === "none" || commentInput.style.display === "") {
             commentInput.style.display = "block";
             subjectSelector.style.display = "block";
-            commentText.placeholder = `Write your ${type}...(255 Characters limit)`;
+            commentText.placeholder = "Write your " + type + "...(255 Characters limit)";
         } else {
             commentInput.style.display = "none";
             subjectSelector.style.display = "none";
@@ -115,4 +49,101 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // Function to submit a review (already included in your code)
+    function submitComment() {
+        var commentText = document.getElementById("commentText").value;
+        var rating = getSelectedRating(); // Implement function to get selected rating
+        var subject = document.getElementById("subject").value; // Get selected subject
+        var userEmail = document.getElementById("userEmail").value;
+
+        // Validate inputs (already included in your code)
+        if (commentText.length < 20) {
+            displayErrorMessage("Please enter at least 20 characters for your review.");
+            return;
+        }
+
+        if (userEmail === "") {
+            displayErrorMessage("Please enter your email.");
+            return;
+        }
+
+        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(userEmail)) {
+            displayErrorMessage("Please enter a valid email address.");
+            return;
+        }
+
+        // Example of AJAX request to submit review (already included in your code)
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "review.php", true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+        var formData = "review=" + encodeURIComponent(commentText) + "&star=" + rating + "&program=" + subject + "&email=" + userEmail;
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    // Successful submission
+                    displaySubmittedReview(commentText, rating, subject, userEmail);
+                    clearFormInputs();
+                } else {
+                    // Error handling
+                    displayErrorMessage("Failed to submit review. Please try again later.");
+                }
+            }
+        };
+        xhr.send(formData);
+    }
+
+    // Function to get selected rating (already included in your code)
+    function getSelectedRating() {
+        var stars = document.getElementsByName("rating");
+
+        for (var i = 0; i < stars.length; i++) {
+            if (stars[i].checked) {
+                return stars[i].value;
+            }
+        }
+        return null; // No rating selected
+    }
+
+    // Function to display submitted review (already included in your code)
+    function displaySubmittedReview(comment, rating, subject, userEmail) {
+        var userEmailDisplay = userEmail.substr(0, 4) + '*'.repeat(userEmail.length - 4); // Display first 4 characters and hide the rest
+
+        // Create new review element
+        var reviewElement = document.createElement("div");
+        reviewElement.classList.add("review-item");
+        reviewElement.innerHTML = `
+            <div class="review-header">
+                <span class="review-rating">${rating} ★</span>
+                <span class="review-info">${subject} | ${userEmailDisplay}</span>
+            </div>
+            <p class="review-comment">${comment}</p>
+        `;
+
+        // Insert new review at the beginning of the reviews section
+        var reviewsSection = document.getElementById("reviews");
+        reviewsSection.insertBefore(reviewElement, reviewsSection.firstChild);
+
+        // Limit the number of displayed reviews to 15 (already included in your code)
+        var reviewItems = reviewsSection.getElementsByClassName("review-item");
+        if (reviewItems.length > 15) {
+            reviewsSection.removeChild(reviewsSection.lastChild);
+        }
+    }
+
+    // Function to clear form inputs (already included in your code)
+    function clearFormInputs() {
+        document.getElementById("commentText").value = "";
+        document.getElementById("userEmail").value = "";
+        document.getElementById("commentInput").style.display = "none";
+        document.getElementById("subjectSelector").style.display = "none";
+        document.getElementById("writeReviewBtn").textContent = "Write a Review or feedback";
+    }
+
+    // Function to display error message (already included in your code)
+    function displayErrorMessage(message) {
+        var errorMessageElement = document.getElementById("error-message");
+        errorMessageElement.textContent = message;
+    }
 });
