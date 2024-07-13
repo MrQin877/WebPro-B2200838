@@ -18,10 +18,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $star = $_POST['star'];
     $program = $_POST['program'];
 
-    $sql = "INSERT INTO user_review (review, star, program) VALUES (?, ?)";
+    $sql = "INSERT INTO user_review (review, star, program) VALUES (?, ?, ?)";
 
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ss", $review, $star, $program);
+    $stmt->bind_param("sss", $review, $star, $program);
 
     if ($stmt->execute()) {
         echo "Review submitted successfully";
