@@ -57,7 +57,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         } else {
                             $clear_stmt->bind_param("i", $userID);
                             $clear_stmt->execute();
-                            echo "Password updated successfully.";
+
+                            // Redirect to homepage (Homepage.html) after successful password update
+                            header("Location: Homepage.html");
+                            exit();
                         }
                     } else {
                         echo "Error updating password: " . $conn->error;
