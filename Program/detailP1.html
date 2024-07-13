@@ -143,13 +143,10 @@
         <!-- Write a Review Section -->
         <section id="review-section" style="text-align: center; margin-top: 50px;">
             <h2>Share Your Experience</h2>
-            <!-- Toggle Comment Input -->
             <?php
                 session_start();
                 if (isset($_SESSION['user_id'])) {
                     echo '<button id="writeReviewBtn" onclick="toggleCommentInput(\'review\')">Write a Review or feedback</button>';
-                } else {
-                    echo '<button id="writeReviewBtn" onclick="alert(\'Please log in to write a review.\')">Write a Review or feedback</button>';
                 }
             ?>
             
@@ -209,7 +206,6 @@
                 commentInput.style.display = "block";
                 subjectSelector.style.display = "block";
                 commentText.placeholder = "Write your " + type + "...(255 Characters limit)";
-                document.getElementById("writeReviewBtn").textContent = "Cancel";
             } else {
                 commentInput.style.display = "none";
                 subjectSelector.style.display = "none";
@@ -262,13 +258,18 @@
             reviewElement.className = "review-item";
             reviewElement.innerHTML = `
                 <div class="review-header">
-                    <div class="review-rating">${rating}★</div>
-                    <div class="review-info">${subject}</div>
+                    <span class="review-rating">${rating}</span>
+                    <span class="review-info">${subject}</span>
                 </div>
                 <div class="review-comment">${commentText}</div>
             `;
+            reviewsContainer.prepend(reviewElement);
 
-            reviewsContainer.insertBefore(reviewElement, reviewsContainer.firstChild);
+            // Remove the last review if more than 15 reviews are displayed
+            var reviews = reviewsContainer.getElementsByClassName("review-item");
+            if (reviews.length > 15) {
+                reviews[reviews.length - 1].remove();
+            }
         }
 
         function clearFormInputs() {
