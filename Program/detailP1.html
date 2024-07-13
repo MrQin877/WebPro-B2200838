@@ -129,10 +129,10 @@
     </style>
 </head>
 <body>
-    <header></header>
+    <headers></headers>
     <div class="container" style="margin-bottom: 10%;">
         <section class="align-center" style="margin-top: 9%;">
-            <h1>Program Detail Page</h1>
+            <h1>Program List</h1>
             <div class="search-bar">
                 <input type="text" id="searchInput" placeholder="Search programs..." oninput="filterSuggestions()" onclick="showAllSuggestions()">
                 <div id="suggestions"></div>
@@ -143,14 +143,8 @@
         <!-- Write a Review Section -->
         <section id="review-section" style="text-align: center; margin-top: 50px;">
             <h2>Share Your Experience</h2>
-            <?php
-                session_start();
-                if (isset($_SESSION['user_id'])) {
-                    echo '<button id="writeReviewBtn" onclick="toggleCommentInput(\'review\')">Write a Review or feedback</button>';
-                } else {
-                    echo '<button id="writeReviewBtn" disabled>Write a Review or feedback</button>';
-                }
-            ?>
+            <!-- Toggle Comment Input -->
+            <button id="writeReviewBtn" onclick="toggleCommentInput('review')">Write a Review or feedback</button>
             
             <!-- Subject Selector -->
             <div class="subject-selector" id="subjectSelector" style="display: none;">
@@ -192,13 +186,30 @@
         </section>
     </div>
     
-    <footer></footer>
+    <footers></footers>
     
     <script src="../multiUsage.js" defer></script>
     <script src="detailP3.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     <script>
+        // Function to check login status
+        function checkLoginStatus() {
+            // Replace the following line with your actual login check logic
+            var isLoggedIn = false; // Assume user is not logged in by default
+
+            // Update button state based on login status
+            var writeReviewBtn = document.getElementById("writeReviewBtn");
+            if (isLoggedIn) {
+                writeReviewBtn.disabled = false;
+                writeReviewBtn.textContent = "Write a Review or feedback";
+            } else {
+                writeReviewBtn.disabled = true;
+                writeReviewBtn.textContent = "Please log in to write a review";
+            }
+        }
+
+        // Function to toggle the comment input
         function toggleCommentInput(type) {
             var commentInput = document.getElementById("commentInput");
             var commentText = document.getElementById("commentText");
@@ -260,18 +271,13 @@
             reviewElement.className = "review-item";
             reviewElement.innerHTML = `
                 <div class="review-header">
-                    <span class="review-rating">${rating}</span>
-                    <span class="review-info">${subject}</span>
+                    <div class="review-rating">${rating}★</div>
+                    <div class="review-info">${subject}</div>
                 </div>
                 <div class="review-comment">${commentText}</div>
             `;
-            reviewsContainer.prepend(reviewElement);
 
-            // Remove the last review if more than 15 reviews are displayed
-            var reviews = reviewsContainer.getElementsByClassName("review-item");
-            if (reviews.length > 15) {
-                reviews[reviews.length - 1].remove();
-            }
+            reviewsContainer.insertBefore(reviewElement, reviewsContainer.firstChild);
         }
 
         function clearFormInputs() {
@@ -285,6 +291,11 @@
         function displayErrorMessage(message) {
             var errorMessageElement = document.getElementById("error-message");
             errorMessageElement.textContent = message;
+        }
+
+        // Check login status when the page loads
+        window.onload = function() {
+            checkLoginStatus();
         }
     </script>
 </body>
