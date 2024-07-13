@@ -193,32 +193,42 @@
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     <script>
-        // JavaScript 코드 시작
-document.addEventListener('DOMContentLoaded', function() {
-    // 세션 확인 요청
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', 'sessioncheck.php', true);
-    xhr.onload = function() {
-        if (xhr.status === 200) {
-            var response = JSON.parse(xhr.responseText);
-            if (response.loggedIn) {
-                // 로그인 상태일 때 버튼 활성화
-                document.getElementById('writeReviewBtn').disabled = false;
-                document.getElementById('writeReviewBtn').textContent = 'Write a Review or feedback';
-            } else {
-                // 비로그인 상태일 때 버튼 비활성화
-                document.getElementById('writeReviewBtn').disabled = true;
-                document.getElementById('writeReviewBtn').textContent = 'Please log in to write a review or feedback';
-            }
-        } else {
-            // 요청 실패 시 처리
-            console.error('Failed to check session status.');
-        }
-    };
-    xhr.send();
+        // JavaScript 코드
+
+document.addEventListener("DOMContentLoaded", function() {
+    // 페이지 로드 시 실행되는 함수
+    checkLoginStatus(); // 로그인 상태 체크 함수 호출
 });
 
-// 기존의 함수들은 그대로 유지됩니다.
+function checkLoginStatus() {
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "sessioncheck.php", true); // sessioncheck.php는 로그인 상태를 확인하는 서버 스크립트
+
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                var response = JSON.parse(xhr.responseText);
+                var isLoggedIn = response.loggedIn;
+
+                // 로그인 상태에 따라 버튼 활성화 여부 결정
+                var writeReviewBtn = document.getElementById("writeReviewBtn");
+
+                if (isLoggedIn) {
+                    // 로그인 상태일 때 버튼 활성화
+                    writeReviewBtn.disabled = false;
+                } else {
+                    // 비로그인 상태일 때 버튼 비활성화
+                    writeReviewBtn.disabled = true;
+                }
+            } else {
+                console.error("Failed to check login status.");
+            }
+        }
+    };
+
+    xhr.send();
+}
+
 function toggleCommentInput(type) {
     var commentInput = document.getElementById("commentInput");
     var commentText = document.getElementById("commentText");
@@ -301,7 +311,6 @@ function displayErrorMessage(message) {
     var errorMessageElement = document.getElementById("error-message");
     errorMessageElement.textContent = message;
 }
-// JavaScript 코드 끝
 
     </script>
 </body>
