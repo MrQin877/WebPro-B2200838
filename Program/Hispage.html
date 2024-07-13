@@ -36,6 +36,13 @@
             border-radius: 30px;
             overflow: hidden;
         }
+
+        .reviews{
+            display: flex;
+            justify-content: center; 
+            align-items: center;
+            flex-direction: column;
+        }
          
         .reviews-section {
             margin-top: 100px; /* 위쪽 여백 */
@@ -45,6 +52,8 @@
          /* 리뷰 아이템 스타일 */
          .review-item {
              border: 1px solid #e0e0e0;
+             align-items: center;
+             flex-direction: column;
              border-radius: 8px;
              padding: 10px;
              margin-bottom: 15px;
@@ -131,7 +140,7 @@
         </div>
     </div>
 
-    <section id="reviews">
+    <section class="reviews" id="reviews" style="margin-top: 10%;">
         <!-- Reviews will be dynamically loaded here -->
     </section>
     
