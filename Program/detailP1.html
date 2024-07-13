@@ -193,34 +193,6 @@
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     <script>
-        // Function to check login status
-        function checkLoginStatus() {
-            var xhr = new XMLHttpRequest();
-            xhr.open("GET", "check_login.php", true); // 서버의 로그인 상태를 확인하는 API 엔드포인트로 대체하세요
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState === XMLHttpRequest.DONE) {
-                    if (xhr.status === 200) {
-                        var response = JSON.parse(xhr.responseText);
-                        var isLoggedIn = response.isLoggedIn;
-                        
-                        // Update button state based on login status
-                        var writeReviewBtn = document.getElementById("writeReviewBtn");
-                        if (isLoggedIn) {
-                            writeReviewBtn.disabled = false;
-                            writeReviewBtn.textContent = "Write a Review or feedback";
-                        } else {
-                            writeReviewBtn.disabled = true;
-                            writeReviewBtn.textContent = "Please log in to write a review";
-                        }
-                    } else {
-                        console.error("Failed to check login status");
-                    }
-                }
-            };
-            xhr.send();
-        }
-
-        // Function to toggle the comment input
         function toggleCommentInput(type) {
             var commentInput = document.getElementById("commentInput");
             var commentText = document.getElementById("commentText");
@@ -278,6 +250,7 @@
         function displaySubmittedReview(commentText, rating, subject) {
             var reviewsContainer = document.getElementById("reviews");
 
+            var review
             var reviewElement = document.createElement("div");
             reviewElement.className = "review-item";
             reviewElement.innerHTML = `
@@ -304,9 +277,22 @@
             errorMessageElement.textContent = message;
         }
 
-        // Check login status when the page loads
-        window.onload = function() {
+        // Check login status
+        window.addEventListener('DOMContentLoaded', function() {
             checkLoginStatus();
+        });
+
+        function checkLoginStatus() {
+            var writeReviewBtn = document.getElementById('writeReviewBtn');
+            var loggedIn = <?php echo json_encode(isset($_SESSION['user_id'])); ?>;
+
+            if (!loggedIn) {
+                writeReviewBtn.disabled = true;
+                writeReviewBtn.textContent = "Login to Write a Review";
+            } else {
+                writeReviewBtn.disabled = false;
+                writeReviewBtn.textContent = "Write a Review or feedback";
+            }
         }
     </script>
 </body>

@@ -14,6 +14,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
+// Check if this is a POST request for login
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $Email = $_POST['email'];
     $Password = $_POST['password'];
@@ -46,6 +47,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $stmt->close();
     }
+}
+
+// Check if this is a GET request to check login status
+if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['action']) && $_GET['action'] == 'check_login') {
+    $response = array(
+        "isLoggedIn" => isset($_SESSION['user_id']) // 사용자 세션에 user_id가 설정되어 있으면 로그인 상태로 간주
+    );
+
+    header('Content-Type: application/json');
+    echo json_encode($response);
+    exit();
 }
 
 $conn->close();
