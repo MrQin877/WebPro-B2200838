@@ -77,21 +77,9 @@ document.addEventListener('DOMContentLoaded', () => {
     function submitComment() {
         const commentText = document.getElementById("commentText").value;
         const rating = getSelectedRating();
-        const userEmail = document.getElementById("userEmail").value;
 
         if (commentText.length < 20) {
             displayErrorMessage("Please enter at least 20 characters for your review.");
-            return;
-        }
-
-        if (userEmail === "") {
-            displayErrorMessage("Please enter your email.");
-            return;
-        }
-
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(userEmail)) {
-            displayErrorMessage("Please enter a valid email address.");
             return;
         }
 
@@ -103,7 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
         xhr.onreadystatechange = function() {
             if (xhr.readyState === XMLHttpRequest.DONE) {
                 if (xhr.status === 200) {
-                    displaySubmittedReview(commentText, rating, userEmail);
+                    displaySubmittedReview(commentText, rating);
                     clearFormInputs();
                 } else {
                     displayErrorMessage("Failed to submit review. Please try again later.");
@@ -123,15 +111,12 @@ document.addEventListener('DOMContentLoaded', () => {
         return null;
     }
 
-    function displaySubmittedReview(comment, rating, userEmail) {
-        const userEmailDisplay = userEmail.substr(0, 4) + '*'.repeat(userEmail.length - 4);
-
+    function displaySubmittedReview(comment, rating) {
         const reviewElement = document.createElement("div");
         reviewElement.classList.add("review-item");
         reviewElement.innerHTML = `
             <div class="review-header">
                 <span class="review-rating">${rating} ★</span>
-                <span class="review-info">${userEmailDisplay}</span>
             </div>
             <p class="review-comment">${comment}</p>
         `;
@@ -147,7 +132,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function clearFormInputs() {
         document.getElementById("commentText").value = "";
-        document.getElementById("userEmail").value = "";
         document.getElementById("commentInput").style.display = "none";
         document.getElementById("subjectSelector").style.display = "none";
         document.getElementById("writeReviewBtn").textContent = "Write a Review or feedback";
