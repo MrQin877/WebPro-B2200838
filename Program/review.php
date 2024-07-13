@@ -18,20 +18,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $star = $_POST['star'];
     $program = $_POST['program'];
     
+    // SQL 쿼리
+    $sql = "INSERT INTO user_review (review, star, program) VALUES (?, ?, ?)";
 
-    $sql = "INSERT INTO user_review (review, star, program) VALUES (?, ?, ?, ?)";
-
+    // 준비된 문장을 생성하고 매개변수를 바인딩
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sss", $review, $star);
+    $stmt->bind_param("sis", $review, $star, $program); // 매개변수 타입에 주의하세요: s는 문자열, i는 정수입니다.
 
+    // 쿼리 실행
     if ($stmt->execute()) {
         echo "Review submitted successfully";
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
     }
 
+    // 문장 닫기
     $stmt->close();
 }
 
+// 데이터베이스 연결 닫기
 $conn->close();
 ?>
