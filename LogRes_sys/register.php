@@ -14,6 +14,9 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
+// Variables to store error messages
+$errorMessage = "";
+
 // Process registration form if submitted via POST method
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Retrieve form data
@@ -27,51 +30,46 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Check if any required field is empty
     if (empty($Username) || empty($Email) || empty($Password) || empty($PhoneNumber) || empty($Birth) || empty($Gender) || empty($resetPassword)) {
-        echo "All fields are required.";
+        $errorMessage = "All fields are required.";
     } else {
         // Validate password (example pattern: 10 characters or less, one capital letter, one special character)
         if (!preg_match('/^(?=.*[A-Z])(?=.*[!@#$%&])[A-Za-z\d!@#$%&]{1,10}$/', $Password)) {
-            echo "Password must be 10 characters or less, include at least one capital letter and one special character (!, @, #, $, %, &).";
-            exit();
-        }
-
-        // Validate phone number (numeric check)
-        if (!preg_match('/^\d+$/', $PhoneNumber)) {
-            echo "Please enter a valid phone number with numbers only.";
-            exit();
-        }
-
-        // Check if Email already exists in the database
-        $stmt = $conn->prepare("SELECT UserID FROM user_registration WHERE Email = ?");
-        $stmt->bind_param("s", $Email);
-        $stmt->execute();
-        $stmt->store_result();
-
-        if ($stmt->num_rows > 0) {
-            // Email already exists
-            echo "The Email is already registered.";
+            $errorMessage = "Password must be 10 characters or less, include at least one capital letter and one special character (!, @, #, $, %, &).";
+        } elseif (!preg_match('/^\d+$/', $PhoneNumber)) {
+            $errorMessage = "Please enter a valid phone number with numbers only.";
         } else {
-            // Check if resetPassword already exists in the database
-            $stmt = $conn->prepare("SELECT resetPassword FROM user_registration WHERE resetPassword = ?");
-            $stmt->bind_param("s", $resetPassword);
+            // Check if Email already exists in the database
+            $stmt = $conn->prepare("SELECT UserID FROM user_registration WHERE Email = ?");
+            $stmt->bind_param("s", $Email);
             $stmt->execute();
             $stmt->store_result();
 
             if ($stmt->num_rows > 0) {
-                // resetPassword already exists
-                echo "The resetPassword is already registered.";
+                // Email already exists
+                $errorMessage = "The Email is already registered. Please try again with a different Email.";
             } else {
-                // Hash the password
-                $hashedPassword = password_hash($Password, PASSWORD_DEFAULT);
+                // Check if resetPassword already exists in the database
+                $stmt = $conn->prepare("SELECT resetPassword FROM user_registration WHERE resetPassword = ?");
+                $stmt->bind_param("s", $resetPassword);
+                $stmt->execute();
+                $stmt->store_result();
 
-                // Insert new user into database
-                $stmt = $conn->prepare("INSERT INTO user_registration (Username, Email, Password, PhoneNumber, Birth, Gender, resetPassword) VALUES (?, ?, ?, ?, ?, ?, ?)");
-                $stmt->bind_param("sssssss", $Username, $Email, $hashedPassword, $PhoneNumber, $Birth, $Gender, $resetPassword);
-
-                if ($stmt->execute()) {
-                    echo "Registration successful.";
+                if ($stmt->num_rows > 0) {
+                    // resetPassword already exists
+                    $errorMessage = "The resetPassword is already registered. Please try again with a different resetPassword.";
                 } else {
-                    echo "Error: " . $stmt->error;
+                    // Hash the password
+                    $hashedPassword = password_hash($Password, PASSWORD_DEFAULT);
+
+                    // Insert new user into database
+                    $stmt = $conn->prepare("INSERT INTO user_registration (Username, Email, Password, PhoneNumber, Birth, Gender, resetPassword) VALUES (?, ?, ?, ?, ?, ?, ?)");
+                    $stmt->bind_param("sssssss", $Username, $Email, $hashedPassword, $PhoneNumber, $Birth, $Gender, $resetPassword);
+
+                    if ($stmt->execute()) {
+                        echo "Registration successful.";
+                    } else {
+                        $errorMessage = "Error: " . $stmt->error;
+                    }
                 }
             }
         }
