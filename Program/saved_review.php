@@ -28,7 +28,7 @@ if (isset($_SESSION['email'])) {
     // 현재 로그인된 이메일과 입력된 이메일이 일치하는지 확인
     if ($email == $loggedInUserEmail) {
         // 일치하는 경우, 리뷰 데이터를 저장
-        $stmt = $conn->prepare("INSERT INTO saved_review (review, star, program, email) VALUES (?, ?, ?, ?)");
+        $stmt = $conn->prepare("INSERT INTO user_review (review, star, program, email) VALUES (?, ?, ?, ?)");
         $stmt->bind_param("siss", $review, $star, $program, $email);
         if ($stmt->execute()) {
             echo "Review saved successfully!";
