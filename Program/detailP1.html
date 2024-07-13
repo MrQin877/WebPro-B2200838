@@ -129,7 +129,7 @@
     </style>
 </head>
 <body>
-    <headers></headers>
+    <header></header>
     <div class="container" style="margin-bottom: 10%;">
         <section class="align-center" style="margin-top: 9%;">
             <h1>Program List</h1>
@@ -143,8 +143,7 @@
         <!-- Write a Review Section -->
         <section id="review-section" style="text-align: center; margin-top: 50px;">
             <h2>Share Your Experience</h2>
-            <!-- Toggle Comment Input -->
-            <button id="writeReviewBtn" onclick="toggleCommentInput('review')">Write a Review or feedback</button>
+            <?php include 'check_session.php'; ?>
             
             <!-- Subject Selector -->
             <div class="subject-selector" id="subjectSelector" style="display: none;">
@@ -186,7 +185,7 @@
         </section>
     </div>
     
-    <footers></footers>
+    <footer></footer>
     
     <script src="../multiUsage.js" defer></script>
     <script src="detailP3.js"></script>
@@ -201,7 +200,7 @@
             if (commentInput.style.display === "none" || commentInput.style.display === "") {
                 commentInput.style.display = "block";
                 subjectSelector.style.display = "block";
-                commentText.placeholder = "Write your " + type + "...(255 Characters limit)";
+                commentText.placeholder = "Write your " + type + "... (255 Characters limit)";
             } else {
                 commentInput.style.display = "none";
                 subjectSelector.style.display = "none";
@@ -275,6 +274,32 @@
             var errorMessageElement = document.getElementById("error-message");
             errorMessageElement.textContent = message;
         }
+
+        // AJAX function to check login status and toggle review section visibility
+        function checkLoginStatus() {
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "check_session.php", true);
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        var response = JSON.parse(xhr.responseText);
+                        if (response.loggedIn) {
+                            document.getElementById("writeReviewBtn").style.display = "block";
+                        } else {
+                            document.getElementById("writeReviewBtn").style.display = "none";
+                        }
+                    } else {
+                        console.error("Error checking login status: " + xhr.status);
+                    }
+                }
+            };
+            xhr.send();
+        }
+
+        // Call the login status check function when the page loads
+        document.addEventListener("DOMContentLoaded", function() {
+            checkLoginStatus();
+        });
     </script>
 </body>
 </html>
