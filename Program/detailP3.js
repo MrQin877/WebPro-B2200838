@@ -96,4 +96,23 @@ document.addEventListener('DOMContentLoaded', () => {
     function logout() {
         sessionStorage.removeItem('loggedInUser');
     }
+
+    // 리뷰 작성 입력창 토글 함수
+    function toggleCommentInput(type) {
+        var commentInput = document.getElementById("commentInput");
+        var commentText = document.getElementById("commentText");
+        var subjectSelector = document.getElementById("subjectSelector");
+
+        // Toggle visibility of comment input and subject selector
+        if (commentInput.style.display === "none" || commentInput.style.display === "") {
+            commentInput.style.display = "block";
+            subjectSelector.style.display = "block";
+            commentText.placeholder = `Write your ${type}...(255 Characters limit)`;
+        } else {
+            commentInput.style.display = "none";
+            subjectSelector.style.display = "none";
+            document.getElementById("writeReviewBtn").textContent = "Write a Review or feedback";
+        }
+    }
+
 });
