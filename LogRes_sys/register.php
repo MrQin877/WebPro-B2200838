@@ -41,27 +41,38 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             exit();
         }
 
-        // Check if resetPassword already exists in the database
-        $stmt = $conn->prepare("SELECT resetPassword FROM user_registration WHERE resetPassword = ?");
-        $stmt->bind_param("s", $resetPassword);
+        // Check if Email already exists in the database
+        $stmt = $conn->prepare("SELECT UserID FROM user_registration WHERE Email = ?");
+        $stmt->bind_param("s", $Email);
         $stmt->execute();
         $stmt->store_result();
 
         if ($stmt->num_rows > 0) {
-            // resetPassword already exists
-            echo "The resetPassword is already registered.";
+            // Email already exists
+            echo "The Email is already registered.";
         } else {
-            // Hash the password
-            $hashedPassword = password_hash($Password, PASSWORD_DEFAULT);
+            // Check if resetPassword already exists in the database
+            $stmt = $conn->prepare("SELECT resetPassword FROM user_registration WHERE resetPassword = ?");
+            $stmt->bind_param("s", $resetPassword);
+            $stmt->execute();
+            $stmt->store_result();
 
-            // Insert new user into database
-            $stmt = $conn->prepare("INSERT INTO user_registration (Username, Email, Password, PhoneNumber, Birth, Gender, resetPassword) VALUES (?, ?, ?, ?, ?, ?, ?)");
-            $stmt->bind_param("sssssss", $Username, $Email, $hashedPassword, $PhoneNumber, $Birth, $Gender, $resetPassword);
-
-            if ($stmt->execute()) {
-                echo "Registration successful.";
+            if ($stmt->num_rows > 0) {
+                // resetPassword already exists
+                echo "The resetPassword is already registered.";
             } else {
-                echo "Error: " . $stmt->error;
+                // Hash the password
+                $hashedPassword = password_hash($Password, PASSWORD_DEFAULT);
+
+                // Insert new user into database
+                $stmt = $conn->prepare("INSERT INTO user_registration (Username, Email, Password, PhoneNumber, Birth, Gender, resetPassword) VALUES (?, ?, ?, ?, ?, ?, ?)");
+                $stmt->bind_param("sssssss", $Username, $Email, $hashedPassword, $PhoneNumber, $Birth, $Gender, $resetPassword);
+
+                if ($stmt->execute()) {
+                    echo "Registration successful.";
+                } else {
+                    echo "Error: " . $stmt->error;
+                }
             }
         }
 
