@@ -13,6 +13,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const writeReviewBtn = document.getElementById('writeReviewBtn');
     const isLoggedIn = true; // 로그인 상태 확인 로직으로 대체 필요
 
+    let currentProgram = null; // 현재 선택된 프로그램을 저장할 변수
+
     function toggleWriteReviewButton() {
         if (isLoggedIn) {
             writeReviewBtn.style.display = 'block';
@@ -26,7 +28,10 @@ document.addEventListener('DOMContentLoaded', () => {
         programs.forEach(program => {
             const programElement = document.createElement('div');
             programElement.classList.add('program');
-            programElement.onclick = () => showProgramDetails(program.page);
+            programElement.onclick = () => {
+                currentProgram = program.title; // 클릭한 프로그램의 이름을 저장
+                showProgramDetails(program.page);
+            };
             programElement.innerHTML = `
                 <div class="program-content">
                     <img src="${program.icon}" alt="${program.title} Icon">
@@ -94,7 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
         xhr.open("POST", "review.php", true);
         xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
-        const formData = "review=" + encodeURIComponent(commentText) + "&star=" + rating;
+        const formData = "review=" + encodeURIComponent(commentText) + "&star=" + rating + "&program=" + encodeURIComponent(currentProgram);
         xhr.onreadystatechange = function() {
             if (xhr.readyState === XMLHttpRequest.DONE) {
                 if (xhr.status === 200) {
