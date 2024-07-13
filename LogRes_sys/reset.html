@@ -12,13 +12,17 @@
 
 <body>
     <div class="wrapper">
-        <form id="resetPasswordForm" method="POST" action="send_reset_email.php" onsubmit="showSuccessMessage(event, 'password-reset')">
+        <form id="resetPasswordForm" onsubmit="showSuccessMessage(event, 'password-reset')">
             <h1>Reset Password</h1>
             <div class="input-box">
-                <input type="email" name="email" placeholder="Enter your email(ID)" required>
-                <i class="bx bxs-envelope"></i>
+                <input type="password" placeholder="New Password" required>
+                <i class="bx bxs-lock-alt"></i>
             </div>
-            <button type="submit" class="btn">Send Reset Email</button>
+            <div class="input-box">
+                <input type="password" placeholder="Confirm Password" required>
+                <i class="bx bxs-lock-alt"></i>
+            </div>
+            <button type="submit" class="btn">Reset Password</button>
             <p id="successMessage" class="success-message"></p>
         </form>
     </div>
