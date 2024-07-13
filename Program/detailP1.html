@@ -193,125 +193,117 @@
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     <script>
-        // JavaScript 코드
+        var isLoggedIn = false; // 초기값 설정
 
-document.addEventListener("DOMContentLoaded", function() {
-    // 페이지 로드 시 실행되는 함수
-    checkLoginStatus(); // 로그인 상태 체크 함수 호출
-});
+        window.onload = function() {
+            checkLoginStatus(); // 페이지 로드 시 로그인 상태 확인
+        };
 
-function checkLoginStatus() {
-    var xhr = new XMLHttpRequest();
-    xhr.open("GET", "sessioncheck.php", true); // sessioncheck.php는 로그인 상태를 확인하는 서버 스크립트
-
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState === XMLHttpRequest.DONE) {
-            if (xhr.status === 200) {
-                var response = JSON.parse(xhr.responseText);
-                var isLoggedIn = response.loggedIn;
-
-                // 로그인 상태에 따라 버튼 활성화 여부 결정
-                var writeReviewBtn = document.getElementById("writeReviewBtn");
-
-                if (isLoggedIn) {
-                    // 로그인 상태일 때 버튼 활성화
-                    writeReviewBtn.disabled = false;
-                } else {
-                    // 비로그인 상태일 때 버튼 비활성화
-                    writeReviewBtn.disabled = true;
+        function checkLoginStatus() {
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', 'sessioncheck.php', true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    var response = JSON.parse(xhr.responseText);
+                    isLoggedIn = response.loggedIn; // 로그인 상태 업데이트
+                    updateReviewButton(); // 버튼 상태 업데이트
                 }
+            };
+            xhr.send();
+        }
+
+        function updateReviewButton() {
+            var writeReviewBtn = document.getElementById('writeReviewBtn');
+            if (isLoggedIn) {
+                writeReviewBtn.removeAttribute('disabled'); // 로그인 상태일 때 버튼 활성화
             } else {
-                console.error("Failed to check login status.");
+                writeReviewBtn.setAttribute('disabled', 'true'); // 로그인 상태가 아닐 때 버튼 비활성화
             }
         }
-    };
 
-    xhr.send();
-}
+        function toggleCommentInput() {
+            var commentInput = document.getElementById('commentInput');
+            var subjectSelector = document.getElementById('subjectSelector');
+            var writeReviewBtn = document.getElementById('writeReviewBtn');
 
-function toggleCommentInput(type) {
-    var commentInput = document.getElementById("commentInput");
-    var commentText = document.getElementById("commentText");
-    var subjectSelector = document.getElementById("subjectSelector");
-
-    if (commentInput.style.display === "none" || commentInput.style.display === "") {
-        commentInput.style.display = "block";
-        subjectSelector.style.display = "block";
-        commentText.placeholder = "Write your " + type + "...(255 Characters limit)";
-    } else {
-        commentInput.style.display = "none";
-        subjectSelector.style.display = "none";
-        document.getElementById("writeReviewBtn").textContent = "Write a Review or feedback";
-    }
-}
-
-function submitComment() {
-    var commentText = document.getElementById("commentText").value;
-    var rating = getSelectedRating();
-    var subject = document.getElementById("subject").value;
-
-    if (commentText.length < 20) {
-        displayErrorMessage("Please enter at least 20 characters for your review.");
-        return;
-    }
-
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", "review.php", true);
-    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-
-    var formData = "review=" + encodeURIComponent(commentText) + "&star=" + rating + "&program=" + subject;
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState === XMLHttpRequest.DONE) {
-            if (xhr.status === 200) {
-                displaySubmittedReview(commentText, rating, subject);
-                clearFormInputs();
+            if (commentInput.style.display === 'none' || commentInput.style.display === '') {
+                commentInput.style.display = 'block';
+                subjectSelector.style.display = 'block';
+                writeReviewBtn.textContent = 'Cancel';
             } else {
-                displayErrorMessage("Failed to submit review. Please try again later.");
+                commentInput.style.display = 'none';
+                subjectSelector.style.display = 'none';
+                writeReviewBtn.textContent = 'Write a Review or feedback';
             }
         }
-    };
-    xhr.send(formData);
-}
 
-function getSelectedRating() {
-    var ratingElements = document.getElementsByName("rating");
-    for (var i = 0; i < ratingElements.length; i++) {
-        if (ratingElements[i].checked) {
-            return ratingElements[i].value;
+        function submitComment() {
+            var commentText = document.getElementById('commentText').value;
+            var rating = getSelectedRating();
+            var subject = document.getElementById('subject').value;
+
+            if (commentText.length < 20) {
+                displayErrorMessage('Please enter at least 20 characters for your review.');
+                return;
+            }
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'saved_review.php', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        displaySubmittedReview(commentText, rating, subject);
+                        clearFormInputs();
+                    } else {
+                        displayErrorMessage('Failed to submit review. Please try again later.');
+                    }
+                }
+            };
+
+            var formData = 'review=' + encodeURIComponent(commentText) + '&star=' + rating + '&program=' + subject;
+            xhr.send(formData);
         }
-    }
-    return 0;
-}
 
-function displaySubmittedReview(commentText, rating, subject) {
-    var reviewsContainer = document.getElementById("reviews");
+        function getSelectedRating() {
+            var ratingElements = document.getElementsByName('rating');
+            for (var i = 0; i < ratingElements.length; i++) {
+                if (ratingElements[i].checked) {
+                    return ratingElements[i].value;
+                }
+            }
+            return 0;
+        }
 
-    var reviewElement = document.createElement("div");
-    reviewElement.className = "review-item";
-    reviewElement.innerHTML = `
-        <div class="review-header">
-            <div class="review-rating">${rating}★</div>
-            <div class="review-info">${subject}</div>
-        </div>
-        <div class="review-comment">${commentText}</div>
-    `;
+        function displaySubmittedReview(commentText, rating, subject) {
+            var reviewsContainer = document.getElementById('reviews');
 
-    reviewsContainer.insertBefore(reviewElement, reviewsContainer.firstChild);
-}
+            var reviewElement = document.createElement('div');
+            reviewElement.className = 'review-item';
+            reviewElement.innerHTML = `
+                <div class="review-header">
+                    <div class="review-rating">${rating}★</div>
+                    <div class="review-info">${subject}</div>
+                </div>
+                <div class="review-comment">${commentText}</div>
+            `;
 
-function clearFormInputs() {
-    document.getElementById("commentText").value = "";
-    var ratingElements = document.getElementsByName("rating");
-    for (var i = 0; i < ratingElements.length; i++) {
-        ratingElements[i].checked = false;
-    }
-}
+            reviewsContainer.insertBefore(reviewElement, reviewsContainer.firstChild);
+        }
 
-function displayErrorMessage(message) {
-    var errorMessageElement = document.getElementById("error-message");
-    errorMessageElement.textContent = message;
-}
+        function clearFormInputs() {
+            document.getElementById('commentText').value = '';
+            var ratingElements = document.getElementsByName('rating');
+            for (var i = 0; i < ratingElements.length; i++) {
+                ratingElements[i].checked = false;
+            }
+        }
 
+        function displayErrorMessage(message) {
+            var errorMessageElement = document.getElementById('error-message');
+            errorMessageElement.textContent = message;
+        }
     </script>
 </body>
 </html>
