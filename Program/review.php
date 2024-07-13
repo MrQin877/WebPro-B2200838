@@ -17,9 +17,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $review = $_POST['review'];
     $star = $_POST['star'];
     $program = $_POST['program'];
+    $saved_time = @$_saved_time['saved_time'];
     
     // SQL 쿼리
-    $sql = "INSERT INTO user_review (review, star, program) VALUES (?, ?, ?)";
+    $sql = "INSERT INTO user_review (review, star, program, saved_time) VALUES (?, ?, ?, ?)";
 
     // 준비된 문장을 생성하고 매개변수를 바인딩
     $stmt = $conn->prepare($sql);
