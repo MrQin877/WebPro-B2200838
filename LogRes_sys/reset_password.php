@@ -1,44 +1,58 @@
 <?php
-session_start(); // 세션 시작
+session_start();
 
-$servername = "localhost"; // 데이터베이스 서버 이름
-$username = "root"; // 데이터베이스 사용자 이름
-$password = ""; // 데이터베이스 비밀번호
-$dbname = "user"; // 데이터베이스 이름
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "user";
 
-// 데이터베이스 연결
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-// 연결 확인
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// 세션에서 이메일 가져오기
-if (!isset($_SESSION['reset_email'])) {
-    echo "Session error: No recovery email found.";
-    exit();
-}
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $new_password = $_POST['new_password'];
+    $confirm_password = $_POST['confirm_password'];
+    $reset_token = $_POST['reset_token'];
 
-// 새로운 비밀번호와 컨펌 비밀번호 가져오기
-$new_password = $_POST['new_password'];
-$confirm_password = $_POST['confirm_password'];
-
-// 입력값 확인
-if (empty($new_password) || empty($confirm_password)) {
-    echo "All fields are required.";
-} elseif ($new_password !== $confirm_password) {
-    echo "New passwords do not match.";
-} else {
-    // 이메일과 매치되는 회원의 비밀번호 업데이트
-    $email = $_SESSION['reset_email'];
-    $new_password_hashed = password_hash($new_password, PASSWORD_DEFAULT);
-    $sql = "UPDATE user_registration SET password = '$new_password_hashed' WHERE email = '$email'";
-
-    if ($conn->query($sql) === TRUE) {
-        echo "Password updated successfully.";
+    if (empty($new_password) || empty($confirm_password) || empty($reset_token)) {
+        echo "All fields are required.";
+    } elseif ($new_password !== $confirm_password) {
+        echo "New passwords do not match.";
     } else {
-        echo "Error updating password: " . $conn->error;
+        // Verify reset token from database
+        $sql = "SELECT * FROM password_reset WHERE reset_token = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("s", $reset_token);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $email = $row['email'];
+
+            // Update password in user_registration table
+            $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
+            $update_sql = "UPDATE user_registration SET password = ? WHERE email = ?";
+            $update_stmt = $conn->prepare($update_sql);
+            $update_stmt->bind_param("ss", $hashed_password, $email);
+
+            if ($update_stmt->execute()) {
+                // Password updated successfully, remove reset token from password_reset table
+                $delete_sql = "DELETE FROM password_reset WHERE reset_token = ?";
+                $delete_stmt = $conn->prepare($delete_sql);
+                $delete_stmt->bind_param("s", $reset_token);
+                $delete_stmt->execute();
+
+                echo "Password updated successfully.";
+            } else {
+                echo "Error updating password: " . $conn->error;
+            }
+        } else {
+            echo "Invalid reset token.";
+        }
     }
 }
 
