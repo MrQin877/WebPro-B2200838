@@ -17,14 +17,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $review = $_POST['review'];
     $star = $_POST['star'];
     $program = $_POST['program'];
-    $saved_time = @$_saved_time['saved_time'];
     
+    // 현재 시간 구하기
+    $saved_time = date('Y-m-d H:i:s'); // 예: 2024-07-14 15:30:00
+
     // SQL 쿼리
     $sql = "INSERT INTO user_review (review, star, program, saved_time) VALUES (?, ?, ?, ?)";
 
     // 준비된 문장을 생성하고 매개변수를 바인딩
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sss", $review, $star, $program); // 매개변수 타입에 주의하세요: s는 문자열, i는 정수입니다.
+    $stmt->bind_param("ssss", $review, $star, $program, $saved_time); // 매개변수 타입에 주의하세요: s는 문자열, i는 정수입니다.
 
     // 쿼리 실행
     if ($stmt->execute()) {
