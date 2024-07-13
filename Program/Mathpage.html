@@ -174,34 +174,36 @@
                     checkEnrollment(data.user_id);
                 }
             });
-
-            loadReviews(); // Load reviews on page load
+            
+            // Load reviews for Mathematics program
+            loadReviews('Mathematics');
         });
+        
+        function loadReviews(program) {
+            fetch(`load_reviews.php?program=${program}`)
+            .then(response => response.json())
+            .then(data => {
+                const reviewsContainer = document.getElementById('reviews');
+                reviewsContainer.innerHTML = '';
+                
+                data.reviews.forEach(review => {
+                    const reviewElement = document.createElement('div');
+                    reviewElement.className = 'review-item';
+                    reviewElement.innerHTML = `
+                    <div class="review-header">
+                        <div class="review-rating">${review.star}★</div>
+                        <div class="review-info">${review.email}</div>
+                    </div>
+                    <div class="review-comment">${review.review}</div>
+                `;
+                reviewsContainer.appendChild(reviewElement);
+            });
+        })
+        .catch(error => {
+            console.error('Error loading reviews:', error);
+        });
+}
 
-        function loadReviews() {
-            fetch('load_reviews.php?program=Mathematics')
-                .then(response => response.json())
-                .then(data => {
-                    const reviewsContainer = document.getElementById('reviews');
-                    reviewsContainer.innerHTML = '';
-
-                    data.reviews.forEach(review => {
-                        const reviewElement = document.createElement('div');
-                        reviewElement.className = 'review-item';
-                        reviewElement.innerHTML = `
-                            <div class="review-header">
-                                <div class="review-rating">${review.star}★</div>
-                                <div class="review-info">${review.email}</div>
-                            </div>
-                            <div class="review-comment">${review.review}</div>
-                        `;
-                        reviewsContainer.appendChild(reviewElement);
-                    });
-                })
-                .catch(error => {
-                    console.error('Error loading reviews:', error);
-                });
-        }
     </script>
     <section style="margin-bottom:10%; height: vh;"></section>
     <footers></footers>
