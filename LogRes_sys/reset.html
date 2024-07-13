@@ -1,32 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reset Password | Codehal</title>
-    <link rel="stylesheet" href="Nlogin.css">
-    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <title>Reset Password</title>
 </head>
-
 <body>
-    <div class="wrapper">
-        <form id="resetPasswordForm" onsubmit="showSuccessMessage(event, 'password-reset')">
-            <h1>Reset Password</h1>
-            <div class="input-box">
-                <input type="password" placeholder="New Password" required>
-                <i class="bx bxs-lock-alt"></i>
-            </div>
-            <div class="input-box">
-                <input type="password" placeholder="Confirm Password" required>
-                <i class="bx bxs-lock-alt"></i>
-            </div>
-            <button type="submit" class="btn">Reset Password</button>
-            <p id="successMessage" class="success-message"></p>
-        </form>
-    </div>
-    <script src="Nlogin.js"></script>
+    <h2>Reset Password</h2>
+    <form method="POST" action="send_reset_email.php">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required><br>
+        <button type="submit">Send Reset Email</button>
+    </form>
 </body>
-
 </html>
