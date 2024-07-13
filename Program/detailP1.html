@@ -110,11 +110,6 @@
             margin-right: 10px;
         }
 
-        .review-info {
-            font-size: 14px;
-            color: #666;
-        }
-
         .review-comment {
             font-size: 16px;
             margin-top: 5px;
@@ -134,7 +129,7 @@
         <section class="align-center" style="margin-top: 9%;">
             <h1>Program List</h1>
             <div class="search-bar">
-                <input type="text" id="searchInput" placeholder="Search programs..." oninput="filterSuggestions()" onclick="showAllSuggestions()">
+                <input type="text" id="searchInput" placeholder="Search programs..." oninput="filterPrograms()" onclick="showAllPrograms()">
                 <div id="suggestions"></div>
             </div>
         </section>
@@ -189,92 +184,154 @@
     <footers></footers>
     
     <script src="../multiUsage.js" defer></script>
-    <script src="detailP3.js"></script>
-    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     <script>
-        function toggleCommentInput(type) {
-            var commentInput = document.getElementById("commentInput");
-            var commentText = document.getElementById("commentText");
-            var subjectSelector = document.getElementById("subjectSelector");
+        document.addEventListener('DOMContentLoaded', () => {
+            const programs = [
+                { title: 'Malay Language', description: 'Learn Malay language basics.', icon: '../images/icon3.jpg', page: 'Malpage.html' },
+                { title: 'English Language', description: 'Master English language skills.', icon: '../images/icon4.jpg', page: 'Engpage.html' },
+                { title: 'Mathematics', description: 'Explore various math concepts.', icon: '../images/icon2.jpg', page: 'Mathpage.html' },
+                { title: 'History', description: 'Study historical events and figures.', icon: '../images/icon5.jpg', page: 'Hispage.html' },
+                { title: 'Science', description: 'Learn about scientific principles.', icon: '../images/icon1.jpg', page: 'Sicpage.html' },
+                { title: 'All Subjects', description: 'Learn about our every programs.', icon: '../images/icon6.jpg', page: 'Allpage.html' }
+            ];
 
-            if (commentInput.style.display === "none" || commentInput.style.display === "") {
-                commentInput.style.display = "block";
-                subjectSelector.style.display = "block";
-                commentText.placeholder = "Write your " + type + "...(255 Characters limit)";
-            } else {
-                commentInput.style.display = "none";
-                subjectSelector.style.display = "none";
-                document.getElementById("writeReviewBtn").textContent = "Write a Review or feedback";
+            const programList = document.getElementById('programList');
+            const searchInput = document.getElementById('searchInput');
+            const writeReviewBtn = document.getElementById('writeReviewBtn');
+            const isLoggedIn = true; // 로그인 상태 확인 로직으로 대체 필요
+
+            let currentProgram = null; // 현재 선택된 프로그램을 저장할 변수
+
+            function toggleWriteReviewButton() {
+                if (isLoggedIn) {
+                    writeReviewBtn.style.display = 'block';
+                } else {
+                    writeReviewBtn.style.display = 'none';
+                }
             }
-        }
 
-        function submitComment() {
-            var commentText = document.getElementById("commentText").value;
-            var rating = getSelectedRating();
-            var subject = document.getElementById("subject").value;
-
-            if (commentText.length < 20) {
-                displayErrorMessage("Please enter at least 20 characters for your review.");
-                return;
+            function renderPrograms(programs) {
+                programList.innerHTML = '';
+                programs.forEach(program => {
+                    const programElement = document.createElement('div');
+                    programElement.classList.add('program');
+                    programElement.onclick = () => {
+                        currentProgram = program.title; // 클릭한 프로그램의 이름을 저장
+                        showProgramDetails(program.page);
+                    };
+                    programElement.innerHTML = `
+                        <div class="program-content">
+                            <img src="${program.icon}" alt="${program.title} Icon">
+                            <div class="program-info">
+                                <div class="program-title">${program.title}</div>
+                                <div class="program-description">${program.description}</div>
+                            </div>
+                        </div>
+                    `;
+                    programList.appendChild(programElement);
+                });
+                toggleWriteReviewButton();
             }
 
-            var xhr = new XMLHttpRequest();
-            xhr.open("POST", "review.php", true);
-            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            function showProgramDetails(page) {
+                window.location.href = page;
+            }
 
-            var formData = "review=" + encodeURIComponent(commentText) + "&star=" + rating + "&program=" + subject;
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState === XMLHttpRequest.DONE) {
-                    if (xhr.status === 200) {
-                        displaySubmittedReview(commentText, rating, subject);
-                        clearFormInputs();
-                    } else {
-                        displayErrorMessage("Failed to submit review. Please try again later.");
+            function filterPrograms() {
+                const searchText = searchInput.value.toLowerCase();
+                const filteredPrograms = programs.filter(program =>
+                    program.title.toLowerCase().includes(searchText)
+                );
+                renderPrograms(filteredPrograms);
+            }
+
+            function toggleCommentInput(type) {
+                const commentInput = document.getElementById("commentInput");
+                const commentText = document.getElementById("commentText");
+                const subjectSelector = document.getElementById("subjectSelector");
+
+                if (commentInput.style.display === "none" || commentInput.style.display === "") {
+                    commentInput.style.display = "block";
+                    subjectSelector.style.display = "block";
+                    commentText.placeholder = "Write your " + type + "...(255 Characters limit)";
+                } else {
+                    commentInput.style.display = "none";
+                    subjectSelector.style.display = "none";
+                    document.getElementById("writeReviewBtn").textContent = "Write a Review or feedback";
+                }
+            }
+
+            function submitComment() {
+                const commentText = document.getElementById("commentText").value;
+                const rating = getSelectedRating();
+
+                if (commentText.length < 20) {
+                    displayErrorMessage("Please enter at least 20 characters for your review.");
+                    return;
+                }
+
+                const xhr = new XMLHttpRequest();
+                xhr.open("POST", "review.php", true);
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+                const formData = "review=" + encodeURIComponent(commentText) + "&star=" + rating + "&program=" + encodeURIComponent(currentProgram);
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === XMLHttpRequest.DONE) {
+                        if (xhr.status === 200) {
+                            displaySubmittedReview(commentText, rating);
+                            clearFormInputs();
+                        } else {
+                            displayErrorMessage("Failed to submit review. Please try again later.");
+                        }
+                    }
+                };
+                xhr.send(formData);
+            }
+
+            function getSelectedRating() {
+                const stars = document.getElementsByName("rating");
+                for (let i = 0; i < stars.length; i++) {
+                    if (stars[i].checked) {
+                        return stars[i].value;
                     }
                 }
-            };
-            xhr.send(formData);
-        }
+                return null;
+            }
 
-        function getSelectedRating() {
-            var ratingElements = document.getElementsByName("rating");
-            for (var i = 0; i < ratingElements.length; i++) {
-                if (ratingElements[i].checked) {
-                    return ratingElements[i].value;
+            function displaySubmittedReview(comment, rating) {
+                const reviewElement = document.createElement("div");
+                reviewElement.classList.add("review-item");
+                reviewElement.innerHTML = `
+                    <div class="review-header">
+                        <span class="review-rating">${rating} ★</span>
+                    </div>
+                    <p class="review-comment">${comment}</p>
+                `;
+
+                const reviewsSection = document.getElementById("reviews");
+                reviewsSection.insertBefore(reviewElement, reviewsSection.firstChild);
+
+                const reviewItems = reviewsSection.getElementsByClassName("review-item");
+                if (reviewItems.length > 15) {
+                    reviewsSection.removeChild(reviewsSection.lastChild);
                 }
             }
-            return 0;
-        }
 
-        function displaySubmittedReview(commentText, rating, subject) {
-            var reviewsContainer = document.getElementById("reviews");
-
-            var reviewElement = document.createElement("div");
-            reviewElement.className = "review-item";
-            reviewElement.innerHTML = `
-                <div class="review-header">
-                    <div class="review-rating">${rating}★</div>
-                    <div class="review-info">${subject}</div>
-                </div>
-                <div class="review-comment">${commentText}</div>
-            `;
-
-            reviewsContainer.insertBefore(reviewElement, reviewsContainer.firstChild);
-        }
-
-        function clearFormInputs() {
-            document.getElementById("commentText").value = "";
-            var ratingElements = document.getElementsByName("rating");
-            for (var i = 0; i < ratingElements.length; i++) {
-                ratingElements[i].checked = false;
+            function clearFormInputs() {
+                document.getElementById("commentText").value = "";
+                document.getElementById("commentInput").style.display = "none";
+                document.getElementById("subjectSelector").style.display = "none";
+                document.getElementById("writeReviewBtn").textContent = "Write a Review or feedback";
             }
-        }
 
-        function displayErrorMessage(message) {
-            var errorMessageElement = document.getElementById("error-message");
-            errorMessageElement.textContent = message;
-        }
+            function displayErrorMessage(message) {
+                const errorMessageElement = document.getElementById("error-message");
+                errorMessageElement.textContent = message;
+            }
+
+            searchInput.addEventListener('input', filterPrograms);
+            renderPrograms(programs);
+        });
     </script>
 </body>
 </html>
