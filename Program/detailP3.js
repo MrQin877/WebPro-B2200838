@@ -1,148 +1,74 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // 유저 로그인 상태 확인 (예제)
-    const isLoggedIn = true; // 실제 로그인 체크로 대체
+    // 프로그램 목록 배열
+    const programs = [
+        { title: 'Malay Language', description: 'Learn Malay language basics.', icon: '../images/icon3.jpg', page: 'Malpage.html' },
+        { title: 'English Language', description: 'Master English language skills.', icon: '../images/icon4.jpg', page: 'Engpage.html' },
+        { title: 'Mathematics', description: 'Explore various math concepts.', icon: '../images/icon2.jpg', page: 'Mathpage.html' },
+        { title: 'History', description: 'Study historical events and figures.', icon: '../images/icon5.jpg', page: 'Hispage.html' },
+        { title: 'Science', description: 'Learn about scientific principles.', icon: '../images/icon1.jpg', page: 'Sicpage.html' },
+        { title: 'All Subjects', description: 'Learn about our every programs.', icon: '../images/icon6.jpg', page: 'Allpage.html' }
+    ];
 
-    // 로그인 상태에 따라 리뷰 섹션의 가시성을 토글하는 함수
-    function toggleReviewSectionVisibility() {
-        const writeReviewBtn = document.getElementById('writeReviewBtn');
-        const commentInput = document.getElementById('commentInput');
-        const subjectSelector = document.getElementById('subjectSelector');
+    // HTML 요소 참조
+    const programList = document.getElementById('programList');
+    const searchInput = document.getElementById('searchInput');
+    const writeReviewBtn = document.getElementById('writeReviewBtn'); // 추가된 부분: Write a Review 버튼
 
+    // Function to check if user is logged in (예시)
+    const isLoggedIn = true; // 실제 로그인 상태 확인 로직으로 대체 필요
+
+    // Function to toggle visibility of Write a Review 버튼 based on login status
+    function toggleWriteReviewButton() {
         if (isLoggedIn) {
             writeReviewBtn.style.display = 'block';
-            commentInput.style.display = 'none';
-            subjectSelector.style.display = 'none';
         } else {
             writeReviewBtn.style.display = 'none';
-            commentInput.style.display = 'none';
-            subjectSelector.style.display = 'none';
         }
     }
 
-    // 초기 호출을 통해 로그인 상태에 따른 가시성 토글
-    toggleReviewSectionVisibility();
+    // 초기 프로그램 목록을 렌더링하는 함수
+    function renderPrograms(programs) {
+        // 프로그램 리스트를 비움
+        programList.innerHTML = '';
 
-    // writeReviewBtn 클릭 이벤트 리스너
-    writeReviewBtn.addEventListener('click', () => {
-        if (isLoggedIn) {
-            toggleCommentInput('review');
-        } else {
-            alert('리뷰를 작성하려면 로그인하세요.'); // 로그인 프롬프트 로직으로 대체
-        }
-    });
+        // 프로그램 배열을 순회하며 각 프로그램을 렌더링
+        programs.forEach(program => {
+            // 프로그램 요소를 생성
+            const programElement = document.createElement('div');
+            programElement.classList.add('program');
 
-    // 댓글 입력란 가시성을 토글하는 함수
-    function toggleCommentInput(type) {
-        var commentInput = document.getElementById("commentInput");
-        var commentText = document.getElementById("commentText");
-        var subjectSelector = document.getElementById("subjectSelector");
+            // 클릭 시 해당 프로그램의 상세 페이지로 이동하도록 설정
+            programElement.onclick = () => {
+                showProgramDetails(program.page);
+            };
 
-        if (commentInput.style.display === "none" || commentInput.style.display === "") {
-            commentInput.style.display = "block";
-            subjectSelector.style.display = "block";
-            commentText.placeholder = `${type}을(를) 작성하세요... (255자 제한)`;
-        } else {
-            commentInput.style.display = "none";
-            subjectSelector.style.display = "none";
-            document.getElementById("writeReviewBtn").textContent = "리뷰 또는 피드백 작성";
-        }
+            // 프로그램 요소의 내부 HTML 설정
+            programElement.innerHTML = `
+                <div class="program-content">
+                    <img src="${program.icon}" alt="${program.title} Icon">
+                    <div class="program-info">
+                        <div class="program-title">${program.title}</div>
+                        <div class="program-description">${program.description}</div>
+                    </div>
+                </div>
+            `;
+
+            // 프로그램 리스트에 프로그램 요소를 추가
+            programList.appendChild(programElement);
+        });
+
+        // Write a Review 버튼 표시 여부 업데이트
+        toggleWriteReviewButton();
     }
 
-    // 리뷰 제출 함수 (이미 포함된 코드)
-    function submitComment() {
-        var commentText = document.getElementById("commentText").value;
-        var rating = getSelectedRating(); // 선택된 평점을 가져오는 함수 구현 필요
-        var subject = document.getElementById("subject").value; // 선택된 주제 가져오기
-        var userEmail = document.getElementById("userEmail").value;
-
-        // 입력값 유효성 검사 (이미 포함된 코드)
-        if (commentText.length < 20) {
-            displayErrorMessage("리뷰를 최소 20자 이상 입력하세요.");
-            return;
-        }
-
-        if (userEmail === "") {
-            displayErrorMessage("이메일을 입력하세요.");
-            return;
-        }
-
-        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(userEmail)) {
-            displayErrorMessage("유효한 이메일 주소를 입력하세요.");
-            return;
-        }
-
-        // AJAX 요청 예제 (이미 포함된 코드)
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", "review.php", true);
-        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-
-        var formData = `review=${encodeURIComponent(commentText)}&star=${rating}&program=${subject}&email=${userEmail}`;
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState === XMLHttpRequest.DONE) {
-                if (xhr.status === 200) {
-                    // 성공적인 제출
-                    displaySubmittedReview(commentText, rating, subject, userEmail);
-                    clearFormInputs();
-                } else {
-                    // 오류 처리
-                    displayErrorMessage("리뷰 제출에 실패했습니다. 나중에 다시 시도하세요.");
-                }
-            }
-        };
-        xhr.send(formData);
+    // 프로그램의 상세 페이지로 이동하는 함수
+    function showProgramDetails(page) {
+        window.location.href = page;
     }
 
-    // 선택된 평점을 가져오는 함수 (이미 포함된 코드)
-    function getSelectedRating() {
-        var stars = document.getElementsByName("rating");
+    // 검색 입력 필드에 입력 이벤트 리스너 추가
+    searchInput.addEventListener('input', filterPrograms);
 
-        for (var i = 0; i < stars.length; i++) {
-            if (stars[i].checked) {
-                return stars[i].value;
-            }
-        }
-        return null; // 선택된 평점이 없음
-    }
-
-    // 제출된 리뷰를 표시하는 함수 (이미 포함된 코드)
-    function displaySubmittedReview(comment, rating, subject, userEmail) {
-        var userEmailDisplay = userEmail.substr(0, 4) + '*'.repeat(userEmail.length - 4); // 처음 4자만 표시하고 나머지는 숨김
-
-        // 새로운 리뷰 요소 생성
-        var reviewElement = document.createElement("div");
-        reviewElement.classList.add("review-item");
-        reviewElement.innerHTML = `
-            <div class="review-header">
-                <span class="review-rating">${rating} ★</span>
-                <span class="review-info">${subject} | ${userEmailDisplay}</span>
-            </div>
-            <p class="review-comment">${comment}</p>
-        `;
-
-        // 리뷰 섹션의 시작 부분에 새 리뷰 삽입
-        var reviewsSection = document.getElementById("reviews");
-        reviewsSection.insertBefore(reviewElement, reviewsSection.firstChild);
-
-        // 표시되는 리뷰의 수를 15개로 제한 (이미 포함된 코드)
-        var reviewItems = reviewsSection.getElementsByClassName("review-item");
-        if (reviewItems.length > 15) {
-            reviewsSection.removeChild(reviewsSection.lastChild);
-        }
-    }
-
-    // 폼 입력값을 초기화하는 함수 (이미 포함된 코드)
-    function clearFormInputs() {
-        document.getElementById("commentText").value = "";
-        document.getElementById("userEmail").value = "";
-        document.getElementById("commentInput").style.display = "none";
-        document.getElementById("subjectSelector").style.display = "none";
-        document.getElementById("writeReviewBtn").textContent = "리뷰 또는 피드백 작성";
-    }
-
-    // 오류 메시지를 표시하는 함수 (이미 포함된 코드)
-    function displayErrorMessage(message) {
-        var errorMessageElement = document.getElementById("error-message");
-        errorMessageElement.textContent = message;
-    }
+    // 초기 프로그램 목록을 렌더링
+    renderPrograms(programs);
 });
