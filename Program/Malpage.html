@@ -37,11 +37,32 @@
             overflow: hidden;
         }
         .review-item {
-            border: 1px solid #ccc;
-            padding: 10px;
-            margin-bottom: 10px;
-            border-radius: 5px;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #ffffff;
+            transition: transform 0.3s, box-shadow 0.3s;
         }
+
+        .review-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .review-item .review-text {
+        font-size: 16px;
+        line-height: 1.5;
+        color: #333333;
+        }
+
+        .review-item .review-meta {
+        font-size: 14px;
+        color: #777777;
+        margin-top: 10px;
+        }
+
 
         .review-header {
             display: flex;
