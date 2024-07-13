@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $PhoneNumber = $_POST['PhoneNumber'];
     $Birth = $_POST['Birth'];
     $Gender = $_POST['Gender'];
-    $resetToken = $_POST['reset_token']; // 여기서 리셋 토큰을 받아옵니다.'$resetToken'
+    $resetToken = $_POST['resetToken']; // 여기서 리셋 토큰을 받아옵니다.'$resetToken'
 
     // Check if any field is empty
     if (empty($Username) || empty($Email) || empty($Password) || empty($PhoneNumber) || empty($Birth) || empty($Gender) || empty($resetToken)) {
