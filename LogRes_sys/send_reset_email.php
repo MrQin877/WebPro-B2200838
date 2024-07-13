@@ -2,7 +2,7 @@
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-require 'vendor/autoload.php';
+require __DIR__ . '/vendor/autoload.php'; // Adjust the path if necessary
 
 $servername = "localhost";
 $username = "root";
@@ -51,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $mail->Port = 587;
 
                     // 수신자 설정
-                    $mail->setFrom('wnsgud030405@gmail.com', 'June');
+                    $mail->setFrom('wnsgud030405@gmail.com', 'Jun');
                     $mail->addAddress($email);
 
                     // 이메일 내용 설정
