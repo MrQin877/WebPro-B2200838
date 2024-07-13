@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     if ($update_stmt->execute()) {
                         // Redirect to homepage (Homepage.html) after successful password update
-                        header("Location: Homepage.html");
+                        header("Location: HomePage.html");
                         exit();
                     } else {
                         echo "Error updating password: " . $conn->error;
