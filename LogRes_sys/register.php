@@ -79,4 +79,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 
 $conn->close();
+
+// Return error message if exists
+if (!empty($errorMessage)) {
+    echo $errorMessage;
+}
 ?>
