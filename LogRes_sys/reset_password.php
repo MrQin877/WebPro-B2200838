@@ -15,9 +15,9 @@ if ($conn->connect_error) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $new_password = $_POST['new_password'];
     $confirm_password = $_POST['confirm_password'];
-    $resetToken = $_POST['resetToken'];
+    $resetToken = $_POST['resetToken']; // Ensure consistent variable name
 
-    if (empty($new_password) || empty($confirm_password) || empty($reset_token)) {
+    if (empty($new_password) || empty($confirm_password) || empty($resetToken)) {
         echo "All fields are required.";
     } elseif ($new_password !== $confirm_password) {
         echo "New passwords do not match.";
@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Verify reset token from database
         $sql = "SELECT * FROM password_reset WHERE reset_token = ?";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("i", $resetToken);
+        $stmt->bind_param("s", $resetToken); // Assuming reset_token is stored as string
         $stmt->execute();
         $result = $stmt->get_result();
 
@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             if ($update_stmt->execute()) {
                 // Password updated successfully, remove reset token from password_reset table
-                $delete_sql = "DELETE FROM password_reset WHERE resetToken = ?";
+                $delete_sql = "DELETE FROM password_reset WHERE reset_token = ?";
                 $delete_stmt = $conn->prepare($delete_sql);
                 $delete_stmt->bind_param("s", $resetToken);
                 $delete_stmt->execute();
