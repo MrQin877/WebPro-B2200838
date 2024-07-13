@@ -213,21 +213,9 @@
             var commentText = document.getElementById("commentText").value;
             var rating = getSelectedRating();
             var subject = document.getElementById("subject").value;
-            var userEmail = document.getElementById("userEmail").value;
 
             if (commentText.length < 20) {
                 displayErrorMessage("Please enter at least 20 characters for your review.");
-                return;
-            }
-
-            if (userEmail === "") {
-                displayErrorMessage("Please enter your email.");
-                return;
-            }
-
-            var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(userEmail)) {
-                displayErrorMessage("Please enter a valid email address.");
                 return;
             }
 
@@ -235,11 +223,11 @@
             xhr.open("POST", "review.php", true);
             xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
-            var formData = "review=" + encodeURIComponent(commentText) + "&star=" + rating + "&program=" + subject + "&email=" + userEmail;
+            var formData = "review=" + encodeURIComponent(commentText) + "&star=" + rating + "&program=" + subject;
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === XMLHttpRequest.DONE) {
                     if (xhr.status === 200) {
-                        displaySubmittedReview(commentText, rating, subject, userEmail);
+                        displaySubmittedReview(commentText, rating, subject);
                         clearFormInputs();
                     } else {
                         displayErrorMessage("Failed to submit review. Please try again later.");
@@ -259,7 +247,7 @@
             return 0;
         }
 
-        function displaySubmittedReview(commentText, rating, subject, userEmail) {
+        function displaySubmittedReview(commentText, rating, subject) {
             var reviewsContainer = document.getElementById("reviews");
 
             var reviewElement = document.createElement("div");
@@ -267,7 +255,7 @@
             reviewElement.innerHTML = `
                 <div class="review-header">
                     <div class="review-rating">${rating}★</div>
-                    <div class="review-info">${subject} - ${userEmail}</div>
+                    <div class="review-info">${subject}</div>
                 </div>
                 <div class="review-comment">${commentText}</div>
             `;
@@ -277,7 +265,6 @@
 
         function clearFormInputs() {
             document.getElementById("commentText").value = "";
-            document.getElementById("userEmail").value = "";
             var ratingElements = document.getElementsByName("rating");
             for (var i = 0; i < ratingElements.length; i++) {
                 ratingElements[i].checked = false;
