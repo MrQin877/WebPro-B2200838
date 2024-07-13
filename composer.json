@@ -11,5 +11,7 @@
             "email": "kkjhhyu0405@gmail.com"
         }
     ],
-    "require": {}
+    "require": {
+        "phpmailer/phpmailer": "^6.9"
+    }
 }
