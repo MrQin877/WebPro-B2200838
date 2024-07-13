@@ -15,7 +15,7 @@ if ($conn->connect_error) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $new_password = $_POST['new_password'];
     $confirm_password = $_POST['confirm_password'];
-    $reset_token = $_POST['resetToken'];
+    $resetToken = $_POST['resetToken'];
 
     if (empty($new_password) || empty($confirm_password) || empty($reset_token)) {
         echo "All fields are required.";
