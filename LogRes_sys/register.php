@@ -45,6 +45,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         } elseif (!preg_match('/^\d+$/', $PhoneNumber)) {
             $errorMessage = "Please enter a valid phone number with numbers only.";
         } else {
+            // Hash the password
+            $hashedPassword = password_hash($Password, PASSWORD_DEFAULT);
+
             // Check if Email already exists in the database
             $stmt = $conn->prepare("SELECT UserID FROM user_registration WHERE Email = ?");
             $stmt->bind_param("s", $Email);
@@ -54,41 +57,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($stmt->num_rows > 0) {
                 // Email already exists
                 $errorMessage = "The Email is already registered. Please try again with a different Email.";
-                echo '<script>alert("The Email is already registered. Please try again with a different Email."); window.location.href = "register.html";</script>';
-                exit();
             } else {
-                // Check if resetPassword already exists in the database
-                $stmt = $conn->prepare("SELECT resetPassword FROM user_registration WHERE resetPassword = ?");
-                $stmt->bind_param("s", $resetPassword);
-                $stmt->execute();
-                $stmt->store_result();
+                // Insert new user into database
+                $stmt = $conn->prepare("INSERT INTO user_registration (Username, Email, Password, PhoneNumber, Birth, Gender, resetPassword) VALUES (?, ?, ?, ?, ?, ?, ?)");
+                $stmt->bind_param("sssssss", $Username, $Email, $hashedPassword, $PhoneNumber, $Birth, $Gender, $resetPassword);
 
-                if ($stmt->num_rows > 0) {
-                    // resetPassword already exists
-                    $errorMessage = "The resetPassword is already registered. Please try again with a different resetPassword.";
-                    echo '<script>alert("The resetPassword is already registered. Please try again with a different resetPassword."); window.location.href = "register.html";</script>';
-                    exit();
+                if ($stmt->execute()) {
+                    // Registration successful
+                    echo "Registration successful.";
+                    // Optional: Redirect to another page after successful registration
+                    // header("Location: success.html");
+                    // exit();
                 } else {
-                    // Hash the password
-                    $hashedPassword = password_hash($Password, PASSWORD_DEFAULT);
-
-                    // Insert new user into database
-                    $stmt = $conn->prepare("INSERT INTO user_registration (Username, Email, Password, PhoneNumber, Birth, Gender, resetPassword) VALUES (?, ?, ?, ?, ?, ?, ?)");
-                    $stmt->bind_param("sssssss", $Username, $Email, $hashedPassword, $PhoneNumber, $Birth, $Gender, $resetPassword);
-
-                    if ($stmt->execute()) {
-                        echo "Registration successful.";
-                        // Optional: Redirect to another page after successful registration
-                        // header("Location: success.html");
-                        // exit();
-                    } else {
-                        $errorMessage = "Error: " . $stmt->error;
-                    }
+                    $errorMessage = "Error: " . $stmt->error;
                 }
             }
-        }
 
-        $stmt->close();
+            $stmt->close();
+        }
     }
 }
 

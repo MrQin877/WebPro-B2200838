@@ -7,7 +7,7 @@ const ConfirmPasswordInput = document.getElementById("ConfirmPassword");
 const PhoneNumberInput = document.getElementById("PhoneNumber");
 const BirthInput = document.getElementById("Birth");
 const GenderInput = document.getElementById("Gender");
-const ResetPasswordInput = document.getElementById("ResetPassword");
+const ResetPasswordInput = document.getElementById("resetPassword");
 const message = document.getElementById("successMessage");
 
 // Add submit event listener to the form
