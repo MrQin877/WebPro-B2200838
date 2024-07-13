@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Verify reset token from database
         $sql = "SELECT * FROM password_reset WHERE reset_token = ?";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("s", $reset_token);
+        $stmt->bind_param("s", $resetToken);
         $stmt->execute();
         $result = $stmt->get_result();
 
