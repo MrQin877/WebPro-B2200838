@@ -147,6 +147,8 @@
                 session_start();
                 if (isset($_SESSION['user_id'])) {
                     echo '<button id="writeReviewBtn" onclick="toggleCommentInput(\'review\')">Write a Review or feedback</button>';
+                } else {
+                    echo '<button id="writeReviewBtn" disabled>Write a Review or feedback</button>';
                 }
             ?>
             
