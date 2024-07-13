@@ -54,8 +54,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($stmt->num_rows > 0) {
                 // Email already exists
                 $errorMessage = "The Email is already registered. Please try again with a different Email.";
-                echo '<script>alert("The Email is already registered. Please try again with a different Email."); window.location.href = "register.html";</script>';
-                exit();
             } else {
                 // Check if resetPassword already exists in the database
                 $stmt = $conn->prepare("SELECT resetPassword FROM user_registration WHERE resetPassword = ?");
@@ -66,8 +64,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 if ($stmt->num_rows > 0) {
                     // resetPassword already exists
                     $errorMessage = "The resetPassword is already registered. Please try again with a different resetPassword.";
-                    echo '<script>alert("The resetPassword is already registered. Please try again with a different resetPassword."); window.location.href = "register.html";</script>';
-                    exit();
                 } else {
                     // Hash the password
                     $hashedPassword = password_hash($Password, PASSWORD_DEFAULT);
@@ -93,4 +89,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 
 $conn->close();
+
+// Redirect to register.html if there's an error
+if (!empty($errorMessage)) {
+    echo '<script>alert("' . $errorMessage . '"); window.location.href = "register.html";</script>';
+    exit();
+}
 ?>
