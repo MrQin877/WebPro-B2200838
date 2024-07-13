@@ -47,6 +47,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($stmt->num_rows > 0) {
                 // Email already exists
                 $errorMessage = "The Email is already registered. Please try again with a different Email.";
+                // Redirect back to registration page
+                header("Location: register.html");
+                exit();
             } else {
                 // Check if resetPassword already exists in the database
                 $stmt = $conn->prepare("SELECT resetPassword FROM user_registration WHERE resetPassword = ?");
@@ -79,12 +82,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 
 $conn->close();
-
-// Return error message if exists
-if (!empty($errorMessage)) {
-    echo $errorMessage;
-    // Redirect to registration page after displaying error message
-    header("Location: registration_page.php");
-    exit();
-}
 ?>
