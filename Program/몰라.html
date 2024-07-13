@@ -105,7 +105,7 @@
 
     <script>
         function checkEnrollment(userId) {
-            const programId = '1001';
+            const programId = '1004';
             fetch('check_enrollment.php', {
                 method: 'POST',
                 headers: {
@@ -179,7 +179,7 @@
         });
 
         function loadReviews() {
-            fetch('load_reviews.php?program=Malay%20Language')
+            fetch('load_reviews.php?program=History')
                 .then(response => response.json())
                 .then(data => {
                     const reviewsContainer = document.getElementById('reviews');
