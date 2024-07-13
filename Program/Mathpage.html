@@ -39,6 +39,23 @@
             border-radius: 30px;
             overflow: hidden;
         }
+        .review-section {
+            margin-top: 50px;
+        }
+        .review-form {
+            margin-bottom: 30px;
+        }
+        .review-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .review-list li {
+            background: #f9f9f9;
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
     </style>
 </head>
 <body>
@@ -71,83 +88,113 @@
         </div>
     </div>
 
-
+    <!-- Review Section -->
+    <div class="review-section" id="reviewSection">
+        <h2>Reviews</h2>
+        <div id="reviewFormContainer"></div>
+        <ul class="review-list" id="reviewList"></ul>
+    </div>
 
     <script>
-        function checkEnrollment(userId) {
-            const programId = '1003';
-            fetch('check_enrollment.php', {
+        // Function to check if a user is logged in
+        function checkLoginStatus() {
+            return fetch('../LogRes_sys/check_session.php')
+                .then(response => response.json())
+                .then(data => {
+                    return data.loggedIn ? data.user_id : null;
+                });
+        }
+
+        // Function to display the review form if the user is logged in
+        function displayReviewForm(userId) {
+            const reviewFormContainer = document.getElementById('reviewFormContainer');
+            reviewFormContainer.innerHTML = `
+                <form class="review-form" id="reviewForm">
+                    <div class="mb-3">
+                        <label for="reviewText" class="form-label">Write a review:</label>
+                        <textarea class="form-control" id="reviewText" rows="3" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="reviewStar" class="form-label">Rating:</label>
+                        <select class="form-select" id="reviewStar" required>
+                            <option value="">Select rating</option>
+                            <option value="1">1 Star</option>
+                            <option value="2">2 Stars</option>
+                            <option value="3">3 Stars</option>
+                            <option value="4">4 Stars</option>
+                            <option value="5">5 Stars</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit Review</button>
+                </form>
+            `;
+            document.getElementById('reviewForm').addEventListener('submit', function(event) {
+                event.preventDefault();
+                submitReview(userId);
+            });
+        }
+
+        // Function to submit the review
+        function submitReview(userId) {
+            const reviewText = document.getElementById('reviewText').value;
+            const reviewStar = document.getElementById('reviewStar').value;
+            const programId = '1003'; // Current program ID
+
+            fetch('review.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ user_id: userId, program_id: programId })
+                body: JSON.stringify({
+                    user_id: userId,
+                    program_id: programId,
+                    review: reviewText,
+                    star: reviewStar
+                })
             })
             .then(response => response.json())
             .then(data => {
-                if (data.enrolled) {
-                    document.getElementById('alreadyEnrolledFeedback').style.display = 'block';
-                    document.getElementById('addToCartBtn').disabled = true;
+                if (data.success) {
+                    // Reload reviews after successful submission
+                    loadReviews();
+                    document.getElementById('reviewForm').reset();
+                } else {
+                    alert('Failed to submit review.');
                 }
             });
         }
 
-        function checkCart() {
-            const cart = JSON.parse(localStorage.getItem('cart')) || [];
-            const packageExists = cart.some(item => item.id === 'all-subject-package');
-            const otherProgramsExist = cart.some(item => item.id !== 'all-subject-package');
-            
-            return { packageExists, otherProgramsExist };
-        }
+        // Function to load and display reviews
+        function loadReviews() {
+            const programId = '1003'; // Current program ID
 
-        function addToCart(programId, programName, price, icon) {
-            const cartCheck = checkCart();
-            
-            if (cartCheck.packageExists) {
-                alert("You cannot add specific programs when the All Subjects Package is in the cart.");
-                return;
-            }
-
-            const cart = JSON.parse(localStorage.getItem('cart')) || [];
-            const itemExists = cart.some(item => item.id === programId);
-            if (itemExists) {
-                var existsFeedback = document.getElementById('cartExistsFeedback');
-                existsFeedback.style.display = 'block'; 
-                setTimeout(function() {
-                    existsFeedback.style.display = 'none'; 
-                }, 2000); 
-                return; // Do not add the program again
-            }
-
-            // Track 'add to cart' event with Google Analytics
-            gtag('event', `${programId}_add_to_cart`, {
-                'event_category': 'E-commerce',
-                'event_label': programName,
-                'value': 1
-            });
-
-            cart.push({ id: programId, name: programName, price: price, icon: icon, quantity: 1 });
-            localStorage.setItem('cart', JSON.stringify(cart));
-
-            var feedback = document.getElementById('cartFeedback');
-            feedback.style.display = 'block'; 
-            setTimeout(function() {
-                feedback.style.display = 'none'; 
-            }, 2000); 
-        }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            fetch('../LogRes_sys/check_session.php')
+            fetch(`load_reviews.php?program_id=${programId}`)
             .then(response => response.json())
-            .then(data => {
-                if (data.loggedIn) {
-                    checkEnrollment(data.user_id);
+            .then(reviews => {
+                const reviewList = document.getElementById('reviewList');
+                reviewList.innerHTML = '';
+                reviews.forEach(review => {
+                    const reviewItem = document.createElement('li');
+                    reviewItem.innerHTML = `
+                        <p><strong>Rating:</strong> ${review.star} Stars</p>
+                        <p>${review.review}</p>
+                    `;
+                    reviewList.appendChild(reviewItem);
+                });
+            });
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            checkLoginStatus().then(userId => {
+                if (userId) {
+                    displayReviewForm(userId);
                 }
+                loadReviews();
             });
         });
     </script>
     <section style="margin-bottom:10%; height: vh;"></section>
-    <footers>
-    </footers>
+    <footers></footers>
 </body>
 </html>
