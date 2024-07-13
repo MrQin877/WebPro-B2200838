@@ -20,9 +20,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $PhoneNumber = $_POST['PhoneNumber'];
     $Birth = $_POST['Birth'];
     $Gender = $_POST['Gender'];
+    $resetToken = $_POST['reset_token']; // 여기서 리셋 토큰을 받아옵니다.'$resetToken'
 
     // Check if any field is empty
-    if (empty($Username) || empty($Email) || empty($Password) || empty($PhoneNumber) || empty($Birth) || empty($Gender)) {
+    if (empty($Username) || empty($Email) || empty($Password) || empty($PhoneNumber) || empty($Birth) || empty($Gender) || empty($resetToken)) {
         echo "First Name, Email, and Password are required fields.";
     } else {
         // Validate password
@@ -51,8 +52,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $hashedPassword = password_hash($Password, PASSWORD_DEFAULT);
 
             // Prepare an insert statement
-            $stmt = $conn->prepare("INSERT INTO user_registration (Username, Email, Password, PhoneNumber, Birth, Gender) VALUES (?, ?, ?, ?, ?, ?)");
-            $stmt->bind_param("ssssss", $Username, $Email, $hashedPassword, $PhoneNumber, $Birth, $Gender);
+            $stmt = $conn->prepare("INSERT INTO user_registration (Username, Email, Password, PhoneNumber, Birth, Gender, resetToken) VALUES (?, ?, ?, ?, ?, ?, ?)");
+            $stmt->bind_param("ssssssi", $Username, $Email, $hashedPassword, $PhoneNumber, $Birth, $Gender, $resetToken);
 
             if ($stmt->execute()) {
                 echo "<script>alert('Registration successful.'); window.location.href = 'Nlogin.html';</script>";
