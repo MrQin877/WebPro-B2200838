@@ -66,9 +66,115 @@ document.addEventListener('DOMContentLoaded', () => {
         window.location.href = page;
     }
 
+    // 프로그램 목록을 필터링하는 함수
+    function filterPrograms() {
+        const searchTerm = searchInput.value.toLowerCase();
+        const filteredPrograms = programs.filter(program =>
+            program.title.toLowerCase().includes(searchTerm) ||
+            program.description.toLowerCase().includes(searchTerm)
+        );
+        renderPrograms(filteredPrograms);
+    }
+
     // 검색 입력 필드에 입력 이벤트 리스너 추가
     searchInput.addEventListener('input', filterPrograms);
 
     // 초기 프로그램 목록을 렌더링
     renderPrograms(programs);
 });
+
+function toggleCommentInput(type) {
+    var commentInput = document.getElementById("commentInput");
+    var commentText = document.getElementById("commentText");
+    var subjectSelector = document.getElementById("subjectSelector");
+
+    if (commentInput.style.display === "none" || commentInput.style.display === "") {
+        commentInput.style.display = "block";
+        subjectSelector.style.display = "block";
+        commentText.placeholder = "Write your " + type + "...(255 Characters limit)";
+    } else {
+        commentInput.style.display = "none";
+        subjectSelector.style.display = "none";
+        document.getElementById("writeReviewBtn").textContent = "Write a Review or feedback";
+    }
+}
+
+function submitComment() {
+    var commentText = document.getElementById("commentText").value;
+    var rating = getSelectedRating();
+    var subject = document.getElementById("subject").value;
+    var userEmail = document.getElementById("userEmail").value;
+
+    if (commentText.length < 20) {
+        displayErrorMessage("Please enter at least 20 characters for your review.");
+        return;
+    }
+
+    if (userEmail === "") {
+        displayErrorMessage("Please enter your email.");
+        return;
+    }
+
+    var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(userEmail)) {
+        displayErrorMessage("Please enter a valid email address.");
+        return;
+    }
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "review.php", true);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+    var formData = "review=" + encodeURIComponent(commentText) + "&star=" + rating + "&program=" + subject + "&email=" + userEmail;
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                displaySubmittedReview(commentText, rating, subject, userEmail);
+                clearFormInputs();
+            } else {
+                displayErrorMessage("Failed to submit review. Please try again later.");
+            }
+        }
+    };
+    xhr.send(formData);
+}
+
+function getSelectedRating() {
+    var ratingElements = document.getElementsByName("rating");
+    for (var i = 0; i < ratingElements.length; i++) {
+        if (ratingElements[i].checked) {
+            return ratingElements[i].value;
+        }
+    }
+    return 0;
+}
+
+function displaySubmittedReview(commentText, rating, subject, userEmail) {
+    var reviewsContainer = document.getElementById("reviews");
+
+    var reviewElement = document.createElement("div");
+    reviewElement.className = "review-item";
+    reviewElement.innerHTML = `
+        <div class="review-header">
+            <div class="review-rating">${rating}★</div>
+            <div class="review-info">${subject} - ${userEmail}</div>
+        </div>
+        <div class="review-comment">${commentText}</div>
+    `;
+
+    reviewsContainer.insertBefore(reviewElement, reviewsContainer.firstChild);
+}
+
+function clearFormInputs() {
+    document.getElementById("commentText").value = "";
+    document.getElementById("userEmail").value = "";
+    var ratingElements = document.getElementsByName("rating");
+    for (var i = 0; i < ratingElements.length; i++) {
+        ratingElements[i].checked = false;
+    }
+}
+
+function displayErrorMessage(message) {
+    var errorMessageElement = document.getElementById("error-message");
+    errorMessageElement.textContent = message;
+}

@@ -12,11 +12,11 @@
     <style>
         .rating {
             display: flex;
-            justify-content: center; /* Center align stars */
+            justify-content: center;
             unicode-bidi: bidi-override;
             font-size: 0;
             position: relative;
-            margin-bottom: 20px; /* Adjust spacing between rating and input box */
+            margin-bottom: 20px;
         }
 
         .rating > input {
@@ -25,9 +25,9 @@
 
         .rating > label {
             position: relative;
-            font-size: 40px; /* Adjust size as needed */
+            font-size: 40px;
             cursor: pointer;
-            margin-left: 10px; /* Adjust spacing between stars */
+            margin-left: 10px;
         }
 
         .rating > label:before {
@@ -37,52 +37,52 @@
 
         .rating > input:checked ~ label,
         .rating > input:checked ~ label ~ label {
-            color: #fdd835; /* Color when checked */
+            color: #fdd835;
         }
 
         .rating > label:hover,
         .rating > label:hover ~ label {
-            color: #fdd835; /* Color on hover */
+            color: #fdd835;
         }
 
         .comment-input {
-            margin-top: 20px; /* Adjust top margin as needed */
+            margin-top: 20px;
         }
 
         .comment-input textarea {
             width: 100%;
             padding: 10px;
             font-size: 16px;
-            margin-top: 10px; /* Adjust top margin as needed */
+            margin-top: 10px;
         }
 
         .comment-input .button-container {
             display: flex;
-            justify-content: center; /* Center align buttons */
-            gap: 10px; /* Add space between buttons */
-            margin-top: 10px; /* Adjust top margin as needed */
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
         }
 
         .comment-input button {
             padding: 10px 20px;
             font-size: 16px;
             cursor: pointer;
-            background-color: #fdd835; /* Button background color */
-            color: #fff; /* Button text color */
+            background-color: #fdd835;
+            color: #fff;
             border: none;
             border-radius: 5px;
         }
 
         .cancel-button {
-            background-color: #dc3545; /* Cancel button background color */
+            background-color: #dc3545;
         }
 
         .rating-reverse {
-            flex-direction: row-reverse; /* Reverse direction for rating */
+            flex-direction: row-reverse;
         }
 
         .subject-selector {
-            margin-top: 20px; /* Adjust top margin as needed */
+            margin-top: 20px;
         }
 
         .subject-selector select {
@@ -107,7 +107,7 @@
         .review-rating {
             font-size: 20px;
             font-weight: bold;
-            margin-right: 10px; /* Adjust margin as needed */
+            margin-right: 10px;
         }
 
         .review-info {
@@ -118,7 +118,7 @@
         .review-comment {
             font-size: 16px;
             margin-top: 5px;
-            text-align: left; /* Align text to the left */
+            text-align: left;
         }
 
         .error-message {
@@ -156,7 +156,6 @@
                     <option value="History">History</option>
                     <option value="Science">Science</option>
                     <option value="All subjects">All subjects</option>
-                    <!-- Add more options as needed -->
                 </select>
             </div>
             
@@ -195,13 +194,11 @@
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     <script>
-        // Functions for handling ratings and comments
         function toggleCommentInput(type) {
             var commentInput = document.getElementById("commentInput");
             var commentText = document.getElementById("commentText");
             var subjectSelector = document.getElementById("subjectSelector");
 
-            // Toggle visibility of comment input and subject selector
             if (commentInput.style.display === "none" || commentInput.style.display === "") {
                 commentInput.style.display = "block";
                 subjectSelector.style.display = "block";
@@ -215,11 +212,10 @@
 
         function submitComment() {
             var commentText = document.getElementById("commentText").value;
-            var rating = getSelectedRating(); // Implement function to get selected rating
-            var subject = document.getElementById("subject").value; // Get selected subject
+            var rating = getSelectedRating();
+            var subject = document.getElementById("subject").value;
             var userEmail = document.getElementById("userEmail").value;
 
-            // Validate inputs
             if (commentText.length < 20) {
                 displayErrorMessage("Please enter at least 20 characters for your review.");
                 return;
@@ -230,7 +226,6 @@
                 return;
             }
 
-            // Regular expression to validate email format
             var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailRegex.test(userEmail)) {
                 displayErrorMessage("Please enter a valid email address.");
@@ -245,11 +240,9 @@
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === XMLHttpRequest.DONE) {
                     if (xhr.status === 200) {
-                        // Successful submission
                         displaySubmittedReview(commentText, rating, subject, userEmail);
                         clearFormInputs();
                     } else {
-                        // Error handling
                         displayErrorMessage("Failed to submit review. Please try again later.");
                     }
                 }
@@ -258,48 +251,38 @@
         }
 
         function getSelectedRating() {
-            var stars = document.getElementsByName("rating");
-
-            for (var i = 0; i < stars.length; i++) {
-                if (stars[i].checked) {
-                    return stars[i].value;
+            var ratingElements = document.getElementsByName("rating");
+            for (var i = 0; i < ratingElements.length; i++) {
+                if (ratingElements[i].checked) {
+                    return ratingElements[i].value;
                 }
             }
-            return null; // No rating selected
+            return 0;
         }
 
-        // Function to display submitted review
-        function displaySubmittedReview(comment, rating, subject, userEmail) {
-            var userEmailDisplay = userEmail.substr(0, 4) + '*'.repeat(userEmail.length - 4); // Display first 4 characters and hide the rest
+        function displaySubmittedReview(commentText, rating, subject, userEmail) {
+            var reviewsContainer = document.getElementById("reviews");
 
-            // Create new review element
             var reviewElement = document.createElement("div");
-            reviewElement.classList.add("review-item");
+            reviewElement.className = "review-item";
             reviewElement.innerHTML = `
                 <div class="review-header">
-                    <span class="review-rating">${rating} ★</span>
-                    <span class="review-info">${subject} | ${userEmailDisplay}</span>
+                    <div class="review-rating">${rating}★</div>
+                    <div class="review-info">${subject} - ${userEmail}</div>
                 </div>
-                <p class="review-comment">${comment}</p>
+                <div class="review-comment">${commentText}</div>
             `;
 
-            // Insert new review at the beginning of the reviews section
-            var reviewsSection = document.getElementById("reviews");
-            reviewsSection.insertBefore(reviewElement, reviewsSection.firstChild);
-
-            // Limit the number of displayed reviews to 15
-            var reviewItems = reviewsSection.getElementsByClassName("review-item");
-            if (reviewItems.length > 15) {
-                reviewsSection.removeChild(reviewsSection.lastChild);
-            }
+            reviewsContainer.insertBefore(reviewElement, reviewsContainer.firstChild);
         }
 
         function clearFormInputs() {
             document.getElementById("commentText").value = "";
             document.getElementById("userEmail").value = "";
-            document.getElementById("commentInput").style.display = "none";
-            document.getElementById("subjectSelector").style.display = "none";
-            document.getElementById("writeReviewBtn").textContent = "Write a Review or feedback";
+            var ratingElements = document.getElementsByName("rating");
+            for (var i = 0; i < ratingElements.length; i++) {
+                ratingElements[i].checked = false;
+            }
         }
 
         function displayErrorMessage(message) {
