@@ -14,8 +14,15 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Variables to store error messages
+// Variables to store error messages and form data
 $errorMessage = "";
+$Username = "";
+$Email = "";
+$Password = "";
+$PhoneNumber = "";
+$Birth = "";
+$Gender = "";
+$resetPassword = "";
 
 // Process registration form if submitted via POST method
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -47,9 +54,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($stmt->num_rows > 0) {
                 // Email already exists
                 $errorMessage = "The Email is already registered. Please try again with a different Email.";
-                // Redirect back to registration page
-                header("Location: register.html");
-                exit();
             } else {
                 // Check if resetPassword already exists in the database
                 $stmt = $conn->prepare("SELECT resetPassword FROM user_registration WHERE resetPassword = ?");
@@ -70,6 +74,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                     if ($stmt->execute()) {
                         echo "Registration successful.";
+                        // Optional: Redirect to another page after successful registration
+                        // header("Location: success.html");
+                        // exit();
                     } else {
                         $errorMessage = "Error: " . $stmt->error;
                     }
@@ -83,3 +90,58 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 $conn->close();
 ?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+</head>
+<body>
+    <h2>Registration Form</h2>
+    <form id="registrationForm" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+        <div>
+            <label for="Username">Username:</label>
+            <input type="text" id="Username" name="Username" value="<?php echo htmlspecialchars($Username); ?>">
+        </div>
+        <div>
+            <label for="Email">Email:</label>
+            <input type="email" id="Email" name="Email" value="<?php echo htmlspecialchars($Email); ?>">
+        </div>
+        <div>
+            <label for="Password">Password:</label>
+            <input type="password" id="Password" name="Password">
+        </div>
+        <div>
+            <label for="ConfirmPassword">Confirm Password:</label>
+            <input type="password" id="ConfirmPassword" name="ConfirmPassword">
+        </div>
+        <div>
+            <label for="PhoneNumber">Phone Number:</label>
+            <input type="text" id="PhoneNumber" name="PhoneNumber" value="<?php echo htmlspecialchars($PhoneNumber); ?>">
+        </div>
+        <div>
+            <label for="Birth">Birth Date:</label>
+            <input type="date" id="Birth" name="Birth" value="<?php echo htmlspecialchars($Birth); ?>">
+        </div>
+        <div>
+            <label for="Gender">Gender:</label>
+            <select id="Gender" name="Gender">
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+            </select>
+        </div>
+        <div>
+            <label for="resetPassword">Reset Password:</label>
+            <input type="text" id="resetPassword" name="resetPassword" value="<?php echo htmlspecialchars($resetPassword); ?>">
+        </div>
+        <div>
+            <button type="submit">Register</button>
+        </div>
+        <?php if (!empty($errorMessage)): ?>
+            <p style="color: red;"><?php echo $errorMessage; ?></p>
+        <?php endif; ?>
+    </form>
+</body>
+</html>
