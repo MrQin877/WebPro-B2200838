@@ -48,7 +48,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Check if user is logged in
-            fetch('../Program/check_session.php')
+            fetch('../LogRes_sys/check_session.php')
                 .then(response => response.json())
                 .then(data => {
                     console.log('Session check response:', data);
