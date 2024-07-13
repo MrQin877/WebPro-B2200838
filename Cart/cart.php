@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['program_id'])) {
     }
 
     if ($program_id !== 'all-subject-package' && $packageExists) {
-        echo "You cannot add specific programs when the All Subjects Package is in the cart.";
+        echo "You cannot add this programs when the All Subjects Package is in the cart.";
         exit();
     }
 
