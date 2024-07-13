@@ -11,7 +11,7 @@ if ($conn->connect_error) {
 }
 
 $program = $_GET['program'];
-$stmt = $conn->prepare("SELECT review, star, program FROM user_review WHERE program = ? ORDER BY saved_time DESC LIMIT 5");
+$stmt = $conn->prepare("SELECT review, star, program FROM user_review WHERE program = ? ORDER BY saved_time DESC LIMIT 3");
 $stmt->bind_param("s", $program);
 $stmt->execute();
 $result = $stmt->get_result();
