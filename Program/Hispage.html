@@ -120,7 +120,7 @@
         }
 
         document.addEventListener('DOMContentLoaded', function() {
-            fetch('../LogRes_sys/check_session.php')
+            fetch('check_session.php')
             .then(response => response.json())
             .then(data => {
                 if (data.loggedIn) {
