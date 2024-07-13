@@ -135,6 +135,21 @@ html:not(.dark-style) .account-settings-links .list-group-item.active {
     margin-bottom: 20px;
     font-size: small;
 }
+.font-fam{
+    margin-bottom: 0;
+}
+.rowbox{
+    display: flex; 
+    flex-direction: row;
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-bottom: 0;
+}
+.FormBox{
+    border: #C9CaD9 groove 1px;
+    border-radius: 1%;
+    background-color: #fcfcfe;
+}
 
 @media screen and (max-width:760px) {
     .list-group {

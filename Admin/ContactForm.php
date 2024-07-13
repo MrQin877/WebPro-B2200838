@@ -17,7 +17,7 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
-$courses_query = "SELECT fullname, email, phoneno, question, program FROM contact_form";
+$courses_query = "SELECT id, fullname, email, phoneno, question, program FROM contact_form";
 $form_result = $conn->query($courses_query);
 $contactform = [];
 
