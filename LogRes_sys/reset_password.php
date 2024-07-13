@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $update_stmt->bind_param("si", $hashed_password, $userID);
 
                     if ($update_stmt->execute()) {
-                        // Redirect to login page after successful password update
+                        // Redirect to homepage (HomePage.html) after successful password update
                         header("Location: Nlogin.html");
                         exit();
                     } else {
