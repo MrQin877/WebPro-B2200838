@@ -81,7 +81,7 @@ registrationForm.addEventListener("submit", function(e) {
                         message.style.display = "block";
                         // Optionally, redirect to another page after successful registration
                         setTimeout(() => {
-                            window.location.href = 'LoginPage.html';
+                            window.location.href = 'Nlogin.html';
                         }, 2000); // Redirect after 2 seconds (adjust as needed)
                     } else {
                         message.textContent = "An error occurred. Please try again later.";

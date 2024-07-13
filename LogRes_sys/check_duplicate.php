@@ -1,8 +1,8 @@
 <?php
 // 데이터베이스 연결 정보
 $servername = "localhost";
-$username = "username";
-$password = "password";
+$username = "root";
+$password = "";
 $dbname = "user";
 
 // 클라이언트로부터의 JSON 데이터 파싱
@@ -17,7 +17,7 @@ if ($input && isset($input['Email'])) {
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         // 이메일 중복 확인 쿼리
-        $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM users WHERE email = :email");
+        $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM user_registration WHERE email = :email");
         $stmt->bindParam(':email', $email);
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
