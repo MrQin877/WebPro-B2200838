@@ -17,10 +17,10 @@
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
+
     gtag('config', 'G-2EB6P2R86H');
     </script>
 
-    
     <style>
         .description-block {
             background-color: #f4f5fb; 
@@ -51,25 +51,24 @@
             <div class="description-block">
                 <p><strong>Detailed Description:</strong></p>
                 <ul>
-                    <li>Advanced conversational skills and grammar training</li><br>
-                    <li>Designed for Beginners to advanced speakers</li><br>
-                    <li>Includes video lectures, interactive exercises, and quizzes</li><br>
-                    <li>Personalized feedback from instructors</li><br>
-                    <li>Access to exclusive live Q&A sessions</li><br>
+                    <li>Reading exercises</li><br><br>
+                    <li>Writing exercises</li><br><br>
+                    <li>Listening exercises</li><br><br>
+                    <li>Speaking exercises</li>
                 </ul>
-                <p><strong>Price:</strong> RM 199 one-time purchase</p>
-                <button id="addToCartBtn" onclick="addToCart('1002', 'Mastering English: Everyone Can Be Great Speakers With This Program', 199, '../images/icon4.jpg')">Add to Cart</button>
+                <p><strong>Price:</strong> RM 150 one-time purchase</p> 
+                <button id="addToCartBtn" onclick="addToCart('1002', 'Mastering English', 150, '../images/icon2.jpg')">Add to Cart</button>
                 <p class="cart-feedback" id="cartFeedback">Added to Cart!</p>
                 <p class="cart-feedback" id="cartExistsFeedback" style="color: red;">Already in Cart!</p>
-                <p class="cart-feedback" id="alreadyEnrolledFeedback" style="color:#576490;">You have already enrolled in this program!</p>
+                <p class="cart-feedback" id="alreadyEnrolledFeedback" style="color: #576490;">You have already enrolled in this program!</p>
             </div>
         </div>
         <div style="width: 45%; height:400px;">
             <div class="box">
-                <img src="../images/pic3.jpg" alt="Mastering Science Program Image" width="600" height="400">
+                <img src="../images/pic2.jpg" alt="Mastering English Program Image" width="600" height="400">
             </div>
         </div>
-    </div>    
+    </div>
 
     <script>
         function checkEnrollment(userId) {
@@ -90,7 +89,22 @@
             });
         }
 
+        function checkCart() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const packageExists = cart.some(item => item.id === 'all-subject-package');
+            const otherProgramsExist = cart.some(item => item.id !== 'all-subject-package');
+            
+            return { packageExists, otherProgramsExist };
+        }
+
         function addToCart(programId, programName, price, icon) {
+            const cartCheck = checkCart();
+            
+            if (cartCheck.packageExists) {
+                alert("You cannot add specific programs when the All Subjects Package is in the cart.");
+                return;
+            }
+
             const cart = JSON.parse(localStorage.getItem('cart')) || [];
             const itemExists = cart.some(item => item.id === programId);
             if (itemExists) {
@@ -103,7 +117,7 @@
             }
 
             // Track 'add to cart' event with Google Analytics
-            gtag('event', '1002_add_to_cart', {
+            gtag('event', `${programId}_add_to_cart`, {
                 'event_category': 'E-commerce',
                 'event_label': programName,
                 'value': 1

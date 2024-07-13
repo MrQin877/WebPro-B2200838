@@ -1,24 +1,35 @@
 <?php
 session_start();
 
-// Check if the user is logged in, if not redirect to login page
 if (!isset($_SESSION['user_id'])) {
     header("Location: Nlogin.html");
     exit();
 }
 
-// Assuming you have an array of program IDs being added to the cart
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['program_id'])) {
     $program_id = $_POST['program_id'];
 
-    // Add to cart logic (this can be saved in session or database)
     if (!isset($_SESSION['cart'])) {
         $_SESSION['cart'] = array();
     }
-    $_SESSION['cart'][] = $program_id;
 
+    $packageExists = in_array('all-subject-package', array_column($_SESSION['cart'], 'id'));
+    
+    $otherProgramsExist = count(array_filter($_SESSION['cart'], function($item) {
+        return $item['id'] !== 'all-subject-package';
+    })) > 0;
+
+    if ($program_id === 'all-subject-package' && $otherProgramsExist) {
+        echo "You cannot add the All Subjects Package when other specific programs are in the cart.";
+        exit();
+    }
+
+    if ($program_id !== 'all-subject-package' && $packageExists) {
+        echo "You cannot add specific programs when the All Subjects Package is in the cart.";
+        exit();
+    }
+
+    $_SESSION['cart'][] = ['id' => $program_id];
     echo "Item added to cart.";
 }
 ?>
-
-

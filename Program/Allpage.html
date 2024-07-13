@@ -88,7 +88,22 @@
             });
         }
 
+        function checkCart() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const packageExists = cart.some(item => item.id === 'all-subject-package');
+            const otherProgramsExist = cart.some(item => item.id !== 'all-subject-package');
+            
+            return { packageExists, otherProgramsExist };
+        }
+
         function addAllSubjectsToCart() {
+            const cartCheck = checkCart();
+            
+            if (cartCheck.otherProgramsExist) {
+                alert("You cannot add the All Subjects Package when other specific programs are in the cart.");
+                return;
+            }
+            
             const cart = JSON.parse(localStorage.getItem('cart')) || [];
             const allSubjects = [
                 { id: '1001', name: 'Mastering Malay Language', price: 0, icon: '../images/icon1.jpg', quantity: 1 },

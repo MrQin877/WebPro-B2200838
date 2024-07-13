@@ -89,7 +89,22 @@
             });
         }
 
+        function checkCart() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const packageExists = cart.some(item => item.id === 'all-subject-package');
+            const otherProgramsExist = cart.some(item => item.id !== 'all-subject-package');
+            
+            return { packageExists, otherProgramsExist };
+        }
+
         function addToCart(programId, programName, price, icon) {
+            const cartCheck = checkCart();
+            
+            if (cartCheck.packageExists) {
+                alert("You cannot add specific programs when the All Subjects Package is in the cart.");
+                return;
+            }
+
             const cart = JSON.parse(localStorage.getItem('cart')) || [];
             const itemExists = cart.some(item => item.id === programId);
             if (itemExists) {
@@ -102,7 +117,7 @@
             }
 
             // Track 'add to cart' event with Google Analytics
-            gtag('event', '1001_add_to_cart', {
+            gtag('event', `${programId}_add_to_cart`, {
                 'event_category': 'E-commerce',
                 'event_label': programName,
                 'value': 1
