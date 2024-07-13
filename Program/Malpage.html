@@ -179,29 +179,37 @@
         });
 
         function loadReviews() {
-            fetch('load_reviews.php?program=Malay%20Language')
-                .then(response => response.json())
-                .then(data => {
-                    const reviewsContainer = document.getElementById('reviews');
-                    reviewsContainer.innerHTML = '';
+    fetch('load_reviews.php?program=Malay%20Language')
+        .then(response => response.json())
+        .then(data => {
+            const reviewsContainer = document.getElementById('reviews');
+            reviewsContainer.innerHTML = '';
 
-                    data.reviews.forEach(review => {
-                        const reviewElement = document.createElement('div');
-                        reviewElement.className = 'review-item';
-                        reviewElement.innerHTML = `
-                            <div class="review-header">
-                                <div class="review-rating">${review.star}★</div>
-                                <div class="review-info">${review.program}</div>
-                            </div>
-                            <div class="review-comment">${review.review}</div>
-                        `;
-                        reviewsContainer.appendChild(reviewElement);
-                    });
-                })
-                .catch(error => {
-                    console.error('Error loading reviews:', error);
-                });
-        }
+            // 최대 보여줄 리뷰 개수
+            const maxReviews = 5;
+
+            // 리뷰를 등록 시간 기준으로 최신 순으로 정렬
+            data.reviews.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            // 최대 개수만큼만 출력
+            data.reviews.slice(0, maxReviews).forEach(review => {
+                const reviewElement = document.createElement('div');
+                reviewElement.className = 'review-item';
+                reviewElement.innerHTML = `
+                    <div class="review-header">
+                        <div class="review-rating">${review.star}★</div>
+                        <div class="review-info">${review.program}</div>
+                    </div>
+                    <div class="review-comment">${review.review}</div>
+                `;
+                reviewsContainer.appendChild(reviewElement);
+            });
+        })
+        .catch(error => {
+            console.error('Error loading reviews:', error);
+        });
+}
+
     </script>
     <section style="margin-bottom:10%; height: vh;"></section>
     <footers></footers>
