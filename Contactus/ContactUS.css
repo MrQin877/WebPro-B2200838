@@ -197,6 +197,9 @@ label{
     font-weight: bold;
     transition: all 200ms;
 }
+.form-word{
+    font-family: "Jack Armstrong BB";
+}
 
 @media screen and (max-width:760px) {
 
