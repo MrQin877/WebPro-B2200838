@@ -13,9 +13,15 @@ if ($conn->connect_error) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Check if resetToken is set
+    if (isset($_POST['resetToken'])) {
+        $resetToken = $_POST['resetToken'];
+    } else {
+        $resetToken = "";
+    }
+
     $new_password = $_POST['new_password'];
     $confirm_password = $_POST['confirm_password'];
-    $resetToken = $_POST['resetToken']; // Ensure consistent variable name
 
     if (empty($new_password) || empty($confirm_password) || empty($resetToken)) {
         echo "All fields are required.";
