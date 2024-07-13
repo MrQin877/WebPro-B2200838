@@ -13,10 +13,10 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-2EB6P2R86H"></script>
     <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-2EB6P2R86H');
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-2EB6P2R86H');
     </script>
 
     <style>
@@ -70,7 +70,7 @@
     </style>
 </head>
 <body>
-    <header></header>
+    <headers></headers>
     <section style="margin-top:9%; height: vh;"></section>
     <h1>&emsp;&ensp;Mastering Mathematics: Understand Mathematics by Formulas</h1>
     
@@ -86,7 +86,7 @@
                     <li>Access to exclusive live Q&A sessions</li><br>
                 </ul>
                 <p><strong>Price:</strong> RM 199 one-time purchase</p>
-                <button id="addToCartBtn" onclick="addToCart('1003', 'Mastering Mathematics: Understand Mathematics by Formulas', 199,'../images/icon2.jpg')">Add to Cart</button>
+                <button id="addToCartBtn" onclick="addToCart('1001','Mastering Malay Language: Growing Your Conversational Levels With Us', 199,'../images/icon3.jpg')">Add to Cart</button>
                 <p class="cart-feedback" id="cartFeedback">Added to Cart!</p>
                 <p class="cart-feedback" id="cartExistsFeedback" style="color: red;">Already in Cart!</p>
                 <p class="cart-feedback" id="alreadyEnrolledFeedback" style="color:#576490;">You have already enrolled in this program!</p>
@@ -94,7 +94,7 @@
         </div>
         <div style="width: 45%; height:400px;">
             <div class="box">
-                <img src="../images/pic1.jpg" alt="Mastering Science Program Image" width="600" height="400">
+                <img src="../images/pic5.jpg" alt="Mastering Science Program Image" width="600" height="400">
             </div>
         </div>
     </div>
@@ -105,7 +105,7 @@
 
     <script>
         function checkEnrollment(userId) {
-            const programId = '1003';
+            const programId = '1005';
             fetch('check_enrollment.php', {
                 method: 'POST',
                 headers: {
@@ -174,38 +174,36 @@
                     checkEnrollment(data.user_id);
                 }
             });
-            
-            // Load reviews for Mathematics program
-            loadReviews('Mathematics');
-        });
-        
-        function loadReviews(program) {
-            fetch(`load_reviews.php?program=${program}`)
-            .then(response => response.json())
-            .then(data => {
-                const reviewsContainer = document.getElementById('reviews');
-                reviewsContainer.innerHTML = '';
-                
-                data.reviews.forEach(review => {
-                    const reviewElement = document.createElement('div');
-                    reviewElement.className = 'review-item';
-                    reviewElement.innerHTML = `
-                    <div class="review-header">
-                        <div class="review-rating">${review.star}★</div>
-                        <div class="review-info">${review.email}</div>
-                    </div>
-                    <div class="review-comment">${review.review}</div>
-                `;
-                reviewsContainer.appendChild(reviewElement);
-            });
-        })
-        .catch(error => {
-            console.error('Error loading reviews:', error);
-        });
-}
 
+            loadReviews(); // Load reviews on page load
+        });
+
+        function loadReviews() {
+            fetch('load_reviews.php?program=Mathematics')
+                .then(response => response.json())
+                .then(data => {
+                    const reviewsContainer = document.getElementById('reviews');
+                    reviewsContainer.innerHTML = '';
+
+                    data.reviews.forEach(review => {
+                        const reviewElement = document.createElement('div');
+                        reviewElement.className = 'review-item';
+                        reviewElement.innerHTML = `
+                            <div class="review-header">
+                                <div class="review-rating">${review.star}★</div>
+                                <div class="review-info">${review.program}</div>
+                            </div>
+                            <div class="review-comment">${review.review}</div>
+                        `;
+                        reviewsContainer.appendChild(reviewElement);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error loading reviews:', error);
+                });
+        }
     </script>
     <section style="margin-bottom:10%; height: vh;"></section>
-    <footer></footer>
+    <footers></footers>
 </body>
 </html>

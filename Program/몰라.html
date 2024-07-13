@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>>History-Intensive Program</title>
+    <title>All Subjects-Intensive Program</title>
     <script type="text/javascript" src="https://db.onlinewebfonts.com/s/71976204cf6d53991ececd406824ec45?family=Jack+Armstrong+BB"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="program.css">
@@ -72,20 +72,19 @@
 <body>
     <headers></headers>
     <section style="margin-top:9%; height: vh;"></section>
-    <h1>&emsp;&ensp;Mastering History: Do Not Memorize, Feel History</h1>
+    <h1>&emsp;&ensp;All-Subject Package: Five different subjects at once!</h1>
     
     <div style="display:flex; flex-direction: row; margin-right:2.5%;margin-left:2.5%">
         <div style="width: 55%; height:400px;">
             <div class="description-block">
                 <p><strong>Detailed Description:</strong></p>
                 <ul>
-                    <li>History lessons well-organized in chronological order.</li><br>
-                    <li>Designed to make it easy for learners to get interested.</li><br>
-                    <li>Includes video lectures, interactive exercises, and quizzes</li><br>
-                    <li>Subtlety without missing the details.</li><br>
-                    <li>Access to exclusive live Q&A sessions</li><br>
+                    <li>5 required subjects at once!</li><br><br>
+                    <li>High quality and satisfaction!</li><br><br>
+                    <li>Affordable Price</li><br><br>
+                    <li>Do Not Miss Out This Chance!</li>
                 </ul>
-                <p><strong>Price:</strong> RM 199 one-time purchase</p>
+                <p><strong>Price:</strong> RM 599 one-time purchase</p>
                 <button id="addToCartBtn" onclick="addToCart('1001','Mastering Malay Language: Growing Your Conversational Levels With Us', 199,'../images/icon3.jpg')">Add to Cart</button>
                 <p class="cart-feedback" id="cartFeedback">Added to Cart!</p>
                 <p class="cart-feedback" id="cartExistsFeedback" style="color: red;">Already in Cart!</p>
@@ -94,7 +93,7 @@
         </div>
         <div style="width: 45%; height:400px;">
             <div class="box">
-                <img src="../images/pic5.jpg" alt="Mastering Science Program Image" width="600" height="400">
+                <img src="../images/pic6-1.jpg" alt="Mastering Science Program Image" width="600" height="400">
             </div>
         </div>
     </div>
@@ -105,13 +104,13 @@
 
     <script>
         function checkEnrollment(userId) {
-            const programId = '1004';
+            const packageId = 'all-subject-package';
             fetch('check_enrollment.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ user_id: userId, program_id: programId })
+                body: JSON.stringify({ user_id: userId, program_id: packageId })
             })
             .then(response => response.json())
             .then(data => {
@@ -130,33 +129,34 @@
             return { packageExists, otherProgramsExist };
         }
 
-        function addToCart(programId, programName, price, icon) {
+        function addAllSubjectsToCart() {
             const cartCheck = checkCart();
             
-            if (cartCheck.packageExists) {
-                alert("You cannot add specific programs when the All Subjects Package is in the cart.");
+            if (cartCheck.otherProgramsExist) {
+                alert("You cannot add the All Subjects Package when other specific programs are in the cart.");
                 return;
             }
-
+            
             const cart = JSON.parse(localStorage.getItem('cart')) || [];
-            const itemExists = cart.some(item => item.id === programId);
-            if (itemExists) {
+            const allSubjects = [
+                { id: '1001', name: 'Mastering Malay Language', price: 0, icon: '../images/icon1.jpg', quantity: 1 },
+                { id: '1002', name: 'Mastering English', price: 0, icon: '../images/icon2.jpg', quantity: 1 },
+                { id: '1003', name: 'Mastering Mathematics', price: 0, icon: '../images/icon3.jpg', quantity: 1 },
+                { id: '1004', name: 'Mastering History', price: 0, icon: '../images/icon4.jpg', quantity: 1 },
+                { id: '1005', name: 'Mastering Science', price: 0, icon: '../images/icon5.jpg', quantity: 1 }
+            ];
+
+            const packageExists = cart.some(item => item.id === 'all-subject-package');
+            if (packageExists) {
                 var existsFeedback = document.getElementById('cartExistsFeedback');
                 existsFeedback.style.display = 'block'; 
                 setTimeout(function() {
                     existsFeedback.style.display = 'none'; 
                 }, 2000); 
-                return; // Do not add the program again
+                return; // Do not add the package again
             }
 
-            // Track 'add to cart' event with Google Analytics
-            gtag('event', `${programId}_add_to_cart`, {
-                'event_category': 'E-commerce',
-                'event_label': programName,
-                'value': 1
-            });
-
-            cart.push({ id: programId, name: programName, price: price, icon: icon, quantity: 1 });
+            cart.push({ id: 'all-subject-package', name: 'All Subject Package', price: 599, icon: '../images/icon6.jpg', quantity: 1, items: allSubjects });
             localStorage.setItem('cart', JSON.stringify(cart));
 
             var feedback = document.getElementById('cartFeedback');
@@ -165,6 +165,7 @@
                 feedback.style.display = 'none'; 
             }, 2000); 
         }
+
 
         document.addEventListener('DOMContentLoaded', function() {
             fetch('../LogRes_sys/check_session.php')
@@ -179,7 +180,7 @@
         });
 
         function loadReviews() {
-            fetch('load_reviews.php?program=History')
+            fetch('load_reviews.php?program=Engliah20%Language')
                 .then(response => response.json())
                 .then(data => {
                     const reviewsContainer = document.getElementById('reviews');

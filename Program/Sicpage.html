@@ -4,25 +4,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Science-Intensive Program</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <script type="text/javascript" src="https://db.onlinewebfonts.com/s/71976204cf6d53991ececd406824ec45?family=Jack+Armstrong+BB"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="program.css">
     <link rel="stylesheet" href="../footer-style.css">
     <link rel="stylesheet" href="../header-style.css">
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
     <script src="../multiUsage.js" defer></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2EB6P2R86H"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-2EB6P2R86H');
+    </script>
+
     <style>
-        /* Common styles for both pages */
         .description-block {
-            background-color: #f4f5fb;
-            padding: 20px;
-            border-radius: 30px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
+            background-color: #f4f5fb; 
+            padding: 20px; 
+            border-radius: 30px; 
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+            margin-bottom: 20px; 
         }
         .cart-feedback {
-            display: none;
-            color: navy;
+            display: none; 
+            color: navy; 
             font-weight: bold;
         }
         .box {
@@ -36,21 +43,25 @@
             margin-bottom: 10px;
             border-radius: 5px;
         }
+
         .review-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 5px;
         }
+
         .review-rating {
             font-size: 20px;
             font-weight: bold;
             margin-right: 10px;
         }
+
         .review-info {
             font-size: 14px;
             color: #666;
         }
+
         .review-comment {
             font-size: 16px;
             margin-top: 5px;
@@ -59,10 +70,8 @@
     </style>
 </head>
 <body>
-    <header></header>
-
+    <headers></headers>
     <section style="margin-top:9%; height: vh;"></section>
-    
     <h1>&emsp;&ensp;Mastering Science: Our First Step To Become Little Scientists</h1>
     
     <div style="display:flex; flex-direction: row; margin-right:2.5%;margin-left:2.5%">
@@ -77,7 +86,7 @@
                     <li>Access to exclusive live Q&A sessions</li><br>
                 </ul>
                 <p><strong>Price:</strong> RM 199 one-time purchase</p>
-                <button id="addToCartBtn" onclick="addToCart('1005','Mastering Science: Our First Step To Become Little Scientists', 199,'../images/icon1.jpg')">Add to Cart</button>
+                <button id="addToCartBtn" onclick="addToCart('1001','Mastering Malay Language: Growing Your Conversational Levels With Us', 199,'../images/icon3.jpg')">Add to Cart</button>
                 <p class="cart-feedback" id="cartFeedback">Added to Cart!</p>
                 <p class="cart-feedback" id="cartExistsFeedback" style="color: red;">Already in Cart!</p>
                 <p class="cart-feedback" id="alreadyEnrolledFeedback" style="color:#576490;">You have already enrolled in this program!</p>
@@ -170,7 +179,7 @@
         });
 
         function loadReviews() {
-            fetch('load_reviews.php?program=Science%20Program')
+            fetch('load_reviews.php?program=Science')
                 .then(response => response.json())
                 .then(data => {
                     const reviewsContainer = document.getElementById('reviews');
@@ -194,9 +203,7 @@
                 });
         }
     </script>
-
     <section style="margin-bottom:10%; height: vh;"></section>
-    
-    <footer></footer>
+    <footers></footers>
 </body>
 </html>
