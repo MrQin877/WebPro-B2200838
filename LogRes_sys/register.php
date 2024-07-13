@@ -14,15 +14,8 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Variables to store error messages and form data
+// Variables to store error messages
 $errorMessage = "";
-$Username = "";
-$Email = "";
-$Password = "";
-$PhoneNumber = "";
-$Birth = "";
-$Gender = "";
-$resetPassword = "";
 
 // Process registration form if submitted via POST method
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -54,6 +47,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($stmt->num_rows > 0) {
                 // Email already exists
                 $errorMessage = "The Email is already registered. Please try again with a different Email.";
+                // Redirect back to registration page
+                header("Location: register.html");
+                exit();
             } else {
                 // Check if resetPassword already exists in the database
                 $stmt = $conn->prepare("SELECT resetPassword FROM user_registration WHERE resetPassword = ?");
@@ -74,9 +70,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                     if ($stmt->execute()) {
                         echo "Registration successful.";
-                        // Optional: Redirect to another page after successful registration
-                        // header("Location: success.html");
-                        // exit();
                     } else {
                         $errorMessage = "Error: " . $stmt->error;
                     }
@@ -89,10 +82,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 
 $conn->close();
-
-// Redirect to register.html if there's an error
-if (!empty($errorMessage)) {
-    echo '<script>alert("' . $errorMessage . '"); window.location.href = "register.html";</script>';
-    exit();
-}
 ?>
