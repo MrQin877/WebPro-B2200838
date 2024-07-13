@@ -85,13 +85,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $mail->isSMTP();
             $mail->Host = 'smtp.example.com'; // SMTP 서버
             $mail->SMTPAuth = true;
-            $mail->Username = 'your_email@example.com'; // SMTP 사용자 이메일
-            $mail->Password = 'your_email_password'; // SMTP 사용자 비밀번호
+            $mail->Username = 'wnsgud030405@gmail.com'; // SMTP 사용자 이메일
+            $mail->Password = ''; // SMTP 사용자 비밀번호
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port = 587;
 
             // 수신자 설정
-            $mail->setFrom('your_email@example.com', 'Your Name');
+            $mail->setFrom('wnsgud030405@gmail.com', 'JUNHYEONG');
             $mail->addAddress($email);
 
             // 이메일 내용 설정
