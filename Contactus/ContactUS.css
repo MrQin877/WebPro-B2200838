@@ -144,7 +144,7 @@ section {
     bottom: 0;
     right: 25%;
     background-color: #C9Cad9;
-    z-index: 7;
+    z-index: 2000;
     width: 50%;
     height: 500px;
     display: flex;
