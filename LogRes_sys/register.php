@@ -9,54 +9,57 @@ $dbname = "user";
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
 
+// Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
+// Process registration form if submitted via POST method
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Retrieve form data
     $Username = $_POST['Username'];
     $Email = $_POST['Email'];
     $Password = $_POST['Password'];
     $PhoneNumber = $_POST['PhoneNumber'];
     $Birth = $_POST['Birth'];
     $Gender = $_POST['Gender'];
-    $resetToken = $_POST['resetToken']; // 여기서 리셋 토큰을 받아옵니다.'$resetToken'
+    $resetPassword = $_POST['resetPassword']; // Changed resetToken to resetPassword
 
-    // Check if any field is empty
-    if (empty($Username) || empty($Email) || empty($Password) || empty($PhoneNumber) || empty($Birth) || empty($Gender) || empty($resetToken)) {
-        echo "First Name, Email, and Password are required fields.";
+    // Check if any required field is empty
+    if (empty($Username) || empty($Email) || empty($Password) || empty($PhoneNumber) || empty($Birth) || empty($Gender) || empty($resetPassword)) {
+        echo "All fields are required.";
     } else {
-        // Validate password
+        // Validate password (example pattern: 10 characters or less, one capital letter, one special character)
         if (!preg_match('/^(?=.*[A-Z])(?=.*[!@#$%&])[A-Za-z\d!@#$%&]{1,10}$/', $Password)) {
-            echo "<script>alert('Password must be 10 characters or less, include at least one capital letter and one special character (!, @, #, $, %, &).'); window.location.href = 'register.html';</script>";
+            echo "Password must be 10 characters or less, include at least one capital letter and one special character (!, @, #, $, %, &).";
             exit();
         }
 
         // Validate phone number (numeric check)
         if (!preg_match('/^\d+$/', $PhoneNumber)) {
-            echo "<script>alert('Please enter a valid phone number with numbers only.'); window.location.href = 'register.html';</script>";
+            echo "Please enter a valid phone number with numbers only.";
             exit();
         }
 
-        // Prepare SQL statement to check if email already exists
-        $stmt = $conn->prepare("SELECT UserID, Email FROM user_registration WHERE Email = ?");
+        // Check if email already exists in the database
+        $stmt = $conn->prepare("SELECT UserID FROM user_registration WHERE Email = ?");
         $stmt->bind_param("s", $Email);
         $stmt->execute();
         $stmt->store_result();
 
         if ($stmt->num_rows > 0) {
             // Email already exists
-            echo "<script>alert('The Email is already registered.'); window.location.href = 'register.html';</script>";
+            echo "The Email is already registered.";
         } else {
             // Hash the password
             $hashedPassword = password_hash($Password, PASSWORD_DEFAULT);
 
-            // Prepare an insert statement
-            $stmt = $conn->prepare("INSERT INTO user_registration (Username, Email, Password, PhoneNumber, Birth, Gender, resetToken) VALUES (?, ?, ?, ?, ?, ?, ?)");
-            $stmt->bind_param("ssssssi", $Username, $Email, $hashedPassword, $PhoneNumber, $Birth, $Gender, $resetToken);
+            // Insert new user into database
+            $stmt = $conn->prepare("INSERT INTO user_registration (Username, Email, Password, PhoneNumber, Birth, Gender, resetPassword) VALUES (?, ?, ?, ?, ?, ?, ?)");
+            $stmt->bind_param("sssssss", $Username, $Email, $hashedPassword, $PhoneNumber, $Birth, $Gender, $resetPassword);
 
             if ($stmt->execute()) {
-                echo "<script>alert('Registration successful.'); window.location.href = 'Nlogin.html';</script>";
+                echo "Registration successful.";
             } else {
                 echo "Error: " . $stmt->error;
             }
