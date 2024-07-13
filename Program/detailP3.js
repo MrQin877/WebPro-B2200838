@@ -50,36 +50,18 @@ document.addEventListener('DOMContentLoaded', () => {
         window.location.href = page;
     }
 
-    // 로그인 상태 확인 함수
-    function checkLoginStatus() {
-        // 여기에 실제 로그인 상태를 확인하는 로직을 추가하세요.
-        // 예시로 항상 로그인이 되어 있다고 가정합니다.
-        return true; // 로그인 되어 있는 상태
-    }
+    // 프로그램 목록을 필터링하는 함수
+    function filterPrograms() {
+        // 검색 입력 값을 소문자로 변환
+        const searchValue = searchInput.value.toLowerCase();
 
-    // 리뷰 작성 버튼 클릭 시 실행되는 함수
-    function toggleCommentInput(type) {
-        var commentInput = document.getElementById("commentInput");
-        var commentText = document.getElementById("commentText");
-        var subjectSelector = document.getElementById("subjectSelector");
+        // 검색어가 프로그램 제목에 포함된 프로그램만 필터링
+        const filteredPrograms = programs.filter(program =>
+            program.title.toLowerCase().includes(searchValue)
+        );
 
-        // 로그인 상태 확인
-        var loggedIn = checkLoginStatus();
-
-        if (!loggedIn) {
-            alert("Please log in to write a review.");
-            return;
-        }
-
-        if (commentInput.style.display === "none" || commentInput.style.display === "") {
-            commentInput.style.display = "block";
-            subjectSelector.style.display = "block";
-            commentText.placeholder = "Write your " + type + "... (255 Characters limit)";
-        } else {
-            commentInput.style.display = "none";
-            subjectSelector.style.display = "none";
-            document.getElementById("writeReviewBtn").textContent = "Write a Review or feedback";
-        }
+        // 필터링된 프로그램 목록을 렌더링
+        renderPrograms(filteredPrograms);
     }
 
     // 검색 입력 필드에 입력 이벤트 리스너 추가
@@ -87,4 +69,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 초기 프로그램 목록을 렌더링
     renderPrograms(programs);
+
+    // 로그인 상태 확인 함수
+    function checkLoginStatus() {
+        // 여기에 실제 로그인 상태를 확인하는 로직을 추가하세요.
+        // 예시로 항상 로그인이 되어 있다고 가정합니다.
+        return sessionStorage.getItem('loggedInUser') !== null;
+    }
+
+    // 리뷰 작성 버튼 클릭 시 동작
+    document.getElementById('writeReviewBtn').addEventListener('click', () => {
+        if (checkLoginStatus()) {
+            toggleCommentInput('review');
+        } else {
+            alert('로그인 후 리뷰를 작성할 수 있습니다.');
+            // 여기에 로그인 팝업 등을 띄우는 로직을 추가할 수 있습니다.
+        }
+    });
+
+    // 로그인 세션을 설정하는 예시 함수
+    function login(username) {
+        sessionStorage.setItem('loggedInUser', username);
+    }
+
+    // 로그아웃 세션을 설정하는 예시 함수
+    function logout() {
+        sessionStorage.removeItem('loggedInUser');
+    }
 });
