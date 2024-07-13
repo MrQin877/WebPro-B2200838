@@ -41,15 +41,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             exit();
         }
 
-        // Check if email already exists in the database
-        $stmt = $conn->prepare("SELECT UserID FROM user_registration WHERE Email = ?");
-        $stmt->bind_param("s", $Email);
+        // Check if resetPassword already exists in the database
+        $stmt = $conn->prepare("SELECT resetPassword FROM user_registration WHERE resetPassword = ?");
+        $stmt->bind_param("s", $resetPassword);
         $stmt->execute();
         $stmt->store_result();
 
         if ($stmt->num_rows > 0) {
-            // Email already exists
-            echo "The Email is already registered.";
+            // resetPassword already exists
+            echo "The resetPassword is already registered.";
         } else {
             // Hash the password
             $hashedPassword = password_hash($Password, PASSWORD_DEFAULT);
