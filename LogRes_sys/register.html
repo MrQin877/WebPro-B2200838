@@ -57,17 +57,29 @@
             </div>
             <!-- 인증 코드를 입력받는 칸 추가 -->
             <div class="input-box">
-                <input type="text" class="form-control" id="reset_token" name="reset_token" placeholder="Enter 6-digit Code" required>
+                <input type="text" class="form-control" id="reset_token" name="reset_token" placeholder="Enter 6-digit Code" required pattern="[0-9]{6}"
+                       title="Please enter a 6-digit number." oninput="validateResetToken(this)">
                 <i class="bx bx-key"></i>
             </div>
             <button type="submit" class="btn btn-primary">Register</button>
             <div class="register-link">
                 <p>Already have an account? <a href="Nlogin.html">Login</a></p>
             </div>
+            <p id="resetTokenErrorMessage" class="error-message"></p>
             <p id="successMessage" class="success-message"></p>
         </form>
     </div>
     <script src="register.js"></script>
     <script src="Nlogin.js"></script>
+    <script>
+        function validateResetToken(input) {
+            // 정규 표현식으로 6자리 숫자인지 검사
+            if (!/^[0-9]{6}$/.test(input.value)) {
+                input.setCustomValidity('Please enter a valid 6-digit number.');
+            } else {
+                input.setCustomValidity('');
+            }
+        }
+    </script>
 </body>
 </html>
