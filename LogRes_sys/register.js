@@ -7,6 +7,7 @@ const ConfirmPasswordInput = document.getElementById("ConfirmPassword");
 const PhoneNumberInput = document.getElementById("PhoneNumber");
 const BirthInput = document.getElementById("Birth");
 const GenderInput = document.getElementById("Gender");
+const ResetPasswordInput = document.getElementById("ResetPassword");
 const message = document.getElementById("successMessage");
 
 // Add submit event listener to the form
@@ -21,12 +22,13 @@ registrationForm.addEventListener("submit", function(e) {
     const PhoneNumber = PhoneNumberInput.value.trim();
     const Birth = BirthInput.value.trim();
     const Gender = GenderInput.value.trim();
+    const ResetPassword = ResetPasswordInput.value.trim();
 
     // Regular expression to check password criteria
     const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%&])[A-Za-z\d!@#$%&]{1,10}$/;
 
     // Check if all fields are filled
-    if (!Username || !Email || !Password || !ConfirmPassword || !PhoneNumber || !Birth || !Gender) {
+    if (!Username || !Email || !Password || !ConfirmPassword || !PhoneNumber || !Birth || !Gender || !ResetPassword) {
         message.textContent = "Please fill out all fields.";
         message.style.color = "red";
         message.style.display = "block";
@@ -43,7 +45,64 @@ registrationForm.addEventListener("submit", function(e) {
         message.style.color = "red";
         message.style.display = "block";
     } else {
-        registrationForm.submit(); // Submit the form if all validations pass
+        // Check duplicate Email and ResetPassword via fetch API
+        fetch('check_duplicate.php', {
+            method: 'POST',
+            body: JSON.stringify({ Email: Email, ResetPassword: ResetPassword }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                message.textContent = data.error;
+                message.style.color = "red";
+                message.style.display = "block";
+            } else {
+                // If no duplicates, submit the form
+                fetch('register.php', {
+                    method: 'POST',
+                    body: new FormData(registrationForm)
+                })
+                .then(response => response.text())
+                .then(data => {
+                    if (data === 'Email already exists.') {
+                        message.textContent = "The Email is already registered. Please try again with a different Email.";
+                        message.style.color = "red";
+                        message.style.display = "block";
+                    } else if (data === 'Reset password already exists.') {
+                        message.textContent = "The resetPassword is already registered. Please try again with a different resetPassword.";
+                        message.style.color = "red";
+                        message.style.display = "block";
+                    } else if (data === 'Registration successful.') {
+                        message.textContent = "Registration successful.";
+                        message.style.color = "green";
+                        message.style.display = "block";
+                        // Optionally, redirect to another page after successful registration
+                        setTimeout(() => {
+                            window.location.href = 'LoginPage.html';
+                        }, 2000); // Redirect after 2 seconds (adjust as needed)
+                    } else {
+                        message.textContent = "An error occurred. Please try again later.";
+                        message.style.color = "red";
+                        message.style.display = "block";
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    message.textContent = "An error occurred. Please try again later.";
+                    message.style.color = "red";
+                    message.style.display = "block";
+                });
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            message.textContent = "An error occurred. Please try again later.";
+            message.style.color = "red";
+            message.style.display = "block";
+        });
     }
 });
 
