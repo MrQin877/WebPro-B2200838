@@ -4,11 +4,10 @@ session_start();
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "user";
+$dbname = "your_database_name";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-// Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
@@ -16,21 +15,21 @@ if ($conn->connect_error) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $new_password = $_POST['new_password'];
     $confirm_password = $_POST['confirm_password'];
-    $resetToken = $_POST['resetToken'];
+    $resetPassword = $_POST['resetPassword']; // 사용자가 제출한 6자리 숫자 코드
 
-    if (empty($new_password) || empty($confirm_password) || empty($resetToken)) {
+    if (empty($new_password) || empty($confirm_password) || empty($resetPassword)) {
         echo "All fields are required.";
     } elseif ($new_password !== $confirm_password) {
         echo "New passwords do not match.";
     } else {
         // Verify reset token from database
-        $sql = "SELECT * FROM password_reset WHERE reset_token = ?";
+        $sql = "SELECT * FROM user_registration WHERE resetPassword = ?";
         $stmt = $conn->prepare($sql);
 
         if ($stmt === false) {
             echo "Error preparing query: " . $conn->error;
         } else {
-            $stmt->bind_param("s", $resetToken);
+            $stmt->bind_param("i", $resetPassword); // int 타입으로 바인딩
             $stmt->execute();
             $result = $stmt->get_result();
 
@@ -49,15 +48,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $update_stmt->bind_param("ss", $hashed_password, $email);
 
                     if ($update_stmt->execute()) {
-                        // Password updated successfully, remove reset token from password_reset table
-                        $delete_sql = "DELETE FROM password_reset WHERE reset_token = ?";
-                        $delete_stmt = $conn->prepare($delete_sql);
+                        // Password updated successfully, clear resetPassword field
+                        $clear_sql = "UPDATE user_registration SET resetPassword = NULL WHERE email = ?";
+                        $clear_stmt = $conn->prepare($clear_sql);
 
-                        if ($delete_stmt === false) {
-                            echo "Error preparing delete statement: " . $conn->error;
+                        if ($clear_stmt === false) {
+                            echo "Error preparing clear statement: " . $conn->error;
                         } else {
-                            $delete_stmt->bind_param("s", $resetToken);
-                            $delete_stmt->execute();
+                            $clear_stmt->bind_param("s", $email);
+                            $clear_stmt->execute();
                             echo "Password updated successfully.";
                         }
                     } else {
@@ -65,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     }
                 }
             } else {
-                echo "Invalid reset token.";
+                echo "Invalid reset password.";
             }
         }
     }
