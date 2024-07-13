@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,15 +8,10 @@
     <link rel="stylesheet" href="Nlogin.css">
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
 </head>
-
 <body>
     <div class="wrapper">
-        <form id="resetPasswordForm" method="POST" action="reset_password.php">
+        <form id="resetPasswordForm" action="reset_password.php" method="post">
             <h1>Reset Password</h1>
-            <div class="input-box">
-                <input type="text" name="reset_token" placeholder="Enter 6-digit Code" required>
-                <i class="bx bx-key"></i>
-            </div>
             <div class="input-box">
                 <input type="password" name="new_password" placeholder="New Password" required>
                 <i class="bx bxs-lock-alt"></i>
@@ -26,11 +20,15 @@
                 <input type="password" name="confirm_password" placeholder="Confirm Password" required>
                 <i class="bx bxs-lock-alt"></i>
             </div>
+            <div class="input-box">
+                <input type="text" name="reset_token" placeholder="Enter 6-digit Code" required pattern="[0-9]{6}"
+                       title="Please enter a 6-digit number.">
+                <i class="bx bx-key"></i>
+            </div>
             <button type="submit" class="btn">Reset Password</button>
             <p id="successMessage" class="success-message"></p>
         </form>
     </div>
     <script src="Nlogin.js"></script>
 </body>
-
 </html>
