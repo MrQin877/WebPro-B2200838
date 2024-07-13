@@ -35,33 +35,39 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             if ($result->num_rows > 0) {
                 $row = $result->fetch_assoc();
-                $email = $row['email'];
 
-                // Update password in user_registration table
-                $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
-                $update_sql = "UPDATE user_registration SET password = ? WHERE email = ?";
-                $update_stmt = $conn->prepare($update_sql);
+                // Check if email is present in the fetched row
+                if (isset($row['email'])) {
+                    $email = $row['email'];
 
-                if ($update_stmt === false) {
-                    echo "Error preparing update statement: " . $conn->error;
-                } else {
-                    $update_stmt->bind_param("ss", $hashed_password, $email);
+                    // Update password in user_registration table
+                    $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
+                    $update_sql = "UPDATE user_registration SET password = ? WHERE email = ?";
+                    $update_stmt = $conn->prepare($update_sql);
 
-                    if ($update_stmt->execute()) {
-                        // Password updated successfully, clear resetPassword field
-                        $clear_sql = "UPDATE user_registration SET resetPassword = NULL WHERE email = ?";
-                        $clear_stmt = $conn->prepare($clear_sql);
-
-                        if ($clear_stmt === false) {
-                            echo "Error preparing clear statement: " . $conn->error;
-                        } else {
-                            $clear_stmt->bind_param("s", $email);
-                            $clear_stmt->execute();
-                            echo "Password updated successfully.";
-                        }
+                    if ($update_stmt === false) {
+                        echo "Error preparing update statement: " . $conn->error;
                     } else {
-                        echo "Error updating password: " . $conn->error;
+                        $update_stmt->bind_param("ss", $hashed_password, $email);
+
+                        if ($update_stmt->execute()) {
+                            // Password updated successfully, clear resetPassword field
+                            $clear_sql = "UPDATE user_registration SET resetPassword = NULL WHERE email = ?";
+                            $clear_stmt = $conn->prepare($clear_sql);
+
+                            if ($clear_stmt === false) {
+                                echo "Error preparing clear statement: " . $conn->error;
+                            } else {
+                                $clear_stmt->bind_param("s", $email);
+                                $clear_stmt->execute();
+                                echo "Password updated successfully.";
+                            }
+                        } else {
+                            echo "Error updating password: " . $conn->error;
+                        }
                     }
+                } else {
+                    echo "Email not found in database.";
                 }
             } else {
                 echo "Invalid reset password.";
