@@ -144,7 +144,7 @@
         <section id="review-section" style="text-align: center; margin-top: 50px;">
             <h2>Share Your Experience</h2>
             <!-- Toggle Comment Input -->
-            <button id="writeReviewBtn" onclick="toggleCommentInput('review')">Write a Review or feedback</button>
+            <button id="writeReviewBtn" onclick="toggleCommentInput()">Write a Review or feedback</button>
             
             <!-- Subject Selector -->
             <div class="subject-selector" id="subjectSelector" style="display: none;">
@@ -174,7 +174,7 @@
         
                 <div class="button-container">
                     <button type="button" onclick="submitComment()">Submit</button>
-                    <button type="button" class="cancel-button" onclick="toggleCommentInput('review')">Cancel</button>
+                    
                 </div>
                 <div id="error-message" class="error-message"></div>
             </div>
@@ -193,80 +193,81 @@
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     <script>
-        // Function to check login status
+        var isLoggedIn = false; // 초기값 설정
+
+        window.onload = function() {
+            checkLoginStatus(); // 페이지 로드 시 로그인 상태 확인
+        };
+
         function checkLoginStatus() {
             var xhr = new XMLHttpRequest();
-            xhr.open("GET", "check_login.php", true); // 서버의 로그인 상태를 확인하는 API 엔드포인트로 대체하세요
+            xhr.open('GET', 'check_session.php', true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
             xhr.onreadystatechange = function() {
-                if (xhr.readyState === XMLHttpRequest.DONE) {
-                    if (xhr.status === 200) {
-                        var response = JSON.parse(xhr.responseText);
-                        var isLoggedIn = response.isLoggedIn;
-                        
-                        // Update button state based on login status
-                        var writeReviewBtn = document.getElementById("writeReviewBtn");
-                        if (isLoggedIn) {
-                            writeReviewBtn.disabled = false;
-                            writeReviewBtn.textContent = "Write a Review or feedback";
-                        } else {
-                            writeReviewBtn.disabled = true;
-                            writeReviewBtn.textContent = "Please log in to write a review";
-                        }
-                    } else {
-                        console.error("Failed to check login status");
-                    }
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    var response = JSON.parse(xhr.responseText);
+                    isLoggedIn = response.loggedIn; // 로그인 상태 업데이트
+                    updateReviewButton(); // 버튼 상태 업데이트
                 }
             };
             xhr.send();
         }
 
-        // Function to toggle the comment input
-        function toggleCommentInput(type) {
-            var commentInput = document.getElementById("commentInput");
-            var commentText = document.getElementById("commentText");
-            var subjectSelector = document.getElementById("subjectSelector");
-
-            if (commentInput.style.display === "none" || commentInput.style.display === "") {
-                commentInput.style.display = "block";
-                subjectSelector.style.display = "block";
-                commentText.placeholder = "Write your " + type + "...(255 Characters limit)";
+        function updateReviewButton() {
+            var writeReviewBtn = document.getElementById('writeReviewBtn');
+            if (isLoggedIn) {
+                writeReviewBtn.removeAttribute('disabled'); // 로그인 상태일 때 버튼 활성화
             } else {
-                commentInput.style.display = "none";
-                subjectSelector.style.display = "none";
-                document.getElementById("writeReviewBtn").textContent = "Write a Review or feedback";
+                writeReviewBtn.setAttribute('disabled', 'true'); // 로그인 상태가 아닐 때 버튼 비활성화
+            }
+        }
+
+        function toggleCommentInput() {
+            var commentInput = document.getElementById('commentInput');
+            var subjectSelector = document.getElementById('subjectSelector');
+            var writeReviewBtn = document.getElementById('writeReviewBtn');
+
+            if (commentInput.style.display === 'none' || commentInput.style.display === '') {
+                commentInput.style.display = 'block';
+                subjectSelector.style.display = 'block';
+                writeReviewBtn.textContent = 'Cancel';
+            } else {
+                commentInput.style.display = 'none';
+                subjectSelector.style.display = 'none';
+                writeReviewBtn.textContent = 'Write a Review or feedback';
             }
         }
 
         function submitComment() {
-            var commentText = document.getElementById("commentText").value;
+            var commentText = document.getElementById('commentText').value;
             var rating = getSelectedRating();
-            var subject = document.getElementById("subject").value;
+            var subject = document.getElementById('subject').value;
 
             if (commentText.length < 20) {
-                displayErrorMessage("Please enter at least 20 characters for your review.");
+                displayErrorMessage('Please enter at least 20 characters for your review.');
                 return;
             }
 
             var xhr = new XMLHttpRequest();
-            xhr.open("POST", "review.php", true);
-            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-
-            var formData = "review=" + encodeURIComponent(commentText) + "&star=" + rating + "&program=" + subject;
+            xhr.open('POST', 'saved_review.php', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === XMLHttpRequest.DONE) {
                     if (xhr.status === 200) {
                         displaySubmittedReview(commentText, rating, subject);
                         clearFormInputs();
                     } else {
-                        displayErrorMessage("Failed to submit review. Please try again later.");
+                        displayErrorMessage('Failed to submit review. Please try again later.');
                     }
                 }
             };
+
+            var formData = 'review=' + encodeURIComponent(commentText) + '&star=' + rating + '&program=' + subject;
             xhr.send(formData);
         }
 
         function getSelectedRating() {
-            var ratingElements = document.getElementsByName("rating");
+            var ratingElements = document.getElementsByName('rating');
             for (var i = 0; i < ratingElements.length; i++) {
                 if (ratingElements[i].checked) {
                     return ratingElements[i].value;
@@ -276,10 +277,10 @@
         }
 
         function displaySubmittedReview(commentText, rating, subject) {
-            var reviewsContainer = document.getElementById("reviews");
+            var reviewsContainer = document.getElementById('reviews');
 
-            var reviewElement = document.createElement("div");
-            reviewElement.className = "review-item";
+            var reviewElement = document.createElement('div');
+            reviewElement.className = 'review-item';
             reviewElement.innerHTML = `
                 <div class="review-header">
                     <div class="review-rating">${rating}★</div>
@@ -292,21 +293,16 @@
         }
 
         function clearFormInputs() {
-            document.getElementById("commentText").value = "";
-            var ratingElements = document.getElementsByName("rating");
+            document.getElementById('commentText').value = '';
+            var ratingElements = document.getElementsByName('rating');
             for (var i = 0; i < ratingElements.length; i++) {
                 ratingElements[i].checked = false;
             }
         }
 
         function displayErrorMessage(message) {
-            var errorMessageElement = document.getElementById("error-message");
+            var errorMessageElement = document.getElementById('error-message');
             errorMessageElement.textContent = message;
-        }
-
-        // Check login status when the page loads
-        window.onload = function() {
-            checkLoginStatus();
         }
     </script>
 </body>
