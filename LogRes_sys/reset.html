@@ -12,14 +12,18 @@
 
 <body>
     <div class="wrapper">
-        <form id="resetPasswordForm" onsubmit="showSuccessMessage(event, 'password-reset')">
+        <form id="resetPasswordForm" method="POST" action="reset_password.php">
             <h1>Reset Password</h1>
             <div class="input-box">
-                <input type="password" placeholder="New Password" required>
+                <input type="text" name="reset_token" placeholder="Enter 6-digit Code" required>
+                <i class="bx bx-key"></i>
+            </div>
+            <div class="input-box">
+                <input type="password" name="new_password" placeholder="New Password" required>
                 <i class="bx bxs-lock-alt"></i>
             </div>
             <div class="input-box">
-                <input type="password" placeholder="Confirm Password" required>
+                <input type="password" name="confirm_password" placeholder="Confirm Password" required>
                 <i class="bx bxs-lock-alt"></i>
             </div>
             <button type="submit" class="btn">Reset Password</button>
