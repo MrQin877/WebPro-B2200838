@@ -143,12 +143,8 @@
         <!-- Write a Review Section -->
         <section id="review-section" style="text-align: center; margin-top: 50px;">
             <h2>Share Your Experience</h2>
-            <?php
-            session_start();
-            if (isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] === true) {
-                echo '<button id="writeReviewBtn" onclick="toggleCommentInput(\'review\')">Write a Review or feedback</button>';
-            }
-            ?>
+            <!-- Toggle Comment Input -->
+            <button id="writeReviewBtn" onclick="toggleCommentInput('review')">Write a Review or feedback</button>
             
             <!-- Subject Selector -->
             <div class="subject-selector" id="subjectSelector" style="display: none;">
@@ -205,11 +201,11 @@
             if (commentInput.style.display === "none" || commentInput.style.display === "") {
                 commentInput.style.display = "block";
                 subjectSelector.style.display = "block";
-                commentText.placeholder = "Write your " + type + "... (255 Characters limit)";
+                commentText.placeholder = "Write your " + type + "...(255 Characters limit)";
             } else {
                 commentInput.style.display = "none";
                 subjectSelector.style.display = "none";
-                document.getElementById("writeReviewBtn").textContent = "<?php if (isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] === true) { echo 'Write a Review or feedback'; } ?>";
+                document.getElementById("writeReviewBtn").textContent = "Write a Review or feedback";
             }
         }
 
