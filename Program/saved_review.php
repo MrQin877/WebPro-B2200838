@@ -1,35 +1,49 @@
 <?php
-// Simulated database storage (replace with actual database connection and query)
-$reviews = [];
-
-// Check if POST data is received
+// Example PHP script to handle review submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Validate and sanitize inputs (for demo purpose, actual validation and sanitization should be stricter)
-    $comment = htmlspecialchars($_POST["comment"]);
-    $rating = intval($_POST["rating"]);
-    $email = htmlspecialchars($_POST["email"]);
+    // Validate inputs (sanitize inputs as needed)
+    $review = $_POST["review"];
+    $star = $_POST["star"];
+    $program = $_POST["program"];
+    $email = $_POST["email"];
 
-    // Validate email (for demo purpose, actual validation should be stricter)
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        http_response_code(400);
-        echo "Invalid email format.";
-        exit;
+    // Example: Save review to database (replace with your database connection and query)
+    $servername = "localhost";
+    $username = "username";
+    $password = "password";
+    $dbname = "your_database";
+
+    try {
+        $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        // Prepare SQL statement
+        $stmt = $conn->prepare("INSERT INTO user_review (review, star, program, email) VALUES (:review, :star, :program, :email)");
+        $stmt->bindParam(':review', $review);
+        $stmt->bindParam(':star', $star);
+        $stmt->bindParam(':program', $program);
+        $stmt->bindParam(':email', $email);
+
+        // Execute the statement
+        $stmt->execute();
+
+        // Return success message or data if needed
+        $response = [
+            "status" => "success",
+            "message" => "Review submitted successfully."
+        ];
+        echo json_encode($response);
+    } catch(PDOException $e) {
+        // Handle database errors
+        $response = [
+            "status" => "error",
+            "message" => "Failed to submit review: " . $e->getMessage()
+        ];
+        echo json_encode($response);
     }
-
-    // Save review (for demo purpose, replace with actual database query)
-    $reviews[] = [
-        "comment" => $comment,
-        "rating" => $rating,
-        "email" => $email
-    ];
-
-    // Return success response (for demo purpose)
-    http_response_code(200);
-    echo "Review submitted successfully.";
-    exit;
+} else {
+    // Handle invalid request method
+    http_response_code(405); // Method Not Allowed
+    echo json_encode(["status" => "error", "message" => "Method not allowed"]);
 }
-
-// Return reviews as JSON response (for demo purpose)
-header("Content-Type: application/json");
-echo json_encode($reviews);
 ?>
