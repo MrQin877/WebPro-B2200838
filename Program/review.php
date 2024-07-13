@@ -33,23 +33,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "Error: " . $sql_insert . "<br>" . $conn->error;
     }
 
-    // 새 리뷰가 추가되면, 최신 5개 리뷰만 유지하기 위해 처리
-    // 가장 오래된 리뷰 삭제 쿼리
-    $sql_delete_oldest = "DELETE FROM user_review WHERE reviewID IN (
+    // 최신 5개 리뷰만 유지하기 위해 가장 오래된 리뷰 삭제 쿼리
+    $sql_delete_oldest = "DELETE FROM user_review WHERE reviewID NOT IN (
         SELECT reviewID FROM (
-            SELECT reviewID FROM user_review ORDER BY saved_time ASC LIMIT 100000 OFFSET 5
-        ) AS to_delete
-    )";
+            SELECT reviewID FROM user_review WHERE program = ? ORDER BY saved_time DESC LIMIT 5
+        ) AS to_keep
+    ) AND program = ?";
     
+    // 삭제 쿼리 준비
+    $stmt_delete_oldest = $conn->prepare($sql_delete_oldest);
+    $stmt_delete_oldest->bind_param("ss", $program, $program);
+
     // 쿼리 실행
-    if ($conn->query($sql_delete_oldest) === TRUE) {
-        echo "Oldest review deleted successfully";
+    if ($stmt_delete_oldest->execute()) {
+        echo "Oldest reviews deleted successfully";
     } else {
-        echo "Error deleting oldest review: " . $conn->error;
+        echo "Error deleting oldest reviews: " . $conn->error;
     }
 
     // 문장 닫기
     $stmt_insert->close();
+    $stmt_delete_oldest->close();
 }
 
 // 데이터베이스 연결 닫기
