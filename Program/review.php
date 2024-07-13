@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // 준비된 문장을 생성하고 매개변수를 바인딩
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sis", $review, $star, $program); // 매개변수 타입에 주의하세요: s는 문자열, i는 정수입니다.
+    $stmt->bind_param("sss", $review, $star, $program); // 매개변수 타입에 주의하세요: s는 문자열, i는 정수입니다.
 
     // 쿼리 실행
     if ($stmt->execute()) {
