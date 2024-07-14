@@ -1,0 +1,25 @@
+Admin Account:
+
+gmail: admin1507@smartstudysport.com
+password: smartstudy1507@sport
+
+User Account:
+user1:      
+gmail: qinchong877@gmail.com
+password: Kcz001122#
+
+user2: 
+gmail: kkjhhyu0405@gmail.com
+password: Kjh0405@
+
+user3: 
+gmail: ashton@gmail.com
+password: 3a0b7deeB@
+
+user4:
+gmail: AYA@gmail.com
+password: 12Aa@
+
+user5:
+gmail: tasha@gmail.com
+password: 12Aa@
