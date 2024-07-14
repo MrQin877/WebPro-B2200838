@@ -17,10 +17,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $confirm_password = $_POST['confirm_password'];
     $resetPassword = $_POST['resetPassword']; // 사용자가 제출한 6자리 숫자 코드
 
+    // Validate password complexity
+    $passwordRegex = '/^(?=.*[A-Z])(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{6,10}$/';
+    if (!preg_match($passwordRegex, $new_password)) {
+        echo "Password must be 6 to 10 characters long, include at least one capital letter and one special character (!, @, #, $, %, &).";
+        exit();
+    }
+
     if (empty($new_password) || empty($confirm_password) || empty($resetPassword)) {
         echo "All fields are required.";
     } elseif ($new_password !== $confirm_password) {
-        echo "New passwords do not match.";
+        echo "New passwords do not match. Please try again.";
     } else {
         // Verify reset token from database
         $sql = "SELECT * FROM user_registration WHERE resetPassword = ?";
@@ -50,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     if ($update_stmt->execute()) {
                         // Password successfully updated message
                         $_SESSION['reset_success'] = true;
-                        header("Location: Nlogin.html");
+                        echo "Password successfully updated. Redirecting...";
                         exit();
                     } else {
                         echo "Error updating password: " . $conn->error;
