@@ -14,13 +14,16 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
+header('Content-Type: application/json');
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $Email = $_POST['email'];
     $Password = $_POST['password'];
 
     // Validate input
     if (empty($Email) || empty($Password)) {
-        echo "<script>alert('Email and Password are required fields.'); window.location.href = 'Nlogin.html';</script>";
+        echo json_encode(['success' => false, 'message' => 'Email and Password are required fields.']);
+        exit();
     } else {
         // Prepare a select statement
         $stmt = $conn->prepare("SELECT UserID, password FROM user_registration WHERE Email = ?");
@@ -36,12 +39,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Verify password
             if (password_verify($Password, $hashedPassword)) {
                 $_SESSION['user_id'] = $UserID;
-                echo "<script>window.location.href = '../A-HomePage/HomePage.html';</script>";
+                echo json_encode(['success' => true, 'message' => 'Login successful. Redirecting...']);
             } else {
-                echo "<script>window.location.href = 'Nlogin.html?error=invalid';</script>";
+                echo json_encode(['success' => false, 'message' => 'Invalid email or password.']);
             }
         } else {
-            echo "<script>window.location.href = 'Nlogin.html?error=noaccount';</script>";
+            echo json_encode(['success' => false, 'message' => 'No account found with that email.']);
         }
 
         $stmt->close();
